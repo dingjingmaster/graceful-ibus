@@ -20,6 +20,14 @@ add_definitions(
         -D QT_NO_KEYWORDS
         -D QT_MESSAGELOGCONTEXT
 
+        -D __IBUS_H_INSIDE__
+
+        -D BINDIR=\\"/usr/local/bin\\"
+        -D LIBEXECDIR=\\"/usr/local/bin\\"
+        -D IBUS_DATA_DIR=\\"\\"
+        -D IBUS_CACHE_DIR=\\"\\"
+        -D ISOCODES_PREFIX=\\"\\"
+
         -D PACKAGE_NAME=\\"${PROJECT_NAME}\\"
         -D G_LOG_DOMAIN=\\"${PROJECT_NAME}\\"
         -D PACKAGE_VERSION=\\"${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}\\")
@@ -47,13 +55,4 @@ execute_process(COMMAND uname -m OUTPUT_VARIABLE OS_ARCH OUTPUT_STRIP_TRAILING_W
 MESSAGE(STATUS "OS arch: '${OS_ARCH}'")
 
 
-
-# client
-#add_subdirectory(client)
-#add_subdirectory(kernel)
-#add_subdirectory(tools)
-#add_subdirectory(extensions)
-#add_subdirectory(gui)
-#add_subdirectory(data)
-#add_subdirectory(demo)
-#add_subdirectory(daemon)
+add_subdirectory(bus)
