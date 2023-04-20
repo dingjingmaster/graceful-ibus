@@ -1,4 +1,4 @@
-#include "gt-log.h"
+#include "gi-log.h"
 
 #include <time.h>
 #include <stdio.h>

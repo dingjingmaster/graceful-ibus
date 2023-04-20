@@ -19,8 +19,8 @@
  * USA
  */
 
-#ifndef __IBUS_VERSION_H_
-#define __IBUS_VERSION_H_
+#ifndef _IBUS_VERSION_H_
+#define _IBUS_VERSION_H_
 
 /**
  * SECTION: ibusversion

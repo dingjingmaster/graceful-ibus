@@ -31,7 +31,7 @@
 #endif
 
 #include <glib.h>
-#include <ibustypes.h>
+#include "ibus-types.h"
 
 G_BEGIN_DECLS
 

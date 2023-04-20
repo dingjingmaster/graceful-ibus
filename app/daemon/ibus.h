@@ -26,7 +26,8 @@
 
 #define __IBUS_H_INSIDE__
 
-#include <ibusversion.h>
+#include "ibus-version.h"
+
 #include <ibusshare.h>
 #include <ibusobject.h>
 #include <ibusserializable.h>

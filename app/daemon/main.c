@@ -20,27 +20,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  * USA
  */
-#include <config.h>
-#include <fcntl.h>
-#include <glib.h>
-#include <gio/gio.h>
-#include <ibus.h>
-#include <locale.h>
 #include <pwd.h>
+#include <glib.h>
+#include <ibus.h>
+#include <fcntl.h>
+#include <config.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <locale.h>
+#include <gio/gio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h>
 
 #ifdef HAVE_SYS_PRCTL_H
 /* 获取进程相关信息 */
 #include <sys/prctl.h>
 #endif
 
+#include <glib/gi18n.h>
+
+#include "../common/gi-log.h"
+
 #include "global.h"
 #include "server.h"
 #include "ibusimpl.h"
+#include "../common/ibus-functions.h"
+
+
+static gboolean execute_cmdline (const gchar *cmdline);
+
 
 static gboolean daemonize = FALSE;
 static gboolean single = FALSE;
@@ -51,6 +60,8 @@ static gchar *panel = "default";
 static gchar *emoji_extension = "default";
 static gchar *config = "default";
 static gchar *desktop = "gnome";
+
+const char* gLogPath = "/tmp/" INSTALL_NAME ".log";
 
 static gchar *panel_extension_disable_users[] =
 {
@@ -85,100 +96,16 @@ static const GOptionEntry entries[] =
     { NULL },
 };
 
-/**
- * execute_cmdline:
- * @cmdline: An absolute path of the executable and its parameters, e.g.  "/usr/lib/ibus/ibus-x11 --kill-daemon".
- * @returns: TRUE if both parsing cmdline and executing the command succeed.
- *
- * Execute cmdline. Child process's stdin, stdout, and stderr are attached to /dev/null.
- * You don't have to handle SIGCHLD from the child process since glib will do.
- */
-static gboolean execute_cmdline (const gchar *cmdline)
-{
-    g_assert (cmdline);
-
-    gint argc = 0;
-    gchar **argv = NULL;
-    GError *error = NULL;
-    if (!g_shell_parse_argv (cmdline, &argc, &argv, &error)) {
-        g_warning ("Can not parse cmdline `%s` exec: %s", cmdline, error->message);
-        g_error_free (error);
-        return FALSE;
-    }
-
-    error = NULL;
-    gboolean retval = g_spawn_async (NULL, argv, NULL,
-                            G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
-                            NULL, NULL,
-                            NULL, &error);
-    g_strfreev (argv);
-
-    if (!retval) {
-        g_warning ("Can not execute cmdline `%s`: %s", cmdline, error->message);
-        g_error_free (error);
-        return FALSE;
-    }
-
-    return TRUE;
-}
-
-#ifndef HAVE_DAEMON
-static void
-closeall (gint fd)
-{
-    gint fdlimit = sysconf(_SC_OPEN_MAX);
-
-    while (fd < fdlimit) {
-      close(fd++);
-    }
-}
-
-static gint
-daemon (gint nochdir, gint noclose)
-{
-    switch (fork()) {
-        case 0:  break;
-        case -1: return -1;
-        default: _exit(0);
-    }
-
-    if (setsid() < 0) {
-      return -1;
-    }
-
-    switch (fork()) {
-        case 0:  break;
-        case -1: return -1;
-        default: _exit(0);
-    }
-
-    if (!nochdir) {
-      chdir("/");
-    }
-
-    if (!noclose) {
-        closeall(0);
-        open("/dev/null",O_RDWR);
-        dup(0); dup(0);
-    }
-    return 0;
-}
-#endif
-
-#ifdef HAVE_SYS_PRCTL_H
-static void _sig_usr1_handler (int sig)
-{
-    g_warning ("The parent process died.");
-    bus_server_quit (FALSE);
-}
-#endif
 
 int main (int argc, char* argv[])
 {
     int i;
     const gchar *username = ibus_get_user_name ();
 
-    setlocale (LC_ALL, "");
+    textdomain (GETTEXT_PACKAGE);
+    bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    g_log_set_writer_func (log_handler, NULL, NULL);
 
     GOptionContext *context = g_option_context_new ("- ibus daemon");
     g_option_context_add_main_entries (context, entries, "ibus-daemon");
@@ -360,4 +287,42 @@ int main (int argc, char* argv[])
     bus_server_run ();
 
     return 0;
+}
+
+
+/**
+ * execute_cmdline:
+ * @cmdline: An absolute path of the executable and its parameters, e.g.  "/usr/lib/ibus/ibus-x11 --kill-daemon".
+ * @returns: TRUE if both parsing cmdline and executing the command succeed.
+ *
+ * Execute cmdline. Child process's stdin, stdout, and stderr are attached to /dev/null.
+ * You don't have to handle SIGCHLD from the child process since glib will do.
+ */
+static gboolean execute_cmdline (const gchar *cmdline)
+{
+    g_assert (cmdline);
+
+    gint argc = 0;
+    gchar **argv = NULL;
+    GError *error = NULL;
+    if (!g_shell_parse_argv (cmdline, &argc, &argv, &error)) {
+        g_warning ("Can not parse cmdline `%s` exec: %s", cmdline, error->message);
+        g_error_free (error);
+        return FALSE;
+    }
+
+    error = NULL;
+    gboolean retval = g_spawn_async (NULL, argv, NULL,
+                                     G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+                                     NULL, NULL,
+                                     NULL, &error);
+    g_strfreev (argv);
+
+    if (!retval) {
+        g_warning ("Can not execute cmdline `%s`: %s", cmdline, error->message);
+        g_error_free (error);
+        return FALSE;
+    }
+
+    return TRUE;
 }

@@ -37,8 +37,8 @@
  */
 
 #include <glib-object.h>
-#include "ibustypes.h"
-#include "ibusdebug.h"
+#include "ibus-debug.h"
+#include "ibus-types.h"
 
 /*
  * Type macros.

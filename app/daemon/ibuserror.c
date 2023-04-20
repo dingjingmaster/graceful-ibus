@@ -22,7 +22,7 @@
 #include "ibuserror.h"
 
 #include <gio/gio.h>
-#include "ibustypes.h"
+#include "ibus-types.h"
 
 static const GDBusErrorEntry ibus_error_entries[] =
 {
