@@ -55,4 +55,4 @@ execute_process(COMMAND uname -m OUTPUT_VARIABLE OS_ARCH OUTPUT_STRIP_TRAILING_W
 MESSAGE(STATUS "OS arch: '${OS_ARCH}'")
 
 
-add_subdirectory(bus)
+add_subdirectory(app/daemon)
