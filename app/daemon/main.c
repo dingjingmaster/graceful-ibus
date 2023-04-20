@@ -40,59 +40,52 @@
 
 #include <glib/gi18n.h>
 
-#include "../common/gi-log.h"
-
-#include "global.h"
 #include "server.h"
 #include "ibusimpl.h"
+#include "../common/gi-global.h"
 #include "../common/ibus-functions.h"
 
 
-static gboolean execute_cmdline (const gchar *cmdline);
+static void show_version_and_quit (void);
+static gboolean execute_cmdline (const gchar* cmdline);
 
 
-static gboolean daemonize = FALSE;
-static gboolean single = FALSE;
-static gboolean xim = FALSE;
-static gboolean replace = FALSE;
-static gboolean restart = FALSE;
-static gchar *panel = "default";
-static gchar *emoji_extension = "default";
-static gchar *config = "default";
-static gchar *desktop = "gnome";
+static gboolean         daemonize = FALSE;
+static gboolean         single = FALSE;
+static gboolean         xim = FALSE;
+static gboolean         replace = FALSE;
+static gboolean         restart = FALSE;
+static gchar*           panel = "default";
+static gchar*           config = "default";
+static gchar*           desktop = "gnome";
+static gchar*           gEmojiExtension = "default";
 
-const char* gLogPath = "/tmp/" INSTALL_NAME ".log";
+const char*             gLogPath = "/tmp/" INSTALL_NAME ".log";
 
-static gchar *panel_extension_disable_users[] =
+static gchar* gPanelExtensionDisableUsers[] =
 {
     "gdm",
     "gnome-initial-setup",
     "liveuser"
 };
 
-static void show_version_and_quit (void)
+static const GOptionEntry gEntries[] =
 {
-    g_print ("%s - Version %s\n", g_get_application_name(), VERSION);
-    exit (EXIT_SUCCESS);
-}
-
-static const GOptionEntry entries[] =
-{
-    { "version",   'V', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, show_version_and_quit, "Show the application's version.", NULL },
+    { "version", 'V',   G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, show_version_and_quit, "Show the application's version.", NULL },
     { "daemonize", 'd', 0, G_OPTION_ARG_NONE,   &daemonize, "run ibus as background process.", NULL },
-    { "single",    's', 0, G_OPTION_ARG_NONE,   &single,    "do not execute panel and config module.", NULL },
-    { "xim",       'x', 0, G_OPTION_ARG_NONE,   &xim,       "execute ibus XIM server.", NULL },
-    { "desktop",   'n', 0, G_OPTION_ARG_STRING, &desktop,   "specify the name of desktop session. [default=gnome]", "name" },
-    { "panel",     'p', 0, G_OPTION_ARG_STRING, &panel,     "specify the cmdline of panel program. pass 'disable' not to start a panel program.", "cmdline" },
-    { "emoji-extension", 'E', 0, G_OPTION_ARG_STRING, &emoji_extension, "specify the cmdline of emoji extension program. pass 'disable' not to start an extension program.", "cmdline" },
-    { "config",    'c', 0, G_OPTION_ARG_STRING, &config,    "specify the cmdline of config program. pass 'disable' not to start a config program.", "cmdline" },
-    { "address",   'a', 0, G_OPTION_ARG_STRING, &g_address,   "specify the address of ibus daemon.", "address" },
-    { "replace",   'r', 0, G_OPTION_ARG_NONE,   &replace,   "if there is an old ibus-daemon is running, it will be replaced.", NULL },
-    { "cache",     't', 0, G_OPTION_ARG_STRING, &g_cache,   "specify the cache mode. [auto/refresh/none]", NULL },
-    { "timeout",   'o', 0, G_OPTION_ARG_INT,    &g_gdbus_timeout, "gdbus reply timeout in milliseconds. pass -1 to use the default timeout of gdbus.", "timeout [default is 15000]" },
-    { "mem-profile", 'm', 0, G_OPTION_ARG_NONE,   &g_mempro,   "enable memory profile, send SIGUSR2 to print out the memory profile.", NULL },
-    { "restart",     'R', 0, G_OPTION_ARG_NONE,   &restart,    "restart panel and config processes when they die.", NULL },
-    { "verbose",   'v', 0, G_OPTION_ARG_NONE,   &g_verbose,   "verbose.", NULL },
+    { "single", 's',    0, G_OPTION_ARG_NONE,   &single,    "do not execute panel and config module.", NULL },
+    { "xim", 'x',       0, G_OPTION_ARG_NONE,   &xim,       "execute ibus XIM server.", NULL },
+    { "desktop", 'n',   0, G_OPTION_ARG_STRING, &desktop,   "specify the name of desktop session. [default=gnome]", "name" },
+    { "panel", 'p',     0, G_OPTION_ARG_STRING, &panel,     "specify the cmdline of panel program. pass 'disable' not to start a panel program.", "cmdline" },
+    { "emoji-extension", 'E', 0, G_OPTION_ARG_STRING, &gEmojiExtension, "specify the cmdline of emoji extension program. pass 'disable' not to start an extension program.", "cmdline" },
+    { "config", 'c',    0, G_OPTION_ARG_STRING, &config,    "specify the cmdline of config program. pass 'disable' not to start a config program.", "cmdline" },
+    { "address", 'a',   0, G_OPTION_ARG_STRING, &gAddress,   "specify the address of ibus daemon.", "address" },
+    { "replace", 'r',   0, G_OPTION_ARG_NONE,   &replace,   "if there is an old ibus-daemon is running, it will be replaced.", NULL },
+    { "cache", 't',     0, G_OPTION_ARG_STRING, &gCache,   "specify the cache mode. [auto/refresh/none]", NULL },
+    { "timeout", 'o',   0, G_OPTION_ARG_INT,    &gDBusTimeout, "gdbus reply timeout in milliseconds. pass -1 to use the default timeout of gdbus.", "timeout [default is 15000]" },
+    { "mem-profile", 'm', 0, G_OPTION_ARG_NONE, &gMemPro,   "enable memory profile, send SIGUSR2 to print out the memory profile.", NULL },
+    { "restart", 'R',   0, G_OPTION_ARG_NONE,   &restart,    "restart panel and config processes when they die.", NULL },
+    { "verbose", 'v',   0, G_OPTION_ARG_NONE,   &gVerbose,   "verbose.", NULL },
     { NULL },
 };
 
@@ -108,9 +101,9 @@ int main (int argc, char* argv[])
     g_log_set_writer_func (log_handler, NULL, NULL);
 
     GOptionContext *context = g_option_context_new ("- ibus daemon");
-    g_option_context_add_main_entries (context, entries, "ibus-daemon");
+    g_option_context_add_main_entries (context, gEntries, "ibus-daemon");
 
-    g_argv = g_strdupv (argv);
+    gArgv = g_strdupv (argv);
     GError *error = NULL;
     if (!g_option_context_parse (context, &argc, &argv, &error)) {
         g_printerr ("Option parsing failed: %s\n", error->message);
@@ -118,12 +111,12 @@ int main (int argc, char* argv[])
         exit (-1);
     }
 
-    if (g_gdbus_timeout < -1) {
-        g_printerr ("Bad timeout (must be >= -1): %d\n", g_gdbus_timeout);
+    if (gDBusTimeout < -1) {
+        g_printerr ("Bad timeout (must be >= -1): %d\n", gDBusTimeout);
         exit (-1);
     }
 
-    if (g_mempro) {
+    if (gMemPro) {
         g_warning ("--mem-profile no longer works with the GLib 2.46 or later");
     }
 
@@ -150,7 +143,7 @@ int main (int argc, char* argv[])
     ibus_init ();
 
     /* TODO:// 此处替换新的日志处理库 */
-    ibus_set_log_handler (g_verbose);
+//    ibus_set_log_handler (gVerbose);
 
     /* check if ibus-daemon is running in this session */
     /* TODO:// 此处用glib替换 */
@@ -170,23 +163,25 @@ int main (int argc, char* argv[])
         g_object_unref (bus);
     }
 
+    LOG_INFO("ibus-daemon starting...");
+
     bus_server_init ();
-    for (i = 0; i < G_N_ELEMENTS(panel_extension_disable_users); i++) {
-        if (!g_strcmp0 (username, panel_extension_disable_users[i]) != 0) {
-            emoji_extension = "disable";
+    for (i = 0; i < G_N_ELEMENTS(gPanelExtensionDisableUsers); i++) {
+        if (!g_strcmp0 (username, gPanelExtensionDisableUsers[i]) != 0) {
+            gEmojiExtension = "disable";
             break;
         }
     }
+
     if (!single) {
         /* execute config component */
         if (g_strcmp0 (config, "default") == 0) {
             BusComponent *component;
-            component = bus_ibus_impl_lookup_component_by_name (
-                    BUS_DEFAULT_IBUS, IBUS_SERVICE_CONFIG);
+            component = bus_ibus_impl_lookup_component_by_name(BUS_DEFAULT_IBUS, IBUS_SERVICE_CONFIG);
             if (component) {
                 bus_component_set_restart (component, restart);
             }
-            if (component == NULL || !bus_component_start (component, g_verbose)) {
+            if (component == NULL || !bus_component_start (component, gVerbose)) {
                 g_printerr ("Can not execute default config program\n");
                 exit (-1);
             }
@@ -198,12 +193,11 @@ int main (int argc, char* argv[])
         /* execute panel component */
         if (g_strcmp0 (panel, "default") == 0) {
             BusComponent *component;
-            component = bus_ibus_impl_lookup_component_by_name (
-                    BUS_DEFAULT_IBUS, IBUS_SERVICE_PANEL);
+            component = bus_ibus_impl_lookup_component_by_name(BUS_DEFAULT_IBUS, IBUS_SERVICE_PANEL);
             if (component) {
                 bus_component_set_restart (component, restart);
             }
-            if (component == NULL || !bus_component_start (component, g_verbose)) {
+            if (component == NULL || !bus_component_start (component, gVerbose)) {
                 g_printerr ("Can not execute default panel program\n");
                 exit (-1);
             }
@@ -325,4 +319,10 @@ static gboolean execute_cmdline (const gchar *cmdline)
     }
 
     return TRUE;
+}
+
+static void show_version_and_quit (void)
+{
+    g_print ("%s - Version %s\n", g_get_application_name(), VERSION);
+    exit (EXIT_SUCCESS);
 }

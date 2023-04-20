@@ -716,7 +716,7 @@ bus_engine_proxy_new_internal (const gchar     *path,
             "g-connection",      connection,
             "g-interface-name",  IBUS_INTERFACE_ENGINE,
             "g-object-path",     path,
-            "g-default-timeout", g_gdbus_timeout,
+            "g-default-timeout", gDBusTimeout,
             "g-flags",           flags,
             NULL);
     const gchar *layout = ibus_engine_desc_get_layout (desc);
@@ -997,7 +997,7 @@ bus_engine_proxy_new (IBusEngineDesc      *desc,
                                                                 data,
                                                                 NULL);
         }
-        bus_component_start (data->component, g_verbose);
+        bus_component_start (data->component, gVerbose);
     }
     else {
         /* The factory is ready. We'll create the engine proxy directly. */

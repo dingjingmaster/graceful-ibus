@@ -54,7 +54,7 @@
 static gsize                        gInit = 0;
 int                                 gLogFd = -1;
 pthread_mutex_t                     gLogLock = PTHREAD_MUTEX_INITIALIZER;
-extern char*                        gLogPath;
+extern const char*                  gLogPath;
 
 static int _open_file ();
 static ssize_t _log_write (struct iovec *vec, int n);

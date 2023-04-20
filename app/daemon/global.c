@@ -25,9 +25,9 @@
 
 #include "global.h"
 
-gchar **g_argv = NULL;
-gchar *g_address = IBUS_SOCKET_DIR;
-gchar *g_cache = "auto";
-gboolean g_mempro = FALSE;
-gboolean g_verbose = FALSE;
-gint   g_gdbus_timeout = 15000;
+//gchar **g_argv = NULL;
+//gchar *g_address = IBUS_SOCKET_DIR;
+//gchar *g_cache = "auto";
+//gboolean g_mempro = FALSE;
+//gboolean g_verbose = FALSE;
+//gint   g_gdbus_timeout = 15000;

@@ -22,20 +22,8 @@
 #ifndef __BUS_GLOBAL_H_
 #define __BUS_GLOBAL_H_
 
-#include <glib.h>
+#include "../common/gi-global.h"
 
-G_BEGIN_DECLS
-
-#define DEFAULT_ENGINE "xkb:us::eng"
-
-extern gchar **g_argv;
-extern gchar *g_address;
-extern gchar *g_cache;
-extern gboolean g_mempro;
-extern gboolean g_verbose;
-extern gint   g_gdbus_timeout;
-
-G_END_DECLS
 
 #endif
 

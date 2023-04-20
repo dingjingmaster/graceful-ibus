@@ -76,7 +76,7 @@ _restart_server (void)
     }
 
     _restart = FALSE;
-    execv (exe, g_argv);
+    execv (exe, gArgv);
 
     /* If the server binary is replaced while the server is running,
      * "readlink /proc/[pid]/exe" might return a path with " (deleted)"
@@ -84,9 +84,9 @@ _restart_server (void)
     const gchar suffix[] = " (deleted)";
     if (g_str_has_suffix (exe, suffix)) {
         exe [strlen (exe) - sizeof (suffix) + 1] = '\0';
-        execv (exe, g_argv);
+        execv (exe, gArgv);
     }
-    g_warning ("execv %s failed!", g_argv[0]);
+    g_warning ("execv %s failed!", gArgv[0]);
     g_free (exe);
     exit (-1);
 }
@@ -204,7 +204,7 @@ bus_acquired_handler (GDBusConnection       *connection,
 static char *
 _bus_extract_address (void)
 {
-    char *socket_address = g_strdup (g_address);
+    char *socket_address = g_strdup (gAddress);
     char *p;
 
 #define IF_REPLACE_VARIABLE_WITH_FUNC(variable, func, format)           \
@@ -234,8 +234,7 @@ _bus_extract_address (void)
     return socket_address;
 }
 
-void
-bus_server_init (void)
+void bus_server_init (void)
 {
 #define IBUS_UNIX_TMPDIR        "unix:tmpdir="
 #define IBUS_UNIX_PATH          "unix:path="

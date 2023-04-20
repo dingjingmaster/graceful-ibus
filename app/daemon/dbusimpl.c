@@ -1225,7 +1225,7 @@ bus_dbus_impl_start_service_by_name (BusDBusImpl           *dbus,
     BusComponent *component = bus_ibus_impl_lookup_component_by_name (
             BUS_DEFAULT_IBUS, name);
 
-    if (component == NULL || !bus_component_start (component, g_verbose)) {
+    if (component == NULL || !bus_component_start (component, gVerbose)) {
         g_dbus_method_invocation_return_error (invocation,
                         G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
                         "Failed to start %s", name);
@@ -1236,7 +1236,7 @@ bus_dbus_impl_start_service_by_name (BusDBusImpl           *dbus,
                                                connection,
                                                parameters,
                                                invocation);
-    call->timeout_id = g_timeout_add (g_gdbus_timeout,
+    call->timeout_id = g_timeout_add (gDBusTimeout,
                                       (GSourceFunc) start_service_timeout_cb,
                                       call);
     dbus->start_service_calls = g_list_prepend (dbus->start_service_calls,

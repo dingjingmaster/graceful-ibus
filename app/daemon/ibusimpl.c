@@ -793,7 +793,7 @@ bus_ibus_impl_set_context_engine_from_desc (BusIBusImpl     *ibus,
     bus_input_context_set_engine_by_desc (
             context,
             desc,
-            g_gdbus_timeout, /* timeout in msec. */
+            gDBusTimeout, /* timeout in msec. */
             NULL, /* we do not cancel the call. */
             NULL, /* use the default callback function. */
             NULL);
@@ -1761,7 +1761,7 @@ _ibus_set_global_engine (BusIBusImpl           *ibus,
     bus_input_context_set_engine_by_desc (
             context,
             desc,
-            g_gdbus_timeout, /* timeout in msec. */
+            gDBusTimeout, /* timeout in msec. */
             NULL, /* we do not cancel the call. */
             (GAsyncReadyCallback) _ibus_set_global_engine_ready_cb,
             data);
@@ -1875,7 +1875,7 @@ _ibus_set_preload_engines (BusIBusImpl     *ibus,
 
     for (j = 0; j < array->len; j++) {
         bus_component_start ((BusComponent *) g_ptr_array_index (array, j),
-                             g_verbose);
+                             gVerbose);
     }
 
     g_ptr_array_free (array, FALSE);
@@ -2146,16 +2146,16 @@ bus_ibus_impl_registry_init (BusIBusImpl *ibus)
     ibus->components = NULL;
     ibus->engine_table = g_hash_table_new (g_str_hash, g_str_equal);
 
-    if (g_strcmp0 (g_cache, "none") == 0) {
+    if (g_strcmp0 (gCache, "none") == 0) {
         /* Only load registry, but not read and write cache. */
         ibus_registry_load (registry);
     }
-    else if (g_strcmp0 (g_cache, "refresh") == 0) {
+    else if (g_strcmp0 (gCache, "refresh") == 0) {
         /* Load registry and overwrite the cache. */
         ibus_registry_load (registry);
         ibus_registry_save_cache (registry, TRUE);
     }
-    else if (g_strcmp0 (g_cache, "auto") == 0) {
+    else if (g_strcmp0 (gCache, "auto") == 0) {
         /* Load registry from cache. If the cache does not exist or
          * it is outdated, then generate it.
          */

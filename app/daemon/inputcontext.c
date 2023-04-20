@@ -1196,7 +1196,7 @@ _ic_set_engine (BusInputContext       *context,
 
     bus_input_context_set_engine_by_desc (context,
                             desc,
-                            g_gdbus_timeout,
+                            gDBusTimeout,
                             NULL,
                             (GAsyncReadyCallback)_ic_set_engine_done,
                             invocation);
@@ -2393,7 +2393,7 @@ bus_input_context_enable (BusInputContext *context)
         if (desc != NULL) {
             bus_input_context_set_engine_by_desc (context,
                             desc,
-                            g_gdbus_timeout, /* timeout in msec. */
+                            gDBusTimeout, /* timeout in msec. */
                             NULL, /* we do not cancel the call. */
                             NULL, /* use the default callback function. */
                             NULL);
