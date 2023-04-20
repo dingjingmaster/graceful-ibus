@@ -192,13 +192,12 @@ ibus_get_timeout (void)
     return timeout;
 }
 
-const gchar *
-ibus_get_address (void)
+const gchar* ibus_get_address (void)
 {
-    static gchar *address = NULL;
-    pid_t pid = -1;
-    static gchar buffer[1024];
     FILE *pf;
+    pid_t pid = -1;
+    static gchar *address = NULL;
+    static gchar buffer[1024];
 
     /* free address */
     g_clear_pointer (&address, g_free);

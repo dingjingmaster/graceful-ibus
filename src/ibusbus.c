@@ -836,13 +836,9 @@ _async_finish_guint (GTask   *task,
     return id;
 }
 
-IBusBus *
-ibus_bus_new (void)
+IBusBus* ibus_bus_new (void)
 {
-    IBusBus *bus = IBUS_BUS (g_object_new (IBUS_TYPE_BUS,
-                                           "connect-async", FALSE,
-                                           "client-only", FALSE,
-                                           NULL));
+    IBusBus *bus = IBUS_BUS (g_object_new (IBUS_TYPE_BUS, "connect-async", FALSE, "client-only", FALSE, NULL));
 
     return bus;
 }

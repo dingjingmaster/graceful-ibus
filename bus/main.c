@@ -29,17 +29,18 @@
 #include <pwd.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #ifdef HAVE_SYS_PRCTL_H
+/* 获取进程相关信息 */
 #include <sys/prctl.h>
 #endif
 
 #include "global.h"
-#include "ibusimpl.h"
 #include "server.h"
+#include "ibusimpl.h"
 
 static gboolean daemonize = FALSE;
 static gboolean single = FALSE;
@@ -51,16 +52,16 @@ static gchar *emoji_extension = "default";
 static gchar *config = "default";
 static gchar *desktop = "gnome";
 
-static gchar *panel_extension_disable_users[] = {
+static gchar *panel_extension_disable_users[] =
+{
     "gdm",
     "gnome-initial-setup",
     "liveuser"
 };
 
-static void
-show_version_and_quit (void)
+static void show_version_and_quit (void)
 {
-    g_print ("%s - Version %s\n", g_get_application_name (), VERSION);
+    g_print ("%s - Version %s\n", g_get_application_name(), VERSION);
     exit (EXIT_SUCCESS);
 }
 
@@ -92,8 +93,7 @@ static const GOptionEntry entries[] =
  * Execute cmdline. Child process's stdin, stdout, and stderr are attached to /dev/null.
  * You don't have to handle SIGCHLD from the child process since glib will do.
  */
-static gboolean
-execute_cmdline (const gchar *cmdline)
+static gboolean execute_cmdline (const gchar *cmdline)
 {
     g_assert (cmdline);
 
@@ -166,16 +166,14 @@ daemon (gint nochdir, gint noclose)
 #endif
 
 #ifdef HAVE_SYS_PRCTL_H
-static void
-_sig_usr1_handler (int sig)
+static void _sig_usr1_handler (int sig)
 {
     g_warning ("The parent process died.");
     bus_server_quit (FALSE);
 }
 #endif
 
-gint
-main (gint argc, gchar **argv)
+int main (int argc, char* argv[])
 {
     int i;
     const gchar *username = ibus_get_user_name ();
@@ -189,9 +187,10 @@ main (gint argc, gchar **argv)
     GError *error = NULL;
     if (!g_option_context_parse (context, &argc, &argv, &error)) {
         g_printerr ("Option parsing failed: %s\n", error->message);
-	g_error_free (error);
+        g_error_free (error);
         exit (-1);
     }
+
     if (g_gdbus_timeout < -1) {
         g_printerr ("Bad timeout (must be >= -1): %d\n", g_gdbus_timeout);
         exit (-1);
@@ -201,17 +200,16 @@ main (gint argc, gchar **argv)
         g_warning ("--mem-profile no longer works with the GLib 2.46 or later");
     }
 
-    /* check uid */
+    /* 检查用户是否使用 su 或 sudo 执行 */
     {
-        struct passwd *pwd = getpwuid (getuid ());
-
+        struct passwd* pwd = getpwuid (getuid ());
         if (pwd == NULL || g_strcmp0 (pwd->pw_name, username) != 0) {
             g_printerr ("Please run ibus-daemon with login user! Do not run ibus-daemon with sudo or su.\n");
             exit (-1);
         }
     }
 
-    /* daemonize process */
+    /* 使进程变为守护进程 */
     if (daemonize) {
         if (daemon (1, 0) != 0) {
             g_printerr ("Cannot daemonize ibus.\n");
@@ -224,9 +222,11 @@ main (gint argc, gchar **argv)
 
     ibus_init ();
 
+    /* TODO:// 此处替换新的日志处理库 */
     ibus_set_log_handler (g_verbose);
 
     /* check if ibus-daemon is running in this session */
+    /* TODO:// 此处用glib替换 */
     if (ibus_get_address () != NULL) {
         IBusBus *bus = ibus_bus_new ();
 
@@ -308,8 +308,9 @@ main (gint argc, gchar **argv)
 
     /* execute ibus xim server */
     if (xim) {
-        if (!execute_cmdline (LIBEXECDIR "/ibus-x11 --kill-daemon"))
+        if (!execute_cmdline (LIBEXECDIR "/ibus-x11 --kill-daemon")) {
             exit (-1);
+        }
     }
 
     if (!daemonize) {
@@ -347,12 +348,16 @@ main (gint argc, gchar **argv)
         * And I decided ibus-daemon always exits with the parent's death here
         * to avoid unexpected ibus restarts during the logout.
         */
-        if (prctl (PR_SET_PDEATHSIG, SIGUSR1))
+        if (prctl (PR_SET_PDEATHSIG, SIGUSR1)) {
             g_printerr ("Cannot bind SIGUSR1 for parent death\n");
-        else
+        }
+        else {
             signal (SIGUSR1, _sig_usr1_handler);
+        }
 #endif
     }
+
     bus_server_run ();
+
     return 0;
 }
