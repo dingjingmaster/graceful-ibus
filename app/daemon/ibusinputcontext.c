@@ -22,7 +22,7 @@
  */
 #include "ibusinputcontext.h"
 #include <gio/gio.h>
-#include "ibusshare.h"
+#include "ibus-main.h"
 #include "ibusinternal.h"
 #include "ibusmarshalers.h"
 #include "ibusattribute.h"

@@ -1,4 +1,4 @@
-#include "gi-log.h"
+#include "ibus-log.h"
 
 #include <time.h>
 #include <stdio.h>

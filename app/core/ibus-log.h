@@ -1,5 +1,5 @@
-#ifndef GI_LOG_H
-#define GI_LOG_H
+#ifndef GRACEFUL_IBUS_IBUS_LOG_H
+#define GRACEFUL_IBUS_IBUS_LOG_H
 #include <glib.h>
 #include <stdio.h>
 
@@ -103,4 +103,4 @@ GLogWriterOutput log_handler(GLogLevelFlags level, const GLogField *fields, gsiz
 #ifdef __cplusplus
 }
 #endif
-#endif // GI_LOG_H
+#endif

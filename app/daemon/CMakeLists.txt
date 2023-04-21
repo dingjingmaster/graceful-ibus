@@ -45,14 +45,8 @@ file(GLOB IBUS_DAEMON_SRC
         ibusenumtypes.c
         ibusenumtypes.h
 
-        ibusshare.c
-        ibusshare.h
-
         ibusresources.h
         ibusresources.c
-
-        ibusbus.h
-        ibusbus.c
 
         ibusmarshalers.h
         ibusmarshalers.c

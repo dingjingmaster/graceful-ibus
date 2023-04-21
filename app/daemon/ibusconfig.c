@@ -21,9 +21,9 @@
  */
 #include "ibusinternal.h"
 #include "ibusmarshalers.h"
-#include "ibusshare.h"
+#include "ibus-main.h"
 #include "ibusconfig.h"
-#include "ibusbus.h"
+#include "ibus-bus.h"
 #include "ibuserror.h"
 #include "ibus-types.h"
 

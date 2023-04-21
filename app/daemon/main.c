@@ -42,7 +42,7 @@
 
 #include "server.h"
 #include "ibusimpl.h"
-#include "app/core/gi-log.h"
+#include "app/core/ibus-log.h"
 #include "app/core/gi-global.h"
 #include "app/core/ibus-functions.h"
 
@@ -143,14 +143,10 @@ int main (int argc, char* argv[])
 
     ibus_init ();
 
-    /* TODO:// 此处替换新的日志处理库 */
-//    ibus_set_log_handler (gVerbose);
-
     /* check if ibus-daemon is running in this session */
     /* TODO:// 此处用glib替换 */
     if (ibus_get_address () != NULL) {
         IBusBus *bus = ibus_bus_new ();
-
         if (ibus_bus_is_connected (bus)) {
             if (!replace) {
                 g_printerr ("current session already has an ibus-daemon.\n");

@@ -1,34 +1,16 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* ibus - The Input Bus
- * Copyright (C) 2008-2013 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2018 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2018 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-21.
+//
 
-#ifndef __IBUS_H_
-#define __IBUS_H_
+#ifndef GRACEFUL_IBUS_IBUS_H
+#define GRACEFUL_IBUS_IBUS_H
 
 #define __IBUS_H_INSIDE__
 
 #include "ibus-version.h"
 
-#include "ibusshare.h"
+#include "ibus-log.h"
+#include "ibus-main.h"
 #include "ibusobject.h"
 #include "ibusserializable.h"
 #include "ibusattribute.h"
@@ -43,7 +25,7 @@
 #include "ibusproperty.h"
 #include "ibusproplist.h"
 #include "ibuslookuptable.h"
-#include "ibusbus.h"
+#include "ibus-bus.h"
 #include "ibuskeysyms.h"
 #include "ibuskeymap.h"
 #include "ibuskeys.h"
@@ -62,12 +44,10 @@
 #include "ibusunicode.h"
 #include "ibusxevent.h"
 #include "ibusaccelgroup.h"
-
 #ifndef IBUS_DISABLE_DEPRECATED
 #include "ibuskeysyms-compat.h"
 #endif
 
 #undef __IBUS_H_INSIDE__
 
-#endif
-
+#endif //GRACEFUL_IBUS_IBUS_H

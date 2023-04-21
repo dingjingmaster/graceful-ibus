@@ -1,31 +1,14 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* ibus - The Input Bus
- * Copyright (C) 2008-2010 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2015-2023 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2018 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-21.
+//
+
+#include "ibus-main.h"
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "ibusresources.h"
-#include "ibusshare.h"
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <glib-object.h>
@@ -204,18 +187,21 @@ const gchar* ibus_get_address (void)
 
     /* get address from env variable */
     address = g_strdup (g_getenv ("IBUS_ADDRESS"));
-    if (address)
+    if (address) {
         return address;
+    }
 
     /* read address from ~/.config/ibus/bus/soketfile */
     pf = fopen (ibus_get_socket_path (), "r");
-    if (pf == NULL)
+    if (pf == NULL) {
         return NULL;
+    }
 
     while (!feof (pf)) {
         gchar *p = buffer;
-        if (fgets (buffer, sizeof (buffer), pf) == NULL)
+        if (fgets (buffer, sizeof (buffer), pf) == NULL) {
             break;
+        }
 
         /* skip comment line */
         if (p[0] == '#')
@@ -271,14 +257,14 @@ ibus_write_address (const gchar *address)
     g_return_if_fail (pf != NULL);
 
     fprintf (pf,
-        "# This file is created by ibus-daemon, please do not modify it.\n"
-        "# This file allows processes on the machine to find the\n"
-        "# ibus session bus with the below address.\n"
-        "# If the IBUS_ADDRESS environment variable is set, it will\n"
-        "# be used rather than this file.\n"
-        "IBUS_ADDRESS=%s\n"
-        "IBUS_DAEMON_PID=%ld\n",
-        address, (glong) getpid ());
+             "# This file is created by ibus-daemon, please do not modify it.\n"
+             "# This file allows processes on the machine to find the\n"
+             "# ibus session bus with the below address.\n"
+             "# If the IBUS_ADDRESS environment variable is set, it will\n"
+             "# be used rather than this file.\n"
+             "IBUS_ADDRESS=%s\n"
+             "IBUS_DAEMON_PID=%ld\n",
+             address, (glong) getpid ());
     fclose (pf);
 }
 
@@ -297,8 +283,7 @@ ibus_free_strv (gchar **strv)
     g_free (strv);
 }
 
-void
-ibus_init (void)
+void ibus_init (void)
 {
 #if !GLIB_CHECK_VERSION(2,35,0)
     g_type_init ();
