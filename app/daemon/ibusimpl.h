@@ -23,7 +23,7 @@
 #ifndef __BUS_IBUS_IMPL_H_
 #define __BUS_IBUS_IMPL_H_
 
-#include <ibus.h>
+#include "ibus.h"
 #include "connection.h"
 #include "component.h"
 #include "inputcontext.h"

@@ -3,7 +3,7 @@
 #ifndef __CONFIG_GCONF_H__
 #define __CONFIG_GCONF_H__
 
-#include <ibus.h>
+#include "ibus.h"
 #include <gconf/gconf-client.h>
 
 #define IBUS_TYPE_CONFIG_GCONF	\

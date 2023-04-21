@@ -1,5 +1,5 @@
 /*** BEGIN file-header ***/
-#include "ibus.h"
+#include "../core/ibus.h"
 
 /*** END file-header ***/
 

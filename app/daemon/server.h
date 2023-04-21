@@ -22,7 +22,7 @@
 #ifndef __BUS_SERVER_H_
 #define __BUS_SERVER_H_
 
-#include <ibus.h>
+#include "ibus.h"
 
 G_BEGIN_DECLS
 

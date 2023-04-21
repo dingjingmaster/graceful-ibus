@@ -22,7 +22,7 @@
 #include <fcntl.h>
 #include <glib.h>
 #include <gio/gio.h>
-#include <ibus.h>
+#include "ibus.h"
 #include <locale.h>
 #include <pwd.h>
 #include <signal.h>

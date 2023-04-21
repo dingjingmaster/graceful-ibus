@@ -20,7 +20,7 @@
  * USA
  */
 
-#include <ibus.h>
+#include "ibus.h"
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <errno.h>

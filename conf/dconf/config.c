@@ -22,7 +22,7 @@
  */
 
 #include <string.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "config-private.h"
 
 #define DCONF_PREFIX "/desktop/ibus"

@@ -20,7 +20,7 @@
  * USA
  */
 #include <string.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "config.h"
 
 

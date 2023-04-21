@@ -2,7 +2,7 @@
 /* vim:set et sts=4: */
 
 #include <string.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "config.h"
 
 #define GCONF_PREFIX "/desktop/ibus"

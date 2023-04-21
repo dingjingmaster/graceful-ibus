@@ -20,6 +20,7 @@
  * USA
  */
 #include "ibuslookuptable.h"
+#include "ibus-types.h"
 
 /* functions prototype */
 static void         ibus_lookup_table_destroy       (IBusLookupTable        *table);

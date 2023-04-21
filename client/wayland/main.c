@@ -24,7 +24,7 @@
 #include "config.h"
 
 #include <errno.h>
-#include <ibus.h>
+#include "ibus.h"
 #include <stdlib.h>
 #include <string.h>
 #include <wayland-client.h>

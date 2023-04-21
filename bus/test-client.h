@@ -22,7 +22,7 @@
 #ifndef __BUS_TEST_CLIENT_H_
 #define __BUS_TEST_CLIENT_H_
 
-#include <ibus.h>
+#include "ibus.h"
 
 /*
  * Type macros.

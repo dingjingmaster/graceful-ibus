@@ -1,4 +1,4 @@
-#include <ibus.h>
+#include "ibus.h"
 
 static gboolean
 timeout_cb (gpointer data)

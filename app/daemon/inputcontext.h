@@ -23,7 +23,7 @@
 #ifndef __BUS_INPUT_CONTEXT_H_
 #define __BUS_INPUT_CONTEXT_H_
 
-#include <ibus.h>
+#include "ibus.h"
 
 #include "connection.h"
 #include "factoryproxy.h"

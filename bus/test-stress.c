@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <ibus.h>
+#include "ibus.h"
 #include <locale.h>
 #include <glib.h>
 #include "test-client.h"

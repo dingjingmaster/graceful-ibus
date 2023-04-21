@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 #include <gtk/gtkimmodule.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "ibusimcontext.h"
 
 G_MODULE_EXPORT void

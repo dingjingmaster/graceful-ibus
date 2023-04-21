@@ -31,7 +31,7 @@
 
 #include "dbusimpl.h"
 #include "ibusimpl.h"
-#include "global.h"
+#include "gi-global.h"
 
 
 static GDBusServer *server = NULL;

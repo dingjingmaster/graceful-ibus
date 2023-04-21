@@ -1,4 +1,4 @@
-#include <ibus.h>
+#include "ibus.h"
 
 int main()
 {

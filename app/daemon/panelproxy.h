@@ -23,7 +23,7 @@
 #ifndef __BUS_PANEL_PROXY_H_
 #define __BUS_PANEL_PROXY_H_
 
-#include <ibus.h>
+#include "ibus.h"
 #include "connection.h"
 #include "inputcontext.h"
 

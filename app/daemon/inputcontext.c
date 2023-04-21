@@ -26,7 +26,7 @@
 
 #include "engineproxy.h"
 #include "factoryproxy.h"
-#include "global.h"
+#include "gi-global.h"
 #include "ibusimpl.h"
 #include "marshalers.h"
 #include "types.h"

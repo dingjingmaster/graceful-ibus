@@ -22,7 +22,7 @@
  */
 #include <pwd.h>
 #include <glib.h>
-#include <ibus.h>
+#include "ibus.h"
 #include <fcntl.h>
 #include <config.h>
 #include <signal.h>
@@ -42,8 +42,9 @@
 
 #include "server.h"
 #include "ibusimpl.h"
-#include "../common/gi-global.h"
-#include "../common/ibus-functions.h"
+#include "app/core/gi-log.h"
+#include "app/core/gi-global.h"
+#include "app/core/ibus-functions.h"
 
 
 static void show_version_and_quit (void);

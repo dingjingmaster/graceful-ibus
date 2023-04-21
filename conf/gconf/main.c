@@ -1,7 +1,7 @@
 /* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
 /* vim:set et sts=4: */
 
-#include <ibus.h>
+#include "ibus.h"
 #include <stdlib.h>
 #include <locale.h>
 #include "config.h"

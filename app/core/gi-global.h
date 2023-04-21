@@ -26,5 +26,4 @@ static int                  gDBusTimeout = 15000;
 }
 #endif
 
-#include "../common/gi-log.h"
 #endif //GRACEFUL_IBUS_GI_GLOBAL_H

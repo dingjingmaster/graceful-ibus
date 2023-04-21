@@ -22,7 +22,7 @@
 #ifndef __BUS_MATCH_RULE_H_
 #define __BUS_MATCH_RULE_H_
 
-#include <ibus.h>
+#include "ibus.h"
 
 #include "connection.h"
 

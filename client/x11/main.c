@@ -57,7 +57,7 @@
         g_debug (fmt_args); \
     }
 
-#include <ibus.h>
+#include "ibus.h"
 #include "gdk-private.h"
 #include "locales.h"
 

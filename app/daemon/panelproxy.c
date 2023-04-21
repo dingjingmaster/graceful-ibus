@@ -22,7 +22,7 @@
  */
 #include "panelproxy.h"
 
-#include "global.h"
+#include "gi-global.h"
 #include "marshalers.h"
 #include "types.h"
 

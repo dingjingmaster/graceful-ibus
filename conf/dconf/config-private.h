@@ -26,7 +26,7 @@
 #  include <config.h>
 #endif
 
-#include <ibus.h>
+#include "ibus.h"
 #ifdef DCONF_0_13_4
 #  include <client/dconf-client.h>
 #  include <common/dconf-paths.h>

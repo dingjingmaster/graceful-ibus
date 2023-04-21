@@ -21,7 +21,7 @@
  * USA
  */
 
-#include <ibus.h>
+#include "ibus.h"
 #include <stdlib.h>
 #include <locale.h>
 #include "config-private.h"

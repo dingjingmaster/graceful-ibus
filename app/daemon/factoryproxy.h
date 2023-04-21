@@ -22,7 +22,7 @@
 #ifndef __BUS_FACTORY_PROXY_H_
 #define __BUS_FACTORY_PROXY_H_
 
-#include <ibus.h>
+#include "ibus.h"
 #include "connection.h"
 #include "engineproxy.h"
 

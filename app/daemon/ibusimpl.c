@@ -33,7 +33,7 @@
 #include "connection.h"
 #include "dbusimpl.h"
 #include "factoryproxy.h"
-#include "global.h"
+#include "gi-global.h"
 #include "inputcontext.h"
 #include "panelproxy.h"
 #include "server.h"

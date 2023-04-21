@@ -22,7 +22,7 @@
 #ifndef __CONFIG_MEMCONF_H__
 #define __CONFIG_MEMCONF_H__
 
-#include <ibus.h>
+#include "ibus.h"
 
 #define IBUS_TYPE_CONFIG_MEMCONF	    \
 	(ibus_config_memconf_get_type ())

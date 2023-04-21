@@ -28,6 +28,7 @@
 #include "ibuskeys.h"
 #include "ibuskeysyms.h"
 #include "ibuskeymap.h"
+#include "ibus-types.h"
 
 typedef guint KEYMAP[256][7];
 /* functions prototype */

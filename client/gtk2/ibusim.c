@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 #include <gtk/gtkimmodule.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "ibusimcontext.h"
 
 #define IBUS_LOCALDIR ""

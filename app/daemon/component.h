@@ -22,7 +22,7 @@
 #ifndef __BUS_COMPONENT_H_
 #define __BUS_COMPONENT_H_
 
-#include <ibus.h>
+#include "ibus.h"
 #include "factoryproxy.h"
 
 /*

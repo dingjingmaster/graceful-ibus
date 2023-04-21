@@ -25,7 +25,7 @@
 
 #include <string.h>
 
-#include "global.h"
+#include "gi-global.h"
 #include "ibusimpl.h"
 #include "marshalers.h"
 #include "matchrule.h"

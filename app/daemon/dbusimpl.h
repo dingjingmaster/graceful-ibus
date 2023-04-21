@@ -23,7 +23,7 @@
 #define __BUS_DBUS_IMPL_H_
 
 #include <gio/gio.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "connection.h"
 
 /*

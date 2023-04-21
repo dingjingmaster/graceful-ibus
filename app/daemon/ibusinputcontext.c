@@ -29,6 +29,7 @@
 #include "ibuslookuptable.h"
 #include "ibusproplist.h"
 #include "ibuserror.h"
+#include "ibus-types.h"
 
 #define IBUS_INPUT_CONTEXT_GET_PRIVATE(o)  \
    ((IBusInputContextPrivate *)ibus_input_context_get_instance_private (o))

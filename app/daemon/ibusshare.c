@@ -35,7 +35,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ibus.h>
+#include "ibus.h"
 
 static gchar *_display = NULL;
 

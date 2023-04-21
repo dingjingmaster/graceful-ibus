@@ -1,42 +1,13 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* ibus - The Input Bus
- * Copyright (C) 2008-2013 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2010-2022 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2022 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-21.
+//
 
 #if !defined (__IBUS_H_INSIDE__) && !defined (IBUS_COMPILATION)
 #error "Only <ibus.h> can be included directly"
 #endif
 
-#ifndef __IBUS_TYPES_H_
-#define __IBUS_TYPES_H_
-
-/**
- * SECTION: ibustypes
- * @short_description: Generic types for  IBus.
- * @stability: Stable
- *
- * This section consists generic types for IBus, including shift/control key
- * modifiers,
- * and a rectangle structure.
- */
+#ifndef GRACEFUL_IBUS_IBUS_TYPES_H
+#define GRACEFUL_IBUS_IBUS_TYPES_H
 
 /**
  * IBusModifierType:
@@ -115,7 +86,8 @@ typedef enum
  *
  * Capability flags of UI.
  */
-typedef enum {
+typedef enum
+{
     IBUS_CAP_PREEDIT_TEXT       = 1 << 0,
     IBUS_CAP_AUXILIARY_TEXT     = 1 << 1,
     IBUS_CAP_LOOKUP_TABLE       = 1 << 2,
@@ -134,7 +106,8 @@ typedef enum {
  *
  * Pre-edit commit mode when the focus is lost.
  */
-typedef enum {
+typedef enum
+{
     IBUS_ENGINE_PREEDIT_CLEAR   = 0,
     IBUS_ENGINE_PREEDIT_COMMIT  = 1,
 } IBusPreeditFocusMode;
@@ -147,7 +120,8 @@ typedef enum {
  *
  * Orientation of UI.
  */
-typedef enum {
+typedef enum
+{
     IBUS_ORIENTATION_HORIZONTAL = 0,
     IBUS_ORIENTATION_VERTICAL   = 1,
     IBUS_ORIENTATION_SYSTEM     = 2,
@@ -156,13 +130,14 @@ typedef enum {
 /**
  * IBusBusNameFlag:
  * @IBUS_BUS_NAME_FLAG_ALLOW_REPLACEMENT:
- *    same as DBUS_NAME_FLAG_ALLOW_REPLACEMENT	
+ *    same as DBUS_NAME_FLAG_ALLOW_REPLACEMENT
  * @IBUS_BUS_NAME_FLAG_REPLACE_EXISTING:
  *    same as DBUS_NAME_FLAG_REPLACE_EXISTING
  * @IBUS_BUS_NAME_FLAG_DO_NOT_QUEUE:
- *    same as DBUS_NAME_FLAG_DO_NOT_QUEUE 
+ *    same as DBUS_NAME_FLAG_DO_NOT_QUEUE
  */
-typedef enum {
+typedef enum
+{
     IBUS_BUS_NAME_FLAG_ALLOW_REPLACEMENT   = (1 << 0),
     IBUS_BUS_NAME_FLAG_REPLACE_EXISTING    = (1 << 1),
     IBUS_BUS_NAME_FLAG_DO_NOT_QUEUE        = (1 << 2),
@@ -179,7 +154,8 @@ typedef enum {
  * @IBUS_BUS_REQUEST_NAME_REPLY_ALREADY_OWNER:
  *    same as DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER
  */
-typedef enum {
+typedef enum
+{
     IBUS_BUS_REQUEST_NAME_REPLY_PRIMARY_OWNER   = 1,
     IBUS_BUS_REQUEST_NAME_REPLY_IN_QUEUE        = 2,
     IBUS_BUS_REQUEST_NAME_REPLY_EXISTS          = 3,
@@ -193,7 +169,8 @@ typedef enum {
  * @IBUS_BUS_START_REPLY_ALREADY_RUNNING:
  *    same as DBUS_START_REPLY_ALREADY_RUNNING
  */
-typedef enum {
+typedef enum
+{
     IBUS_BUS_START_REPLY_SUCCESS = 1,
     IBUS_BUS_START_REPLY_ALREADY_RUNNING = 2,
 } IBusBusStartServiceByNameReply;
@@ -207,7 +184,8 @@ typedef enum {
  * @IBUS_ERROR_FAILED:
  * General failure.
  */
-typedef enum {
+typedef enum
+{
     IBUS_ERROR_NO_ENGINE,
     IBUS_ERROR_NO_CONFIG,
     IBUS_ERROR_FAILED
@@ -223,11 +201,12 @@ typedef enum {
  * Rectangle definition.
  */
 typedef struct _IBusRectangle IBusRectangle;
-struct _IBusRectangle {
-    gint x;
-    gint y;
-    gint width;
-    gint height;
+struct _IBusRectangle
+{
+    int     x;
+    int     y;
+    int     width;
+    int     height;
 };
 
 /**
@@ -236,7 +215,7 @@ struct _IBusRectangle {
  *
  * Free function prototype.
  */
-typedef void (* IBusFreeFunc) (gpointer object);
+typedef void (*IBusFreeFunc) (void* object);
 
 /**
  * IBusInputPurpose:
@@ -340,5 +319,5 @@ typedef enum
     IBUS_INPUT_HINT_PRIVATE             = 1 << 11
 } IBusInputHints;
 
-#endif
 
+#endif //GRACEFUL_IBUS_IBUS_TYPES_H

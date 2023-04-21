@@ -1,6 +1,6 @@
 project(bus LANGUAGES C)
 
-include(${CMAKE_SOURCE_DIR}/app/common/common.cmake)
+include(${CMAKE_SOURCE_DIR}/app/core/core.cmake)
 
 file(GLOB IBUS_DAEMON_SRC
         component.c
@@ -24,9 +24,6 @@ file(GLOB IBUS_DAEMON_SRC
         factoryproxy.c
         factoryproxy.h
 
-        global.c
-        global.h
-
         server.c
         server.h
 
@@ -41,7 +38,7 @@ file(GLOB IBUS_DAEMON_SRC
 
         types.h
 
-        ibus.h
+        ../core/ibus.h
 
         ibusversion.h
 
@@ -78,7 +75,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibuscomponent.c
         ibuscomponent.h
 
-        ibusservice.c
         ibusservice.h
 
         ibusproperty.c
@@ -137,7 +133,7 @@ file(GLOB IBUS_DAEMON_SRC
         ibusinputcontext.h
         )
 
-add_executable(ibus-daemon main.c ${IBUS_DAEMON_SRC} ${GRACEFUL_IBUS_COMMON_SRC})
+add_executable(ibus-daemon main.c ${IBUS_DAEMON_SRC} ${GRACEFUL_IBUS_CORE_SRC})
 target_include_directories(ibus-daemon PUBLIC
         ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/app/common/
         ${GIO_INCLUDE_DIRS})

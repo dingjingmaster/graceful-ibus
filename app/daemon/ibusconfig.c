@@ -25,6 +25,7 @@
 #include "ibusconfig.h"
 #include "ibusbus.h"
 #include "ibuserror.h"
+#include "ibus-types.h"
 
 #define IBUS_CONFIG_GET_PRIVATE(o)  \
    ((IBusConfigPrivate *)ibus_config_get_instance_private (o))

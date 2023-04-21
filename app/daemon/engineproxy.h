@@ -24,7 +24,7 @@
 #define __BUS_ENGINE_PROXY_H_
 
 #include <gio/gio.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "connection.h"
 
 /*

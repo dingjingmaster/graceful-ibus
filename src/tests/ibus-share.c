@@ -1,4 +1,4 @@
-#include <ibus.h>
+#include "ibus.h"
 #include <dbus/dbus.h>
 
 static void

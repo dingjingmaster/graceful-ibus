@@ -28,7 +28,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <ibus.h>
+#include "ibus.h"
 #include "ibusimcontext.h"
 
 #ifdef GDK_WINDOWING_WAYLAND

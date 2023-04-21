@@ -28,6 +28,7 @@
 #include "ibusinternal.h"
 #include "ibuserror.h"
 #include "ibusunicode.h"
+#include "ibus-types.h"
 
 #define IBUS_UNICODE_DATA_MAGIC "IBusUnicodeData"
 #define IBUS_UNICODE_BLOCK_MAGIC "IBusUnicodeBlock"
