@@ -260,7 +260,7 @@ static int _open_file ()
     return 0;
 }
 
-static int _log_open_rewrite ()
+static int log_open_rewrite ()
 {
     check_dir (gLogPath);
     gLogFd = open (gLogPath, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -280,7 +280,7 @@ static ssize_t _log_write (struct iovec *vec, int n)
         if (-1 == close (gLogFd)) {
             fprintf(stderr, "close file errno:%d", errno);
         }
-        _log_open_rewrite();
+        log_open_rewrite();
     }
 
     return writev (gLogFd, vec, n);

@@ -269,8 +269,7 @@ ibus_write_address (const gchar *address)
     fclose (pf);
 }
 
-void
-ibus_free_strv (gchar **strv)
+void ibus_free_strv (gchar **strv)
 {
     gchar **p;
 

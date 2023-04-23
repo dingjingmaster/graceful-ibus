@@ -1,33 +1,15 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* bus - The Input Bus
- * Copyright (C) 2008-2010 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2011-2022 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2021 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
+
 #include "server.h"
 
-#include <glib/gstdio.h>
-#include <gio/gio.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gio/gio.h>
+#include <glib/gstdio.h>
 
 #include "dbusimpl.h"
 #include "ibusimpl.h"
@@ -52,8 +34,9 @@ static void restart_server (void)
 
     exe = g_file_read_link ("/proc/self/exe", NULL);
 
-    if (exe == NULL)
+    if (exe == NULL) {
         exe = g_strdup (BINDIR "/ibus-daemon");
+    }
 
     /* close all fds except stdin, stdout, stderr */
     for (fd = 3; fd <= sysconf (_SC_OPEN_MAX); fd ++) {
@@ -99,13 +82,15 @@ static void restart_server (void)
  * Check if @mechanism can be used to authenticate the other peer.
  * Returns: %TRUE if the peer's mechanism is allowed.
  */
-static gboolean
-bus_allow_mechanism_cb (GDBusAuthObserver     *observer,
-                        const gchar           *mechanism,
-                        G_GNUC_UNUSED gpointer user_data)
+static gboolean bus_allow_mechanism_cb (GDBusAuthObserver* observer, const gchar* mechanism, gpointer udata)
 {
-    if (g_strcmp0 (mechanism, "EXTERNAL") == 0)
+    if (g_strcmp0 (mechanism, "EXTERNAL") == 0) {
         return TRUE;
+    }
+
+    (void*) udata;
+    (void*) observer;
+
     return FALSE;
 }
 
@@ -119,19 +104,21 @@ bus_allow_mechanism_cb (GDBusAuthObserver     *observer,
  * Check if a peer who has already authenticated should be authorized.
  * Returns: %TRUE if the peer's credential is authorized.
  */
-static gboolean
-bus_authorize_authenticated_peer_cb (GDBusAuthObserver     *observer,
-                                     GIOStream             *stream,
-                                     GCredentials          *credentials,
-                                     G_GNUC_UNUSED gpointer user_data)
+static gboolean bus_authorize_authenticated_peer_cb (GDBusAuthObserver* observer, GIOStream* stream, GCredentials* credentials, gpointer udata)
 {
     gboolean authorized = FALSE;
     if (credentials) {
         GCredentials *own_credentials = g_credentials_new ();
-        if (g_credentials_is_same_user (credentials, own_credentials, NULL))
+        if (g_credentials_is_same_user (credentials, own_credentials, NULL)) {
             authorized = TRUE;
+        }
         g_object_unref (own_credentials);
     }
+
+    (void*) udata;
+    (void*) stream;
+    (void*) observer;
+
     return authorized;
 }
 
@@ -144,12 +131,9 @@ bus_authorize_authenticated_peer_cb (GDBusAuthObserver     *observer,
  * Handle incoming connections.
  * Returns: %TRUE when the function can handle the connection.
  */
-static gboolean
-bus_new_connection_cb (GDBusServer           *server,
-                       GDBusConnection       *dbus_connection,
-                       G_GNUC_UNUSED gpointer user_data)
+static gboolean bus_new_connection_cb (GDBusServer* server, GDBusConnection* dbusConn, gpointer udata)
 {
-    BusConnection *connection = bus_connection_new (dbus_connection);
+    BusConnection *connection = bus_connection_new (dbusConn);
     bus_dbus_impl_new_connection (dbus, connection);
 
     if (g_object_is_floating (connection)) {
@@ -158,34 +142,33 @@ bus_new_connection_cb (GDBusServer           *server,
         ibus_object_destroy ((IBusObject *)connection);
         g_object_unref (connection);
     }
+
+    (void*) udata;
+    (void*) server;
+
     return TRUE;
 }
 
-static void
-_server_connect_start_portal_cb (GObject               *source_object,
-                                 GAsyncResult          *res,
-                                 G_GNUC_UNUSED gpointer user_data)
+static void server_connect_start_portal_cb (GObject* srcObj, GAsyncResult* res, gpointer udata)
 {
     GVariant *result;
     GError *error = NULL;
 
-    result = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source_object),
-                                            res,
-                                            &error);
+    result = g_dbus_connection_call_finish (G_DBUS_CONNECTION (srcObj), res, &error);
     if (result != NULL) {
         g_variant_unref (result);
-    } else {
+    }
+    else {
         g_print ("portal is not running: %s\n", error->message);
         g_error_free (error);
     }
+
+    (void*) udata;
 }
 
-static void
-bus_acquired_handler (GDBusConnection       *connection,
-                      const gchar           *name,
-                      G_GNUC_UNUSED gpointer user_data)
+static void bus_acquired_handler (GDBusConnection* conn, const gchar* name, gpointer udata)
 {
-    g_dbus_connection_call (connection,
+    g_dbus_connection_call (conn,
                             IBUS_SERVICE_PORTAL,
                             IBUS_PATH_IBUS,
                             "org.freedesktop.DBus.Peer",
@@ -195,16 +178,17 @@ bus_acquired_handler (GDBusConnection       *connection,
                             G_DBUS_CALL_FLAGS_NONE,
                             -1,
                             NULL /* cancellable */,
-                            (GAsyncReadyCallback)
-                                    _server_connect_start_portal_cb,
+                            (GAsyncReadyCallback) server_connect_start_portal_cb,
                             NULL);
+
+    (void*) name;
+    (void*) udata;
 }
 
-static char *
-_bus_extract_address (void)
+static char* bus_extract_address (void)
 {
-    char *socket_address = g_strdup (gAddress);
     char *p;
+    char *socket_address = g_strdup (gAddress);
 
 #define IF_REPLACE_VARIABLE_WITH_FUNC(variable, func, format)           \
     if ((p = g_strstr_len (socket_address, -1, (variable)))) {          \
@@ -218,13 +202,9 @@ _bus_extract_address (void)
         socket_address = tmp;                                           \
     }
 
-    IF_REPLACE_VARIABLE_WITH_FUNC ("$XDG_RUNTIME_DIR",
-                                   g_get_user_runtime_dir,
-                                   "%s")
+    IF_REPLACE_VARIABLE_WITH_FUNC ("$XDG_RUNTIME_DIR", g_get_user_runtime_dir, "%s")
     else
-    IF_REPLACE_VARIABLE_WITH_FUNC ("$XDG_CACHE_HOME",
-                                   g_get_user_cache_dir,
-                                   "%s")
+    IF_REPLACE_VARIABLE_WITH_FUNC ("$XDG_CACHE_HOME", g_get_user_cache_dir, "%s")
     else
     IF_REPLACE_VARIABLE_WITH_FUNC ("$UID", getuid, "%d")
 
@@ -252,7 +232,9 @@ void bus_server_init (void)
     bus_dbus_impl_register_object (dbus, (IBusService *)ibus);
 
     /* init server */
-    socket_address = _bus_extract_address ();
+    socket_address = bus_extract_address ();
+
+    LOG_DEBUG("create dbus server and write socket address to '%s'", socket_address ? socket_address : "<null>");
 
 #define IF_GET_UNIX_DIR_FROM_DIR(prefix)                                \
     if (g_str_has_prefix (socket_address, (prefix))) {                  \
@@ -277,64 +259,40 @@ void bus_server_init (void)
     else {
         g_error ("Your socket address \"%s\" does not correspond with "
                  "one of the following formats; "
-                 IBUS_UNIX_TMPDIR "DIR, " IBUS_UNIX_PATH "FILE, "
-                 IBUS_UNIX_ABSTRACT "FILE, " IBUS_UNIX_DIR "DIR.",
+                     IBUS_UNIX_TMPDIR "DIR, " IBUS_UNIX_PATH "FILE, "
+                     IBUS_UNIX_ABSTRACT "FILE, " IBUS_UNIX_DIR "DIR.",
                  socket_address);
     }
-    if (unix_dir &&
-        !g_file_test (unix_dir, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)) {
-        /* Require mkdir for BSD system.
-         * The mode 0700 can eliminate malicious users change the mode.
-         * `chmod` runs for the last directory only not to change the modes
-         * of the parent directories. E.g. "/tmp/ibus".
-         */
+    if (unix_dir && !g_file_test (unix_dir, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)) {
         errno = 0;
         if (g_mkdir_with_parents (unix_dir, 0700) != 0) {
-            g_error ("mkdir is failed in: %s: %s",
-                     unix_dir, g_strerror (errno));
+            LOG_ERROR("mkdir is failed in: %s: %s", unix_dir, g_strerror (errno));
         }
     }
     g_free (unix_dir);
     guid = g_dbus_generate_guid ();
     observer = g_dbus_auth_observer_new ();
-    server =  g_dbus_server_new_sync (
-                    /* the place where the socket file lives, e.g. /tmp,
-                     * abstract namespace, etc. */
-                    socket_address,
-                    flags, guid,
-                    observer,
-                    NULL /* cancellable */,
-                    &error);
+    server =  g_dbus_server_new_sync (socket_address, flags, guid, observer, NULL, &error);
     if (server == NULL) {
-        g_error ("g_dbus_server_new_sync() is failed with address %s "
-                 "and guid %s: %s",
-                 socket_address, guid, error->message);
+        LOG_ERROR("g_dbus_server_new_sync() is failed with address %s and guid %s: %s", socket_address, guid, error->message);
     }
     g_free (socket_address);
     g_free (guid);
 
-    g_signal_connect (observer, "allow-mechanism",
-                      G_CALLBACK (bus_allow_mechanism_cb), NULL);
-    g_signal_connect (observer, "authorize-authenticated-peer",
-                      G_CALLBACK (bus_authorize_authenticated_peer_cb), NULL);
+    g_signal_connect (observer, "allow-mechanism", G_CALLBACK (bus_allow_mechanism_cb), NULL);
+    g_signal_connect (observer, "authorize-authenticated-peer", G_CALLBACK (bus_authorize_authenticated_peer_cb), NULL);
     g_object_unref (observer);
-    g_signal_connect (server, "new-connection",
-                      G_CALLBACK (bus_new_connection_cb), NULL);
+    g_signal_connect (server, "new-connection", G_CALLBACK (bus_new_connection_cb), NULL);
 
     g_dbus_server_start (server);
 
-    address = g_strdup_printf ("%s,guid=%s",
-                               g_dbus_server_get_client_address (server),
-                               g_dbus_server_get_guid (server));
+    address = g_strdup_printf ("%s,guid=%s", g_dbus_server_get_client_address (server), g_dbus_server_get_guid (server));
 
     /* write address to file */
     ibus_write_address (address);
 
     /* own a session bus name so that third parties can easily track our life-cycle */
-    g_bus_own_name (G_BUS_TYPE_SESSION, IBUS_SERVICE_IBUS,
-                    G_BUS_NAME_OWNER_FLAGS_NONE,
-                    bus_acquired_handler,
-                    NULL, NULL, NULL, NULL);
+    g_bus_own_name (G_BUS_TYPE_SESSION, IBUS_SERVICE_IBUS, G_BUS_NAME_OWNER_FLAGS_NONE, bus_acquired_handler, NULL, NULL, NULL, NULL);
 
 #undef IF_GET_UNIX_DIR_FROM_DIR
 #undef IF_GET_UNIX_DIR_FROM_PATH
@@ -345,14 +303,12 @@ void bus_server_init (void)
 #undef IBUS_UNIX_DIR
 }
 
-const gchar *
-bus_server_get_address (void)
+const gchar* bus_server_get_address (void)
 {
     return address;
 }
 
-void
-bus_server_run (void)
+void bus_server_run (void)
 {
     g_return_if_fail (server);
 
@@ -385,10 +341,10 @@ bus_server_run (void)
     }
 }
 
-void
-bus_server_quit (gboolean restart)
+void bus_server_quit (gboolean restart)
 {
     _restart = restart;
-    if (mainloop)
+    if (mainloop) {
         g_main_loop_quit (mainloop);
+    }
 }
