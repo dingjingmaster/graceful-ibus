@@ -42,8 +42,8 @@
  */
 
 #include "ibusservice.h"
-#include "ibusserializable.h"
 #include "ibusengine.h"
+#include "ibus-serializable.h"
 
 G_BEGIN_DECLS
 

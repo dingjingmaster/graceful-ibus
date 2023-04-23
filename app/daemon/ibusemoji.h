@@ -35,8 +35,7 @@
  * miscellaneous emoji APIs.
  */
 
-#include "ibusserializable.h"
-
+#include "ibus-serializable.h"
 /*
  * Type macros.
  */

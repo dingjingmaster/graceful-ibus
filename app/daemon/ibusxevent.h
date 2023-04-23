@@ -38,7 +38,7 @@
  * see_also: #IBusComponent, #IBusEngineDesc
  */
 
-#include "ibusserializable.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

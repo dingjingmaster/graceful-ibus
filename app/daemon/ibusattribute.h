@@ -38,7 +38,7 @@
  * and background colors.
  */
 
-#include "ibusserializable.h"
+#include "ibus-serializable.h"
 
 G_BEGIN_DECLS
 

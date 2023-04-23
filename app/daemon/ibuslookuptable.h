@@ -42,8 +42,8 @@
  * see_also: #IBusEngine
  */
 
-#include "ibusserializable.h"
 #include "ibustext.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

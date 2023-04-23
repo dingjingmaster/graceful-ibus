@@ -28,8 +28,8 @@
  *
  */
 
-#include "ibusserializable.h"
 #include "ibusxml.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

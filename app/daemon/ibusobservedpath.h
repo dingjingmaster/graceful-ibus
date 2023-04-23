@@ -36,8 +36,8 @@
  * such as monitor modification, directory tree traversal.
  */
 
-#include "ibusserializable.h"
 #include "ibusxml.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

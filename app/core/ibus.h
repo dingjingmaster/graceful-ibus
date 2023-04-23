@@ -12,7 +12,6 @@
 #include "ibus-log.h"
 #include "ibus-main.h"
 #include "ibusobject.h"
-#include "ibusserializable.h"
 #include "ibusattribute.h"
 #include "ibusattrlist.h"
 #include "ibustext.h"
@@ -44,6 +43,7 @@
 #include "ibusunicode.h"
 #include "ibusxevent.h"
 #include "ibusaccelgroup.h"
+#include "ibus-serializable.h"
 #ifndef IBUS_DISABLE_DEPRECATED
 #include "ibuskeysyms-compat.h"
 #endif

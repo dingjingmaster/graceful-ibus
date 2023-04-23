@@ -36,7 +36,7 @@
  */
 
 #include <gio/gio.h>
-#include "ibusserializable.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

@@ -39,8 +39,8 @@
  * see_also: #IBusAttribute
  */
 
-#include "ibusserializable.h"
 #include "ibusattrlist.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

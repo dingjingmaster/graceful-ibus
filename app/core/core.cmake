@@ -29,11 +29,15 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
         ${CMAKE_SOURCE_DIR}/app/core/ibus-engine-desc.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-engine-desc.c
 
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-serializable.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-serializable.c
+
         ${CMAKE_SOURCE_DIR}/app/core/ibus-input-context.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-input-context.c
 
         ${CMAKE_SOURCE_DIR}/app/core/interface/ibus-service.h
         ${CMAKE_SOURCE_DIR}/app/core/interface/ibus-service.c
+
         )
 include_directories(${CMAKE_SOURCE_DIR}/app/core)
 include_directories(${CMAKE_SOURCE_DIR}/app/core/interface)

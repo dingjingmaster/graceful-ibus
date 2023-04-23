@@ -27,8 +27,8 @@
 #ifndef __IBUS_PROPERTY_H_
 #define __IBUS_PROPERTY_H_
 
-#include "ibusserializable.h"
 #include "ibustext.h"
+#include "ibus-serializable.h"
 
 /**
  * SECTION: ibusproperty

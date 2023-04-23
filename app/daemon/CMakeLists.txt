@@ -54,9 +54,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibustext.c
         ibustext.h
 
-        ibusserializable.c
-        ibusserializable.h
-
         ibusobject.h
         ibusobject.c
 

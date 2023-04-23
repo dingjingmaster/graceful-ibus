@@ -35,7 +35,7 @@
  * An IBusHotkeyProfile associates a hotkey and an event.
  */
 
-#include "ibusserializable.h"
+#include "ibus-serializable.h"
 
 /*
  * Type macros.

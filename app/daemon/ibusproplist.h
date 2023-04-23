@@ -37,8 +37,8 @@
  *
  */
 
-#include "ibusserializable.h"
 #include "ibusproperty.h"
+#include "ibus-serializable.h"
 
 G_BEGIN_DECLS
 
