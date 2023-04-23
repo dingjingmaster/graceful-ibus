@@ -66,9 +66,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibusregistry.c
         ibusregistry.h
 
-        ibuscomponent.c
-        ibuscomponent.h
-
         ibusservice.h
 
         ibusproperty.c

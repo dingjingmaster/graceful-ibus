@@ -39,7 +39,7 @@
  * see_also: #IBusComponent
  */
 
-#include "ibuscomponent.h"
+#include "ibus-component.h"
 
 /*
  * Type macros.

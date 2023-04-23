@@ -21,7 +21,7 @@
 #include <gio/gio.h>
 #include "ibus-main.h"
 #include "ibus-config.h"
-#include "ibuscomponent.h"
+#include "ibus-component.h"
 #include "ibusinputcontext.h"
 
 /*
