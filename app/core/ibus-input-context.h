@@ -1,32 +1,14 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* ibus - The Input Bus
- * Copyright (C) 2008-2013 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2018 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2018 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
 
 #if !defined (__IBUS_H_INSIDE__) && !defined (IBUS_COMPILATION)
 #error "Only <ibus.h> can be included directly"
 #endif
 
-#ifndef __IBUS_INPUT_CONTEXT_H_
-#define __IBUS_INPUT_CONTEXT_H_
+#ifndef GRACEFUL_IBUS_IBUS_INPUT_CONTEXT_H
+#define GRACEFUL_IBUS_IBUS_INPUT_CONTEXT_H
+
 
 /**
  * SECTION: ibusinputcontext
@@ -100,10 +82,10 @@ GType        ibus_input_context_get_type    (void);
  * Returns: A newly allocated #IBusInputContext.
  */
 IBusInputContext *
-             ibus_input_context_new         (const gchar        *path,
-                                             GDBusConnection    *connection,
-                                             GCancellable       *cancellable,
-                                             GError            **error);
+ibus_input_context_new         (const gchar        *path,
+                                GDBusConnection    *connection,
+                                GCancellable       *cancellable,
+                                GError            **error);
 /**
  * ibus_input_context_new_async:
  * @path: The path to the object that emitting the signal.
@@ -132,9 +114,9 @@ void         ibus_input_context_new_async   (const gchar        *path,
  * Returns: A newly allocated #IBusInputContext.
  */
 IBusInputContext *
-             ibus_input_context_new_async_finish
-                                            (GAsyncResult       *res,
-                                             GError            **error);
+ibus_input_context_new_async_finish
+    (GAsyncResult       *res,
+     GError            **error);
 /**
  * ibus_input_context_get_input_context:
  * @path: The path to the object that emitting the signal.
@@ -145,9 +127,9 @@ IBusInputContext *
  * Returns: (transfer none): An existing #IBusInputContext.
  */
 IBusInputContext *
-             ibus_input_context_get_input_context
-                                            (const gchar        *path,
-                                             GDBusConnection    *connection);
+ibus_input_context_get_input_context
+    (const gchar        *path,
+     GDBusConnection    *connection);
 /**
  * ibus_input_context_get_input_context_async:
  * @path: The path to the object that emitting the signal.
@@ -160,11 +142,11 @@ IBusInputContext *
  * Gets an existing #IBusInputContext asynchronously.
  */
 void         ibus_input_context_get_input_context_async
-                                            (const gchar        *path,
-                                             GDBusConnection    *connection,
-                                             GCancellable       *cancellable,
-                                             GAsyncReadyCallback callback,
-                                             gpointer            user_data);
+    (const gchar        *path,
+     GDBusConnection    *connection,
+     GCancellable       *cancellable,
+     GAsyncReadyCallback callback,
+     gpointer            user_data);
 
 /**
  * ibus_input_context_get_input_context_async_finish:
@@ -178,9 +160,9 @@ void         ibus_input_context_get_input_context_async
  * Returns: (transfer none): An existing #IBusInputContext.
  */
 IBusInputContext *
-             ibus_input_context_get_input_context_async_finish
-                                            (GAsyncResult       *res,
-                                             GError            **error);
+ibus_input_context_get_input_context_async_finish
+    (GAsyncResult       *res,
+     GError            **error);
 
 /**
  * ibus_input_context_process_hand_writing_event:
@@ -201,9 +183,9 @@ IBusInputContext *
  * see_also: #IBusEngine::process-hand-writing-event
  */
 void         ibus_input_context_process_hand_writing_event
-                                            (IBusInputContext   *context,
-                                             const gdouble      *coordinates,
-                                             guint               coordinates_len);
+    (IBusInputContext   *context,
+     const gdouble      *coordinates,
+     guint               coordinates_len);
 
 /**
  * ibus_input_context_cancel_hand_writing:
@@ -215,8 +197,8 @@ void         ibus_input_context_process_hand_writing_event
  * see_also: #IBusEngine::cancel-hand-writing
  */
 void         ibus_input_context_cancel_hand_writing
-                                            (IBusInputContext   *context,
-                                             guint               n_strokes);
+    (IBusInputContext   *context,
+     guint               n_strokes);
 
 /**
  * ibus_input_context_process_key_event_async:
@@ -251,14 +233,14 @@ void         ibus_input_context_cancel_hand_writing
  * see_also: #IBusEngine::process-key-event
  */
 void        ibus_input_context_process_key_event_async
-                                            (IBusInputContext   *context,
-                                             guint32             keyval,
-                                             guint32             keycode,
-                                             guint32             state,
-                                             gint                timeout_msec,
-                                             GCancellable       *cancellable,
-                                             GAsyncReadyCallback callback,
-                                             gpointer            user_data);
+    (IBusInputContext   *context,
+     guint32             keyval,
+     guint32             keycode,
+     guint32             state,
+     gint                timeout_msec,
+     GCancellable       *cancellable,
+     GAsyncReadyCallback callback,
+     gpointer            user_data);
 
 /**
  * ibus_input_context_process_key_event_async_finish:
@@ -274,9 +256,9 @@ void        ibus_input_context_process_key_event_async
  *      %FALSE otherwise or some errors happen and the @error will be set.
  */
 gboolean     ibus_input_context_process_key_event_async_finish
-                                            (IBusInputContext   *context,
-                                             GAsyncResult       *res,
-                                             GError            **error);
+    (IBusInputContext   *context,
+     GAsyncResult       *res,
+     GError            **error);
 
 /**
  * ibus_input_context_process_key_event:
@@ -293,10 +275,10 @@ gboolean     ibus_input_context_process_key_event_async_finish
  * See also: ibus_input_context_process_key_event_async()
  */
 gboolean     ibus_input_context_process_key_event
-                                            (IBusInputContext   *context,
-                                             guint32             keyval,
-                                             guint32             keycode,
-                                             guint32             state);
+    (IBusInputContext   *context,
+     guint32             keyval,
+     guint32             keycode,
+     guint32             state);
 
 
 /**
@@ -312,11 +294,11 @@ gboolean     ibus_input_context_process_key_event
  * see_also: #IBusEngine::set-cursor-location
  */
 void         ibus_input_context_set_cursor_location
-                                            (IBusInputContext   *context,
-                                             gint32              x,
-                                             gint32              y,
-                                             gint32              w,
-                                             gint32              h);
+    (IBusInputContext   *context,
+     gint32              x,
+     gint32              y,
+     gint32              w,
+     gint32              h);
 /**
  * ibus_input_context_set_cursor_location_relative:
  * @context: An IBusInputContext.
@@ -328,11 +310,11 @@ void         ibus_input_context_set_cursor_location
  * Set the relative cursor location of IBus input context asynchronously.
  */
 void         ibus_input_context_set_cursor_location_relative
-                                            (IBusInputContext   *context,
-                                             gint32              x,
-                                             gint32              y,
-                                             gint32              w,
-                                             gint32              h);
+    (IBusInputContext   *context,
+     gint32              x,
+     gint32              y,
+     gint32              w,
+     gint32              h);
 /**
  * ibus_input_context_set_capabilities:
  * @context: An IBusInputContext.
@@ -345,8 +327,8 @@ void         ibus_input_context_set_cursor_location_relative
  * see_also: #IBusEngine::set-capabilities
  */
 void         ibus_input_context_set_capabilities
-                                            (IBusInputContext   *context,
-                                             guint32             capabilities);
+    (IBusInputContext   *context,
+     guint32             capabilities);
 
 /**
  * ibus_input_context_property_activate:
@@ -359,9 +341,9 @@ void         ibus_input_context_set_capabilities
  * See also: #IBusEngine::property_activate
  */
 void         ibus_input_context_property_activate
-                                            (IBusInputContext *context,
-                                             const gchar      *prop_name,
-                                             guint32           state);
+    (IBusInputContext *context,
+     const gchar      *prop_name,
+     guint32           state);
 
 /**
  * ibus_input_context_focus_in:
@@ -407,11 +389,11 @@ void         ibus_input_context_reset       (IBusInputContext   *context);
  * An asynchronous IPC will be performed.
  */
 void         ibus_input_context_get_engine_async
-                                            (IBusInputContext   *context,
-                                             gint                timeout_msec,
-                                             GCancellable       *cancellable,
-                                             GAsyncReadyCallback callback,
-                                             gpointer            user_data);
+    (IBusInputContext   *context,
+     gint                timeout_msec,
+     GCancellable       *cancellable,
+     GAsyncReadyCallback callback,
+     gpointer            user_data);
 
 /**
  * ibus_input_context_get_engine_async_finish:
@@ -426,10 +408,10 @@ void         ibus_input_context_get_engine_async
  *     %NULL.
  */
 IBusEngineDesc *
-             ibus_input_context_get_engine_async_finish
-                                            (IBusInputContext   *context,
-                                             GAsyncResult       *res,
-                                             GError            **error);
+ibus_input_context_get_engine_async_finish
+    (IBusInputContext   *context,
+     GAsyncResult       *res,
+     GError            **error);
 
 /**
  * ibus_input_context_get_engine:
@@ -441,7 +423,7 @@ IBusEngineDesc *
  * Returns: (transfer none): An IME engine description for the context, or NULL.
  */
 IBusEngineDesc *
-             ibus_input_context_get_engine  (IBusInputContext   *context);
+ibus_input_context_get_engine  (IBusInputContext   *context);
 
 /**
  * ibus_input_context_set_engine:
@@ -462,10 +444,10 @@ void         ibus_input_context_set_engine  (IBusInputContext   *context,
  * @anchor_pos: Anchor position of selection in @text.
 */
 void         ibus_input_context_set_surrounding_text
-                                            (IBusInputContext   *context,
-                                             IBusText           *text,
-                                             guint32             cursor_pos,
-                                             guint32             anchor_pos);
+    (IBusInputContext   *context,
+     IBusText           *text,
+     guint32             cursor_pos,
+     guint32             anchor_pos);
 
 /**
  * ibus_input_context_needs_surrounding_text:
@@ -477,7 +459,7 @@ void         ibus_input_context_set_surrounding_text
  * %FALSE otherwise.
  */
 gboolean     ibus_input_context_needs_surrounding_text
-                                            (IBusInputContext   *context);
+    (IBusInputContext   *context);
 
 /**
  * ibus_input_context_set_content_type:
@@ -495,9 +477,9 @@ gboolean     ibus_input_context_needs_surrounding_text
  * See also: #IBusEngine::set-content-type
  */
 void         ibus_input_context_set_content_type
-                                            (IBusInputContext   *context,
-                                             guint               purpose,
-                                             guint               hints);
+    (IBusInputContext   *context,
+     guint               purpose,
+     guint               hints);
 
 /**
  * ibus_input_context_set_client_commit_preedit:
@@ -520,8 +502,9 @@ void         ibus_input_context_set_content_type
  * See also ibus_engine_update_preedit_text_with_mode().
  */
 void         ibus_input_context_set_client_commit_preedit (
-                                             IBusInputContext   *context,
-                                             gboolean            client_commit);
+    IBusInputContext   *context,
+    gboolean            client_commit);
 
 G_END_DECLS
-#endif
+
+#endif //GRACEFUL_IBUS_IBUS_INPUT_CONTEXT_H
