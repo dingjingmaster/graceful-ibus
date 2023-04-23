@@ -12,7 +12,7 @@
 
 #include "ibus-log.h"
 #include "ibus-main.h"
-#include "ibusconfig.h"
+#include "ibus-config.h"
 #include "ibusinternal.h"
 #include "ibusmarshalers.h"
 #include "ibusenginedesc.h"
@@ -649,14 +649,14 @@ gboolean ibus_bus_is_connected (IBusBus *bus)
     return bus->priv->connected;
 }
 
-IBusInputContext* ibus_bus_create_input_context (IBusBus* bus, const gchar* client_name)
+IBusInputContext* ibus_bus_create_input_context (IBusBus* bus, const gchar* clientName)
 {
     g_return_val_if_fail (IBUS_IS_BUS (bus), NULL);
-    g_return_val_if_fail (client_name != NULL, NULL);
+    g_return_val_if_fail (clientName != NULL, NULL);
 
     gchar* path;
     IBusInputContext* context = NULL;
-    GVariant* result = ibus_bus_call_sync (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "CreateInputContext", g_variant_new ("(s)", client_name), G_VARIANT_TYPE ("(o)"));
+    GVariant* result = ibus_bus_call_sync (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "CreateInputContext", g_variant_new ("(s)", clientName), G_VARIANT_TYPE ("(o)"));
 
     if (result != NULL) {
         GError *error = NULL;
@@ -684,6 +684,8 @@ static void create_input_context_async_step_two_done (GObject* srcObj , GAsyncRe
     }
 
     g_object_unref (task);
+
+    (void) srcObj;
 }
 
 static void create_input_context_async_step_one_done (GDBusConnection *connection, GAsyncResult* res, GTask* task)
@@ -729,7 +731,16 @@ void ibus_bus_create_input_context_async (IBusBus* bus, const gchar* client_name
     g_task_set_source_tag (task, ibus_bus_create_input_context_async);
 
     g_dbus_connection_call (bus->priv->connection,
-    ibus_bus_get_service_name (bus), IBUS_PATH_IBUS, bus->priv->use_portal ? IBUS_INTERFACE_PORTAL : IBUS_INTERFACE_IBUS, "CreateInputContext", g_variant_new ("(s)", client_name), G_VARIANT_TYPE("(o)"), G_DBUS_CALL_FLAGS_NO_AUTO_START, timeout_msec, cancellable, (GAsyncReadyCallback)create_input_context_async_step_one_done, task);
+                            ibus_bus_get_service_name (bus),
+                            IBUS_PATH_IBUS,
+                            bus->priv->use_portal ? IBUS_INTERFACE_PORTAL : IBUS_INTERFACE_IBUS,
+                            "CreateInputContext",
+                            g_variant_new ("(s)", client_name),
+                            G_VARIANT_TYPE("(o)"),
+                            G_DBUS_CALL_FLAGS_NO_AUTO_START,
+                            timeout_msec,
+                            cancellable,
+                            (GAsyncReadyCallback) create_input_context_async_step_one_done, task);
 }
 
 IBusInputContext* ibus_bus_create_input_context_async_finish (IBusBus* bus, GAsyncResult* res, GError** error)
@@ -742,8 +753,7 @@ IBusInputContext* ibus_bus_create_input_context_async_finish (IBusBus* bus, GAsy
     g_assert (g_task_is_valid (res, bus));
 
     task = G_TASK (res);
-    g_assert (g_task_get_source_tag (task) ==
-              ibus_bus_create_input_context_async);
+    g_assert (g_task_get_source_tag (task) == ibus_bus_create_input_context_async);
     had_error = g_task_had_error (task);
     context = g_task_propagate_pointer (task, error);
     if (had_error) {
@@ -765,9 +775,7 @@ gchar* ibus_bus_current_input_context (IBusBus* bus)
                                  IBUS_PATH_IBUS,
                                  "org.freedesktop.DBus.Properties",
                                  "Get",
-                                 g_variant_new ("(ss)",
-                                                IBUS_INTERFACE_IBUS,
-                                                "CurrentInputContext"),
+                                 g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "CurrentInputContext"),
                                  G_VARIANT_TYPE ("(v)"));
 
     if (result != NULL) {
@@ -785,7 +793,18 @@ void ibus_bus_current_input_context_async (IBusBus* bus, gint timeout_msec, GCan
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Get", g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "CurrentInputContext"), G_VARIANT_TYPE ("(v)"), ibus_bus_current_input_context_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Get",
+                         g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "CurrentInputContext"),
+                         G_VARIANT_TYPE ("(v)"),
+                         ibus_bus_current_input_context_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gchar* ibus_bus_current_input_context_async_finish (IBusBus* bus, GAsyncResult* res, GError** error)
@@ -933,7 +952,18 @@ void ibus_bus_request_name_async (IBusBus* bus, const gchar* name,  guint flags,
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (name != NULL);
 
-    ibus_bus_call_async (bus, DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "RequestName", g_variant_new ("(su)", name, flags), G_VARIANT_TYPE ("(u)"), ibus_bus_request_name_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         DBUS_SERVICE_DBUS,
+                         DBUS_PATH_DBUS,
+                         DBUS_INTERFACE_DBUS,
+                         "RequestName",
+                         g_variant_new ("(su)", name, flags),
+                         G_VARIANT_TYPE ("(u)"),
+                         ibus_bus_request_name_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 guint ibus_bus_request_name_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -977,7 +1007,18 @@ void ibus_bus_release_name_async (IBusBus* bus, const gchar* name, gint timeout_
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (name != NULL);
 
-    ibus_bus_call_async (bus, DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "ReleaseName", g_variant_new ("(s)", name), G_VARIANT_TYPE ("(u)"), ibus_bus_release_name_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         DBUS_SERVICE_DBUS,
+                         DBUS_PATH_DBUS,
+                         DBUS_INTERFACE_DBUS,
+                         "ReleaseName",
+                         g_variant_new ("(s)", name),
+                         G_VARIANT_TYPE ("(u)"),
+                         ibus_bus_release_name_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 guint ibus_bus_release_name_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1052,7 +1093,18 @@ void ibus_bus_name_has_owner_async (IBusBus* bus, const gchar* name, gint timeou
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (name != NULL);
 
-    ibus_bus_call_async (bus, DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "NameHasOwner", g_variant_new ("(s)", name), G_VARIANT_TYPE ("(b)"), ibus_bus_name_has_owner_async, timeout_msec, cancellable,callback, user_data);
+    ibus_bus_call_async (bus,
+                         DBUS_SERVICE_DBUS,
+                         DBUS_PATH_DBUS,
+                         DBUS_INTERFACE_DBUS,
+                         "NameHasOwner",
+                         g_variant_new ("(s)", name),
+                         G_VARIANT_TYPE ("(b)"),
+                         ibus_bus_name_has_owner_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_name_has_owner_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1102,7 +1154,18 @@ void ibus_bus_add_match_async (IBusBus* bus, const gchar* rule, gint timeout_mse
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (rule != NULL);
 
-    ibus_bus_call_async (bus, DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "AddMatch", g_variant_new ("(s)", rule), NULL, ibus_bus_add_match_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         DBUS_SERVICE_DBUS,
+                         DBUS_PATH_DBUS,
+                         DBUS_INTERFACE_DBUS,
+                         "AddMatch",
+                         g_variant_new ("(s)", rule),
+                         NULL,
+                         ibus_bus_add_match_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_add_match_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1145,7 +1208,18 @@ void ibus_bus_remove_match_async (IBusBus* bus, const gchar* rule, gint timeout_
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (rule != NULL);
 
-    ibus_bus_call_async (bus, DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "RemoveMatch", g_variant_new ("(s)", rule), NULL, ibus_bus_remove_match_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         DBUS_SERVICE_DBUS,
+                         DBUS_PATH_DBUS,
+                         DBUS_INTERFACE_DBUS,
+                         "RemoveMatch",
+                         g_variant_new ("(s)", rule),
+                         NULL,
+                         ibus_bus_remove_match_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_remove_match_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1189,7 +1263,17 @@ void ibus_bus_get_name_owner_async (IBusBus* bus, const gchar* name, gint timeou
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (name != NULL);
 
-    ibus_bus_call_async (bus, DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "GetNameOwner", g_variant_new ("(s)", name), G_VARIANT_TYPE ("(s)"), ibus_bus_get_name_owner_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         DBUS_SERVICE_DBUS,
+                         DBUS_PATH_DBUS,
+                         DBUS_INTERFACE_DBUS,
+                         "GetNameOwner",
+                         g_variant_new ("(s)", name), G_VARIANT_TYPE ("(s)"),
+                         ibus_bus_get_name_owner_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gchar* ibus_bus_get_name_owner_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1248,7 +1332,16 @@ void ibus_bus_exit_async (IBusBus* bus, gboolean restart, gint timeout_msec, GCa
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "Exit", g_variant_new ("(b)", restart), NULL, ibus_bus_exit_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         IBUS_INTERFACE_IBUS, "Exit",
+                         g_variant_new ("(b)", restart),
+                         NULL, ibus_bus_exit_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_exit_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1290,7 +1383,18 @@ void ibus_bus_register_component_async (IBusBus* bus, IBusComponent* component, 
     g_return_if_fail (IBUS_IS_COMPONENT (component));
 
     GVariant *variant = ibus_serializable_serialize ((IBusSerializable *)component);
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "RegisterComponent", g_variant_new ("(v)", variant), NULL, ibus_bus_register_component_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         IBUS_INTERFACE_IBUS,
+                         "RegisterComponent",
+                         g_variant_new ("(v)", variant),
+                         NULL,
+                         ibus_bus_register_component_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_register_component_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1318,9 +1422,7 @@ static GList* ibus_bus_do_list_engines (IBusBus *bus, gboolean active_engines_on
                              IBUS_PATH_IBUS,
                              "org.freedesktop.DBus.Properties",
                              "Get",
-                             g_variant_new ("(ss)",
-                                            IBUS_INTERFACE_IBUS,
-                                            property),
+                             g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, property),
                              G_VARIANT_TYPE ("(v)"));
 
     if (result) {
@@ -1352,7 +1454,18 @@ void ibus_bus_list_engines_async (IBusBus* bus, gint timeout_msec, GCancellable*
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Get", g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "Engines"), G_VARIANT_TYPE ("(v)"), ibus_bus_list_engines_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Get",
+                         g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "Engines"),
+                         G_VARIANT_TYPE ("(v)"),
+                         ibus_bus_list_engines_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 GList* ibus_bus_list_engines_async_finish (IBusBus* bus, GAsyncResult *res, GError** error)
@@ -1386,6 +1499,7 @@ GList* ibus_bus_list_engines_async_finish (IBusBus* bus, GAsyncResult *res, GErr
     g_variant_iter_free (iter);
     g_variant_unref (variant);
     g_variant_unref (result);
+
     return retval;
 }
 
@@ -1399,7 +1513,18 @@ void ibus_bus_list_active_engines_async (IBusBus* bus, gint timeout_msec, GCance
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Get", g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "ActiveEngines"), G_VARIANT_TYPE ("(v)"), ibus_bus_list_active_engines_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Get",
+                         g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "ActiveEngines"),
+                         G_VARIANT_TYPE ("(v)"),
+                         ibus_bus_list_active_engines_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 GList* ibus_bus_list_active_engines_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1494,7 +1619,18 @@ void ibus_bus_get_use_sys_layout_async (IBusBus* bus, gint timeout_msec, GCancel
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "GetUseSysLayout", NULL, G_VARIANT_TYPE ("(b)"), ibus_bus_get_use_sys_layout_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         IBUS_INTERFACE_IBUS,
+                         "GetUseSysLayout",
+                         NULL,
+                         G_VARIANT_TYPE ("(b)"),
+                         ibus_bus_get_use_sys_layout_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_get_use_sys_layout_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1536,7 +1672,18 @@ void ibus_bus_get_use_global_engine_async (IBusBus* bus, gint timeout_msec, GCan
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "GetUseGlobalEngine", NULL, G_VARIANT_TYPE ("(b)"), ibus_bus_get_use_global_engine_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         IBUS_INTERFACE_IBUS,
+                         "GetUseGlobalEngine",
+                         NULL,
+                         G_VARIANT_TYPE ("(b)"),
+                         ibus_bus_get_use_global_engine_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_get_use_global_engine_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1578,7 +1725,18 @@ void ibus_bus_is_global_engine_enabled_async (IBusBus* bus, gint timeout_msec, G
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "IsGlobalEngineEnabled", NULL, G_VARIANT_TYPE ("(b)"), ibus_bus_is_global_engine_enabled_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         IBUS_INTERFACE_IBUS,
+                         "IsGlobalEngineEnabled",
+                         NULL,
+                         G_VARIANT_TYPE ("(b)"),
+                         ibus_bus_is_global_engine_enabled_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_is_global_engine_enabled_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1606,9 +1764,7 @@ IBusEngineDesc* ibus_bus_get_global_engine (IBusBus *bus)
                                  IBUS_PATH_IBUS,
                                  "org.freedesktop.DBus.Properties",
                                  "Get",
-                                 g_variant_new ("(ss)",
-                                                IBUS_INTERFACE_IBUS,
-                                                "GlobalEngine"),
+                                 g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "GlobalEngine"),
                                  G_VARIANT_TYPE ("(v)"));
 
     if (result) {
@@ -1630,7 +1786,18 @@ void ibus_bus_get_global_engine_async (IBusBus* bus, gint timeout_msec, GCancell
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Get", g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "GlobalEngine"), G_VARIANT_TYPE ("(v)"), ibus_bus_get_global_engine_async,timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Get",
+                         g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "GlobalEngine"),
+                         G_VARIANT_TYPE ("(v)"),
+                         ibus_bus_get_global_engine_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 IBusEngineDesc* ibus_bus_get_global_engine_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1690,7 +1857,18 @@ void ibus_bus_set_global_engine_async (IBusBus* bus, const gchar* global_engine,
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (global_engine != NULL);
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "SetGlobalEngine", g_variant_new ("(s)", global_engine), NULL, /* no return value */ ibus_bus_set_global_engine_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         IBUS_INTERFACE_IBUS,
+                         "SetGlobalEngine",
+                         g_variant_new ("(s)", global_engine),
+                         NULL, /* no return value */
+                         ibus_bus_set_global_engine_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_set_global_engine_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1720,10 +1898,7 @@ gboolean ibus_bus_preload_engines (IBusBus* bus, const gchar* const* names)
                              IBUS_PATH_IBUS,
                              "org.freedesktop.DBus.Properties",
                              "Set",
-                             g_variant_new ("(ssv)",
-                                            IBUS_INTERFACE_IBUS,
-                                            "PreloadEngines",
-                                            variant),
+                             g_variant_new ("(ssv)", IBUS_INTERFACE_IBUS, "PreloadEngines", variant),
                              NULL);
 
     if (result) {
@@ -1742,7 +1917,18 @@ void ibus_bus_preload_engines_async (IBusBus* bus, const gchar* const* names, gi
     g_return_if_fail (names != NULL && names[0] != NULL);
 
     variant = g_variant_new_strv(names, -1);
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Set", g_variant_new ("(ssv)", IBUS_INTERFACE_IBUS, "PreloadEngines", variant), NULL, /* no return value */ ibus_bus_preload_engines_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Set",
+                         g_variant_new ("(ssv)", IBUS_INTERFACE_IBUS, "PreloadEngines", variant),
+                         NULL, /* no return value */
+                         ibus_bus_preload_engines_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_preload_engines_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1771,9 +1957,7 @@ GVariant* ibus_bus_get_ibus_property (IBusBus* bus, const gchar* property_name)
                              IBUS_PATH_IBUS,
                              "org.freedesktop.DBus.Properties",
                              "Get",
-                             g_variant_new ("(ss)",
-                                            IBUS_INTERFACE_IBUS,
-                                            property_name),
+                             g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, property_name),
                              G_VARIANT_TYPE ("(v)"));
 
     if (result) {
@@ -1789,7 +1973,18 @@ void ibus_bus_get_ibus_property_async (IBusBus* bus, const gchar* property_name,
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (property_name != NULL);
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Get", g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, property_name), G_VARIANT_TYPE ("(v)"), ibus_bus_get_ibus_property_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Get",
+                         g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, property_name),
+                         G_VARIANT_TYPE ("(v)"),
+                         ibus_bus_get_ibus_property_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 GVariant* ibus_bus_get_ibus_property_async_finish (IBusBus* bus, GAsyncResult *res, GError** error) 
@@ -1828,10 +2023,7 @@ void ibus_bus_set_ibus_property (IBusBus* bus, const gchar *property_name, GVari
                              IBUS_PATH_IBUS,
                              "org.freedesktop.DBus.Properties",
                              "Set",
-                             g_variant_new ("(ssv)",
-                                            IBUS_INTERFACE_IBUS,
-                                            property_name,
-                                            value),
+                             g_variant_new ("(ssv)", IBUS_INTERFACE_IBUS, property_name, value),
                              NULL);
 
     if (result) {
@@ -1844,7 +2036,18 @@ void ibus_bus_set_ibus_property_async (IBusBus* bus, const gchar* property_name,
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (property_name != NULL);
 
-    ibus_bus_call_async (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, "org.freedesktop.DBus.Properties", "Set", g_variant_new ("(ssv)", IBUS_INTERFACE_IBUS, property_name, value), NULL, /* no return value */ ibus_bus_set_ibus_property_async, timeout_msec, cancellable, callback, user_data);
+    ibus_bus_call_async (bus,
+                         IBUS_SERVICE_IBUS,
+                         IBUS_PATH_IBUS,
+                         "org.freedesktop.DBus.Properties",
+                         "Set",
+                         g_variant_new ("(ssv)", IBUS_INTERFACE_IBUS, property_name, value),
+                         NULL, /* no return value */
+                         ibus_bus_set_ibus_property_async,
+                         timeout_msec,
+                         cancellable,
+                         callback,
+                         user_data);
 }
 
 gboolean ibus_bus_set_ibus_property_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1929,5 +2132,16 @@ static void ibus_bus_call_async (IBusBus* bus, const gchar* service, const gchar
             iface = IBUS_INTERFACE_PORTAL;
     }
 
-    g_dbus_connection_call (bus->priv->connection, service, path, iface, member, params, replyType, G_DBUS_CALL_FLAGS_NO_AUTO_START, timeoutMsec, cancellable, (GAsyncReadyCallback) ibus_bus_call_async_done, task);
+    g_dbus_connection_call (bus->priv->connection,
+                            service,
+                            path,
+                            iface,
+                            member,
+                            params,
+                            replyType,
+                            G_DBUS_CALL_FLAGS_NO_AUTO_START,
+                            timeoutMsec,
+                            cancellable,
+                            (GAsyncReadyCallback) ibus_bus_call_async_done,
+                            task);
 }

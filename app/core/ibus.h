@@ -35,7 +35,7 @@
 #include "ibusenginedesc.h"
 #include "ibusobservedpath.h"
 #include "ibuscomponent.h"
-#include "ibusconfig.h"
+#include "ibus-config.h"
 #include "ibusconfigservice.h"
 #include "ibuspanelservice.h"
 #include "ibusutil.h"

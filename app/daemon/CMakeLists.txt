@@ -120,9 +120,6 @@ file(GLOB IBUS_DAEMON_SRC
 
         ibuskeyuni.c
 
-        ibusconfig.c
-        ibusconfig.h
-
         ibusinputcontext.c
         ibusinputcontext.h
         )

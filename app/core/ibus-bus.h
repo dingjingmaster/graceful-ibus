@@ -20,7 +20,7 @@
 #include <glib.h>
 #include <gio/gio.h>
 #include "ibus-main.h"
-#include "ibusconfig.h"
+#include "ibus-config.h"
 #include "ibuscomponent.h"
 #include "ibusinputcontext.h"
 
@@ -67,7 +67,7 @@ struct _IBusBusClass
     /* class members */
 };
 
-GType       ibus_bus_get_type          (void);
+GType ibus_bus_get_type (void);
 
 /**
  * ibus_bus_new:
@@ -77,7 +77,7 @@ GType       ibus_bus_get_type          (void);
  * Returns: A newly allocated #IBusBus instance, and the instance is not
  * floating.
  */
-IBusBus     *ibus_bus_new               (void);
+IBusBus* ibus_bus_new (void);
 
 /**
  * ibus_bus_new_async:
@@ -88,7 +88,7 @@ IBusBus     *ibus_bus_new               (void);
  * Returns: A newly allocated #IBusBus instance, and the instance is not
  * floating.
  */
-IBusBus     *ibus_bus_new_async         (void);
+IBusBus* ibus_bus_new_async (void);
 
 /**
  * ibus_bus_new_async_client:
@@ -101,7 +101,7 @@ IBusBus     *ibus_bus_new_async         (void);
  * Returns: A newly allocated #IBusBus instance, and the instance is not
  * floating.
  */
-IBusBus     *ibus_bus_new_async_client  (void);
+IBusBus* ibus_bus_new_async_client (void);
 
 
 /**
@@ -112,7 +112,7 @@ IBusBus     *ibus_bus_new_async_client  (void);
  *
  * Returns: %TRUE if @bus is connected, %FALSE otherwise.
  */
-gboolean     ibus_bus_is_connected      (IBusBus        *bus);
+gboolean ibus_bus_is_connected (IBusBus* bus);
 
 /**
  * ibus_bus_get_connection:
@@ -122,8 +122,7 @@ gboolean     ibus_bus_is_connected      (IBusBus        *bus);
  *
  * Returns: (transfer none): A #GDBusConnection of an #IBusBus instance.
  */
-GDBusConnection *
-ibus_bus_get_connection    (IBusBus        *bus);
+GDBusConnection* ibus_bus_get_connection (IBusBus* bus);
 
 /**
  * ibus_bus_get_service_name:
@@ -133,7 +132,7 @@ ibus_bus_get_connection    (IBusBus        *bus);
  *
  * Returns: at dbus name.
  */
-const gchar * ibus_bus_get_service_name (IBusBus        *bus);
+const gchar* ibus_bus_get_service_name (IBusBus* bus);
 
 /**
  * ibus_bus_hello:
@@ -144,7 +143,7 @@ const gchar * ibus_bus_get_service_name (IBusBus        *bus);
  *
  * Returns: The unique name of IBus process in DBus.
  */
-const gchar *ibus_bus_hello             (IBusBus        *bus);
+const gchar* ibus_bus_hello (IBusBus* bus);
 
 /**
  * ibus_bus_request_name:
@@ -156,9 +155,7 @@ const gchar *ibus_bus_hello             (IBusBus        *bus);
  *
  * Returns: 0 if failed; IBusBusRequestNameReply otherwise.
  */
-guint32      ibus_bus_request_name      (IBusBus        *bus,
-                                         const gchar    *name,
-                                         guint32         flags);
+guint32 ibus_bus_request_name (IBusBus* bus, const gchar* name, guint32 flags);
 
 /**
  * ibus_bus_request_name_async:
@@ -173,14 +170,7 @@ guint32      ibus_bus_request_name      (IBusBus        *bus,
  *
  * Request a name from IBus daemon asynchronously.
  */
-void        ibus_bus_request_name_async (IBusBus        *bus,
-                                         const gchar    *name,
-                                         guint           flags,
-                                         gint            timeout_msec,
-                                         GCancellable   *cancellable,
-                                         GAsyncReadyCallback
-                                         callback,
-                                         gpointer        user_data);
+void ibus_bus_request_name_async (IBusBus* bus, const gchar* name, guint flags, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_request_name_async_finish:
@@ -193,10 +183,7 @@ void        ibus_bus_request_name_async (IBusBus        *bus,
  *
  * Returns: 0 if failed; positive number otherwise.
  */
-guint       ibus_bus_request_name_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+guint ibus_bus_request_name_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_release_name:
@@ -207,8 +194,7 @@ guint       ibus_bus_request_name_async_finish
  *
  * Returns: 0 if failed; positive number otherwise.
  */
-guint        ibus_bus_release_name      (IBusBus        *bus,
-                                         const gchar    *name);
+guint ibus_bus_release_name (IBusBus* bus, const gchar* name);
 
 /**
  * ibus_bus_release_name_async:
@@ -222,14 +208,7 @@ guint        ibus_bus_release_name      (IBusBus        *bus,
  *
  * Release a name to IBus daemon asynchronously.
  */
-void         ibus_bus_release_name_async
-    (IBusBus        *bus,
-     const gchar    *name,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_release_name_async (IBusBus* bus, const gchar* name, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_release_name_async_finish:
@@ -242,10 +221,7 @@ void         ibus_bus_release_name_async
  *
  * Returns: 0 if failed; positive number otherwise.
  */
-guint        ibus_bus_release_name_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+guint ibus_bus_release_name_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_list_queued_owners:
@@ -258,9 +234,7 @@ guint        ibus_bus_release_name_async_finish
  * Returns: (transfer full) (element-type utf8):
  *           The unique bus names of connections currently queued for @name.
  */
-GList *      ibus_bus_list_queued_owners
-    (IBusBus      *bus,
-     const gchar  *name);
+GList* ibus_bus_list_queued_owners (IBusBus* bus, const gchar* name);
 
 /**
  * ibus_bus_name_has_owner:
@@ -271,8 +245,7 @@ GList *      ibus_bus_list_queued_owners
  *
  * Returns: %TRUE if the name has owner, %FALSE otherwise.
  */
-gboolean     ibus_bus_name_has_owner    (IBusBus        *bus,
-                                         const gchar    *name);
+gboolean ibus_bus_name_has_owner (IBusBus* bus, const gchar* name);
 
 /**
  * ibus_bus_name_has_owner_async:
@@ -286,14 +259,7 @@ gboolean     ibus_bus_name_has_owner    (IBusBus        *bus,
  *
  * Checks whether the name has owner asynchronously.
  */
-void         ibus_bus_name_has_owner_async
-    (IBusBus        *bus,
-     const gchar    *name,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_name_has_owner_async (IBusBus* bus, const gchar* name, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_name_has_owner_async_finish:
@@ -306,10 +272,7 @@ void         ibus_bus_name_has_owner_async
  *
  * Returns: %TRUE if the name has owner, %FALSE otherwise.
  */
-gboolean     ibus_bus_name_has_owner_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_name_has_owner_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_list_names:
@@ -321,7 +284,7 @@ gboolean     ibus_bus_name_has_owner_async_finish
  *
  * Returns: (transfer full) (element-type utf8): Lists that attached to @bus.
  */
-GList       *ibus_bus_list_names        (IBusBus        *bus);
+GList* ibus_bus_list_names (IBusBus* bus);
 
 /**
  * ibus_bus_add_match:
@@ -332,8 +295,7 @@ GList       *ibus_bus_list_names        (IBusBus        *bus);
  *
  * Returns: %TRUE if the rule is added. %FALSE otherwise.
  */
-gboolean     ibus_bus_add_match         (IBusBus        *bus,
-                                         const gchar    *rule);
+gboolean ibus_bus_add_match (IBusBus* bus, const gchar* rule);
 
 /**
  * ibus_bus_add_match_async:
@@ -347,13 +309,7 @@ gboolean     ibus_bus_add_match         (IBusBus        *bus,
  *
  * Add a match rule to an #IBusBus asynchronously.
  */
-void         ibus_bus_add_match_async   (IBusBus        *bus,
-                                         const gchar    *rule,
-                                         gint            timeout_msec,
-                                         GCancellable   *cancellable,
-                                         GAsyncReadyCallback
-                                         callback,
-                                         gpointer        user_data);
+void ibus_bus_add_match_async (IBusBus* bus, const gchar* rule, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_add_match_async_finish:
@@ -366,10 +322,7 @@ void         ibus_bus_add_match_async   (IBusBus        *bus,
  *
  * Returns: %TRUE if the rule is added. %FALSE otherwise.
  */
-gboolean     ibus_bus_add_match_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_add_match_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_remove_match:
@@ -380,8 +333,7 @@ gboolean     ibus_bus_add_match_async_finish
  *
  * Returns: %TRUE if the rule is removed. %FALSE otherwise.
  */
-gboolean     ibus_bus_remove_match      (IBusBus        *bus,
-                                         const gchar    *rule);
+gboolean ibus_bus_remove_match (IBusBus* bus, const gchar* rule);
 
 /**
  * ibus_bus_remove_match_async:
@@ -395,14 +347,7 @@ gboolean     ibus_bus_remove_match      (IBusBus        *bus,
  *
  * Remove a match rule to an IBusBus asynchronously.
  */
-void         ibus_bus_remove_match_async
-    (IBusBus        *bus,
-     const gchar    *rule,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_remove_match_async (IBusBus* bus, const gchar* rule, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_remove_match_async_finish:
@@ -415,10 +360,7 @@ void         ibus_bus_remove_match_async
  *
  * Returns: %TRUE if the rule is removed. %FALSE otherwise.
  */
-gboolean     ibus_bus_remove_match_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_remove_match_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_get_name_owner:
@@ -429,8 +371,7 @@ gboolean     ibus_bus_remove_match_async_finish
  *
  * Returns: Owner of the name. The returned value must be freed with g_free().
  */
-gchar       *ibus_bus_get_name_owner    (IBusBus        *bus,
-                                         const gchar    *name);
+gchar* ibus_bus_get_name_owner (IBusBus* bus, const gchar* name);
 
 /**
  * ibus_bus_get_name_owner_async:
@@ -444,14 +385,7 @@ gchar       *ibus_bus_get_name_owner    (IBusBus        *bus,
  *
  * Return the name owner asynchronously.
  */
-void         ibus_bus_get_name_owner_async
-    (IBusBus        *bus,
-     const gchar    *name,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_get_name_owner_async (IBusBus* bus, const gchar* name, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_get_name_owner_async_finish:
@@ -464,10 +398,7 @@ void         ibus_bus_get_name_owner_async
  *
  * Returns: Owner of the name. The returned value must be freed with g_free().
  */
-gchar       *ibus_bus_get_name_owner_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gchar* ibus_bus_get_name_owner_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 /* declare ibus methods */
 
 /**
@@ -479,8 +410,7 @@ gchar       *ibus_bus_get_name_owner_async_finish
  *
  * Returns: %TRUE if the "Exit" call is successful, %FALSE otherwise.
  */
-gboolean     ibus_bus_exit              (IBusBus        *bus,
-                                         gboolean        restart);
+gboolean ibus_bus_exit (IBusBus* bus, gboolean restart);
 
 /**
  * ibus_bus_exit_async:
@@ -494,13 +424,7 @@ gboolean     ibus_bus_exit              (IBusBus        *bus,
  *
  * Exit or restart ibus-daemon asynchronously.
  */
-void        ibus_bus_exit_async         (IBusBus        *bus,
-                                         gboolean        restart,
-                                         gint            timeout_msec,
-                                         GCancellable   *cancellable,
-                                         GAsyncReadyCallback
-                                         callback,
-                                         gpointer        user_data);
+void ibus_bus_exit_async (IBusBus* bus, gboolean restart, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_exit_async_finish:
@@ -513,9 +437,7 @@ void        ibus_bus_exit_async         (IBusBus        *bus,
  *
  * Returns: %TRUE if the "Exit" call is successful, %FALSE otherwise.
  */
-gboolean    ibus_bus_exit_async_finish  (IBusBus        *bus,
-                                         GAsyncResult   *res,
-                                         GError        **error);
+gboolean ibus_bus_exit_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_create_input_context:
@@ -527,10 +449,7 @@ gboolean    ibus_bus_exit_async_finish  (IBusBus        *bus,
  * Returns: (transfer full): A newly allocated #IBusInputContext if the
  *      "CreateInputContext" call is succeeded, %NULL otherwise.
  */
-IBusInputContext *
-ibus_bus_create_input_context
-    (IBusBus        *bus,
-     const gchar    *client_name);
+IBusInputContext* ibus_bus_create_input_context (IBusBus* bus, const gchar* clientName);
 
 /**
  * ibus_bus_create_input_context_async:
@@ -565,11 +484,7 @@ void        ibus_bus_create_input_context_async
  * Returns: (transfer full): A newly allocated #IBusInputContext if the
  *      "CreateInputContext" call is succeeded, %NULL otherwise.
  */
-IBusInputContext *
-ibus_bus_create_input_context_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+IBusInputContext* ibus_bus_create_input_context_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_current_input_context:
@@ -581,8 +496,7 @@ ibus_bus_create_input_context_async_finish
  *          "CurrentInputContext" call succeeded, %NULL otherwise. The return
  *          value must be freed with g_free().
  */
-gchar       *ibus_bus_current_input_context
-    (IBusBus        *bus);
+gchar* ibus_bus_current_input_context (IBusBus* bus);
 
 /**
  * ibus_bus_current_input_context_async:
@@ -595,13 +509,7 @@ gchar       *ibus_bus_current_input_context
  *
  * Get the current focused input context asynchronously.
  */
-void         ibus_bus_current_input_context_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_current_input_context_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_current_input_context_async_finish:
@@ -616,10 +524,7 @@ void         ibus_bus_current_input_context_async
  *          "CurrentInputContext" call succeeded, %NULL otherwise. The return
  *          value must be freed with g_free().
  */
-gchar       *ibus_bus_current_input_context_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gchar* ibus_bus_current_input_context_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_register_component:
@@ -630,9 +535,7 @@ gchar       *ibus_bus_current_input_context_async_finish
  *
  * Returns: %TRUE if the "RegisterComponent" call is successful, %FALSE otherwise.
  */
-gboolean     ibus_bus_register_component
-    (IBusBus        *bus,
-     IBusComponent  *component);
+gboolean ibus_bus_register_component (IBusBus* bus, IBusComponent* component);
 
 /**
  * ibus_bus_register_component_async:
@@ -646,14 +549,7 @@ gboolean     ibus_bus_register_component
  *
  * Register a component to an #IBusBus asynchronously.
  */
-void         ibus_bus_register_component_async
-    (IBusBus        *bus,
-     IBusComponent  *component,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer            user_data);
+void ibus_bus_register_component_async (IBusBus* bus, IBusComponent* component, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_register_component_async_finish:
@@ -666,10 +562,7 @@ void         ibus_bus_register_component_async
  *
  * Returns: %TRUE if the "RegisterComponent" call is successful, %FALSE otherwise.
  */
-gboolean     ibus_bus_register_component_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_register_component_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_list_engines:
@@ -680,7 +573,7 @@ gboolean     ibus_bus_register_component_async_finish
  * Returns: (transfer full) (element-type IBusEngineDesc):
  *         A List of engines.
  */
-GList       *ibus_bus_list_engines      (IBusBus        *bus);
+GList* ibus_bus_list_engines (IBusBus* bus);
 
 /**
  * ibus_bus_list_engines_async:
@@ -693,13 +586,7 @@ GList       *ibus_bus_list_engines      (IBusBus        *bus);
  *
  * List engines asynchronously.
  */
-void         ibus_bus_list_engines_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_list_engines_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_list_engines_async_finish:
@@ -713,10 +600,7 @@ void         ibus_bus_list_engines_async
  * Returns: (transfer full) (element-type IBusEngineDesc):
  *         A List of engines.
  */
-GList       *ibus_bus_list_engines_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+GList* ibus_bus_list_engines_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 #ifndef IBUS_DISABLE_DEPRECATED
 /**
@@ -732,8 +616,7 @@ GList       *ibus_bus_list_engines_async_finish
  * /desktop/ibus/general/preload-engines instead.
  */
 IBUS_DEPRECATED
-GList       *ibus_bus_list_active_engines
-    (IBusBus        *bus);
+GList* ibus_bus_list_active_engines (IBusBus* bus);
 
 /**
  * ibus_bus_list_active_engines_async:
@@ -750,13 +633,7 @@ GList       *ibus_bus_list_active_engines
  * /desktop/ibus/general/preload-engines instead.
  */
 IBUS_DEPRECATED
-void         ibus_bus_list_active_engines_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_list_active_engines_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_list_active_engines_async_finish:
@@ -774,10 +651,7 @@ void         ibus_bus_list_active_engines_async
  * /desktop/ibus/general/preload-engines instead.
  */
 IBUS_DEPRECATED
-GList       *ibus_bus_list_active_engines_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError         **error);
+GList* ibus_bus_list_active_engines_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 #endif /* IBUS_DISABLE_DEPRECATED */
 
 /**
@@ -792,10 +666,7 @@ GList       *ibus_bus_list_active_engines_async_finish
  * Returns: (array zero-terminated=1) (transfer full):
  *         A %NULL-terminated array of engines.
  */
-IBusEngineDesc **
-ibus_bus_get_engines_by_names
-    (IBusBus             *bus,
-     const gchar * const *names);
+IBusEngineDesc** ibus_bus_get_engines_by_names (IBusBus* bus, const gchar* const* names);
 #ifndef IBUS_DISABLE_DEPRECATED
 /**
  * ibus_bus_get_use_sys_layout:
@@ -809,8 +680,7 @@ ibus_bus_get_engines_by_names
  * /desktop/ibus/general/use_system_keyboard_layout instead.
  */
 IBUS_DEPRECATED
-gboolean     ibus_bus_get_use_sys_layout
-    (IBusBus        *bus);
+gboolean ibus_bus_get_use_sys_layout (IBusBus* bus);
 
 /**
  * ibus_bus_get_use_sys_layout_async:
@@ -827,13 +697,7 @@ gboolean     ibus_bus_get_use_sys_layout
  * /desktop/ibus/general/use_system_keyboard_layout instead.
  */
 IBUS_DEPRECATED
-void         ibus_bus_get_use_sys_layout_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_get_use_sys_layout_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_get_use_sys_layout_async_finish:
@@ -850,10 +714,7 @@ void         ibus_bus_get_use_sys_layout_async
  * /desktop/ibus/general/use_system_keyboard_layout instead.
  */
 IBUS_DEPRECATED
-gboolean     ibus_bus_get_use_sys_layout_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_get_use_sys_layout_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_get_use_global_engine:
@@ -867,8 +728,7 @@ gboolean     ibus_bus_get_use_sys_layout_async_finish
  * Deprecated: 1.5.3: Currently global engine is always used.
  */
 IBUS_DEPRECATED
-gboolean     ibus_bus_get_use_global_engine
-    (IBusBus        *bus);
+gboolean ibus_bus_get_use_global_engine (IBusBus* bus);
 
 /**
  * ibus_bus_get_use_global_engine_async:
@@ -884,13 +744,7 @@ gboolean     ibus_bus_get_use_global_engine
  * Deprecated: 1.5.3: Currently global engine is always used.
  */
 IBUS_DEPRECATED
-void         ibus_bus_get_use_global_engine_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_get_use_global_engine_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_get_use_global_engine_async_finish:
@@ -906,10 +760,7 @@ void         ibus_bus_get_use_global_engine_async
  * Deprecated: 1.5.3: Currently global engine is always used.
  */
 IBUS_DEPRECATED
-gboolean     ibus_bus_get_use_global_engine_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError         **error);
+gboolean ibus_bus_get_use_global_engine_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_is_global_engine_enabled:
@@ -926,8 +777,7 @@ gboolean     ibus_bus_get_use_global_engine_async_finish
  * ibus_bus_get_global_engine() returns NULL.
  */
 IBUS_DEPRECATED
-gboolean     ibus_bus_is_global_engine_enabled
-    (IBusBus        *bus);
+gboolean ibus_bus_is_global_engine_enabled (IBusBus* bus);
 
 /**
  * ibus_bus_is_global_engine_enabled_async:
@@ -947,13 +797,7 @@ gboolean     ibus_bus_is_global_engine_enabled
  * ibus_bus_get_global_engine() returns NULL.
  */
 IBUS_DEPRECATED
-void         ibus_bus_is_global_engine_enabled_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer         user_data);
+void ibus_bus_is_global_engine_enabled_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_is_global_engine_enabled_async_finish:
@@ -973,10 +817,7 @@ void         ibus_bus_is_global_engine_enabled_async
  * ibus_bus_get_global_engine() returns NULL.
  */
 IBUS_DEPRECATED
-gboolean     ibus_bus_is_global_engine_enabled_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_is_global_engine_enabled_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 #endif /* IBUS_DISABLE_DEPRECATED */
 
 /**
@@ -988,8 +829,7 @@ gboolean     ibus_bus_is_global_engine_enabled_async_finish
  * Returns: (transfer full): The description of current global engine,
  * or %NULL if there is no global engine.
  */
-IBusEngineDesc *
-ibus_bus_get_global_engine (IBusBus        *bus);
+IBusEngineDesc* ibus_bus_get_global_engine (IBusBus* bus);
 
 /**
  * ibus_bus_get_global_engine_async:
@@ -1002,13 +842,7 @@ ibus_bus_get_global_engine (IBusBus        *bus);
  *
  * Get the description of current global engine asynchronously.
  */
-void         ibus_bus_get_global_engine_async
-    (IBusBus        *bus,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_get_global_engine_async (IBusBus* bus, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_get_global_engine_async_finish:
@@ -1022,11 +856,7 @@ void         ibus_bus_get_global_engine_async
  * Returns: (transfer none): The description of current global engine,
  * or %NULL if there is no global engine.
  */
-IBusEngineDesc *
-ibus_bus_get_global_engine_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+IBusEngineDesc* ibus_bus_get_global_engine_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_set_global_engine:
@@ -1037,8 +867,7 @@ ibus_bus_get_global_engine_async_finish
  *
  * Returns: %TRUE if the global engine was set successfully.
  */
-gboolean     ibus_bus_set_global_engine (IBusBus        *bus,
-                                         const gchar    *global_engine);
+gboolean ibus_bus_set_global_engine (IBusBus* bus, const gchar* globalEngine);
 
 /**
  * ibus_bus_set_global_engine_async:
@@ -1052,14 +881,7 @@ gboolean     ibus_bus_set_global_engine (IBusBus        *bus,
  *
  * Set current global engine asynchronously.
  */
-void         ibus_bus_set_global_engine_async
-    (IBusBus        *bus,
-     const gchar    *global_engine,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_set_global_engine_async (IBusBus* bus, const gchar* globalEngine, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_set_global_engine_async_finish:
@@ -1072,10 +894,7 @@ void         ibus_bus_set_global_engine_async
  *
  * Returns: %TRUE if no IPC errros. %FALSE otherwise.
  */
-gboolean     ibus_bus_set_global_engine_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_set_global_engine_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_set_watch_dbus_signal:
@@ -1085,9 +904,7 @@ gboolean     ibus_bus_set_global_engine_async_finish
  *
  * Start or stop watching the NameOwnerChanged DBus signal.
  */
-void         ibus_bus_set_watch_dbus_signal
-    (IBusBus        *bus,
-     gboolean        watch);
+void ibus_bus_set_watch_dbus_signal (IBusBus* bus, gboolean watch);
 
 /**
  * ibus_bus_set_watch_ibus_signal:
@@ -1097,9 +914,7 @@ void         ibus_bus_set_watch_dbus_signal
  *
  * Start or stop watching the GlobalEngineChanged IBus signal.
  */
-void         ibus_bus_set_watch_ibus_signal
-    (IBusBus        *bus,
-     gboolean        watch);
+void ibus_bus_set_watch_ibus_signal (IBusBus* bus, gboolean watch);
 
 /* declare config apis */
 /**
@@ -1111,7 +926,7 @@ void         ibus_bus_set_watch_ibus_signal
  * Returns: (transfer none): An #IBusConfig object which is configurable with
  * @bus.
  */
-IBusConfig  *ibus_bus_get_config        (IBusBus        *bus);
+IBusConfig* ibus_bus_get_config (IBusBus* bus);
 
 /**
  * ibus_bus_preload_engines:
@@ -1122,8 +937,7 @@ IBusConfig  *ibus_bus_get_config        (IBusBus        *bus);
  *
  * Returns: %TRUE if components start. %FALSE otherwise.
  */
-gboolean     ibus_bus_preload_engines   (IBusBus        *bus,
-                                         const gchar * const *names);
+gboolean ibus_bus_preload_engines (IBusBus* bus, const gchar* const* names);
 
 /**
  * ibus_bus_preload_engines_async:
@@ -1137,15 +951,7 @@ gboolean     ibus_bus_preload_engines   (IBusBus        *bus,
  *
  * Start bus components by engine names asynchronously.
  */
-void         ibus_bus_preload_engines_async
-    (IBusBus        *bus,
-     const gchar * const
-     *names,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer        user_data);
+void ibus_bus_preload_engines_async (IBusBus* bus, const gchar* const* names, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_preload_engines_async_finish:
@@ -1158,10 +964,7 @@ void         ibus_bus_preload_engines_async
  *
  * Returns: %TRUE if component starts. %FALSE otherwise.
  */
-gboolean     ibus_bus_preload_engines_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_preload_engines_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_get_ibus_property:
@@ -1173,8 +976,7 @@ gboolean     ibus_bus_preload_engines_async_finish
  * Returns: (transfer full): The value in org.freedesktop.DBus.Properties.Get
  *           The returned value must be freed with g_variant_unref().
  */
-GVariant *   ibus_bus_get_ibus_property (IBusBus        *bus,
-                                         const gchar    *property_name);
+GVariant* ibus_bus_get_ibus_property (IBusBus* bus, const gchar* propName);
 
 /**
  * ibus_bus_get_ibus_property_async:
@@ -1188,14 +990,7 @@ GVariant *   ibus_bus_get_ibus_property (IBusBus        *bus,
  *
  * Get org.freedesktop.DBus.Properties asynchronously.
  */
-void ibus_bus_get_ibus_property_async
-    (IBusBus        *bus,
-     const gchar    *property_name,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer             user_data);
+void ibus_bus_get_ibus_property_async (IBusBus* bus, const gchar* propName, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_get_ibus_property_async_finish:
@@ -1209,10 +1004,7 @@ void ibus_bus_get_ibus_property_async
  * Returns: (transfer full): The value in org.freedesktop.DBus.Properties.Get
  *           The returned value must be freed with g_variant_unref().
  */
-GVariant *   ibus_bus_get_ibus_property_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+GVariant* ibus_bus_get_ibus_property_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 /**
  * ibus_bus_set_ibus_property:
@@ -1222,9 +1014,7 @@ GVariant *   ibus_bus_get_ibus_property_async_finish
  *
  * Set org.freedesktop.DBus.Properties.
  */
-void         ibus_bus_set_ibus_property (IBusBus        *bus,
-                                         const gchar    *property_name,
-                                         GVariant       *value);
+void ibus_bus_set_ibus_property (IBusBus* bus, const gchar* propeName, GVariant* value);
 
 /**
  * ibus_bus_set_ibus_property_async:
@@ -1239,15 +1029,7 @@ void         ibus_bus_set_ibus_property (IBusBus        *bus,
  *
  * Set org.freedesktop.DBus.Properties asynchronously.
  */
-void         ibus_bus_set_ibus_property_async
-    (IBusBus        *bus,
-     const gchar    *property_name,
-     GVariant       *value,
-     gint            timeout_msec,
-     GCancellable   *cancellable,
-     GAsyncReadyCallback
-     callback,
-     gpointer             user_data);
+void ibus_bus_set_ibus_property_async (IBusBus* bus, const gchar* propName, GVariant* value, gint timMsec, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata);
 
 /**
  * ibus_bus_set_ibus_property_async_finish:
@@ -1260,10 +1042,7 @@ void         ibus_bus_set_ibus_property_async
  *
  * Returns: %TRUE if property is set with async. %FALSE failed.
  */
-gboolean     ibus_bus_set_ibus_property_async_finish
-    (IBusBus        *bus,
-     GAsyncResult   *res,
-     GError        **error);
+gboolean ibus_bus_set_ibus_property_async_finish (IBusBus* bus, GAsyncResult* res, GError** error);
 
 G_END_DECLS
 
