@@ -28,9 +28,9 @@
  * <ulink url="https://github.com/ibus/ibus/wiki/DevXML">https://github.com/ibus/ibus/wiki/DevXML</ulink>
  */
 
+#include "ibus-xml.h"
 #include "ibusobservedpath.h"
 #include "ibus-engine-desc.h"
-#include "ibusxml.h"
 #include "ibus-serializable.h"
 
 /*

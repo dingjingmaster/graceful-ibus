@@ -28,7 +28,8 @@
 #include <glib/gstdio.h>
 #include <gio/gio.h>
 #include <string.h>
-#include "ibusxml.h"
+
+#include "ibus-xml.h"
 
 #ifdef ENABLE_NLS
 #include <libintl.h>

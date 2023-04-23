@@ -30,7 +30,7 @@
 #include "ibuskeys.h"
 #include "ibusenumtypes.h"
 #include "ibushotkey.h"
-#include "ibusxml.h"
+#include "ibus-xml.h"
 #include "ibus-engine-desc.h"
 #include "ibusobservedpath.h"
 #include "ibus-component.h"

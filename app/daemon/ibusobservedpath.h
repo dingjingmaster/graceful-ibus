@@ -36,7 +36,7 @@
  * such as monitor modification, directory tree traversal.
  */
 
-#include "ibusxml.h"
+#include "ibus-xml.h"
 #include "ibus-serializable.h"
 
 /*

@@ -4,7 +4,8 @@
 
 #include "ibus-engine-desc.h"
 #include <stdlib.h>
-#include "ibusxml.h"
+
+#include "ibus-xml.h"
 #include "ibus-internal.h"
 
 enum {

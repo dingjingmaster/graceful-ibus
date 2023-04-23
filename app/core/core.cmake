@@ -12,6 +12,9 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
         ${CMAKE_SOURCE_DIR}/app/core/ibus-bus.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-bus.c
 
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-xml.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-xml.c
+
         ${CMAKE_SOURCE_DIR}/app/core/ibus-main.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-main.c
 

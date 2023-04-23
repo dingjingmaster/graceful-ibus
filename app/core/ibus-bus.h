@@ -29,18 +29,12 @@
  */
 
 /* define GOBJECT macros */
-#define IBUS_TYPE_BUS             \
-    (ibus_bus_get_type ())
-#define IBUS_BUS(obj)             \
-    (G_TYPE_CHECK_INSTANCE_CAST ((obj), IBUS_TYPE_BUS, IBusBus))
-#define IBUS_BUS_CLASS(klass)     \
-    (G_TYPE_CHECK_CLASS_CAST ((klass), IBUS_TYPE_BUS, IBusBusClass))
-#define IBUS_IS_BUS(obj)          \
-    (G_TYPE_CHECK_INSTANCE_TYPE ((obj), IBUS_TYPE_BUS))
-#define IBUS_IS_BUS_CLASS(klass)  \
-    (G_TYPE_CHECK_CLASS_TYPE ((klass), IBUS_TYPE_BUS))
-#define IBUS_BUS_GET_CLASS(obj)   \
-    (G_TYPE_INSTANCE_GET_CLASS ((obj), IBUS_TYPE_BUS, IBusBusClass))
+#define IBUS_TYPE_BUS                   (ibus_bus_get_type ())
+#define IBUS_BUS(obj)                   (G_TYPE_CHECK_INSTANCE_CAST ((obj), IBUS_TYPE_BUS, IBusBus))
+#define IBUS_BUS_CLASS(klass)           (G_TYPE_CHECK_CLASS_CAST ((klass), IBUS_TYPE_BUS, IBusBusClass))
+#define IBUS_IS_BUS(obj)                (G_TYPE_CHECK_INSTANCE_TYPE ((obj), IBUS_TYPE_BUS))
+#define IBUS_IS_BUS_CLASS(klass)        (G_TYPE_CHECK_CLASS_TYPE ((klass), IBUS_TYPE_BUS))
+#define IBUS_BUS_GET_CLASS(obj)         (G_TYPE_INSTANCE_GET_CLASS ((obj), IBUS_TYPE_BUS, IBusBusClass))
 
 G_BEGIN_DECLS
 

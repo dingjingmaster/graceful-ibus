@@ -28,7 +28,7 @@
  *
  */
 
-#include "ibusxml.h"
+#include "ibus-xml.h"
 #include "ibus-serializable.h"
 
 /*

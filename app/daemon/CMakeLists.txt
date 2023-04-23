@@ -85,9 +85,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibuskeymap.c
         ibuskeymap.h
 
-        ibusxml.c
-        ibusxml.h
-
         ibusattrlist.c
         ibusattrlist.h
 
