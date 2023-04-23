@@ -24,7 +24,8 @@
 #include "connection.h"
 #include "matchrule.h"
 
-struct _BusConnection {
+struct _BusConnection
+{
     IBusObject parent;
 
     /* instance members */

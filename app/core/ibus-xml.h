@@ -33,7 +33,8 @@ G_BEGIN_DECLS
  *
  * A data type representing an XML node.
  */
-typedef struct {
+typedef struct
+{
     gchar  *name;
     gchar  *text;
     gchar  **attributes;

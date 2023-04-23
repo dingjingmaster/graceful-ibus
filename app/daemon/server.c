@@ -41,8 +41,7 @@ static BusIBusImpl *ibus = NULL;
 static char *address = NULL;
 static gboolean _restart = FALSE;
 
-static void
-_restart_server (void)
+static void restart_server (void)
 {
     char *exe;
     int fd;
@@ -379,7 +378,7 @@ bus_server_run (void)
      * becoming the daemons. So we run execv() after
      * ibus_object_destroy(ibus) is called here. */
     if (_restart) {
-        _restart_server ();
+        restart_server ();
 
         /* should not reach here */
         g_assert_not_reached ();

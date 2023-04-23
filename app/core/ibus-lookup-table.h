@@ -1,31 +1,13 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* IBus - The Input Bus
- * Copyright (C) 2008-2013 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2008-2013 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
 
 #if !defined (__IBUS_H_INSIDE__) && !defined (IBUS_COMPILATION)
 #error "Only <ibus.h> can be included directly"
 #endif
 
-#ifndef __IBUS_LOOKUP_TABLE_H_
-#define __IBUS_LOOKUP_TABLE_H_
+#ifndef GRACEFUL_IBUS_IBUS_LOOKUP_TABLE_H
+#define GRACEFUL_IBUS_IBUS_LOOKUP_TABLE_H
 
 /**
  * SECTION: ibuslookuptable
@@ -42,7 +24,7 @@
  * see_also: #IBusEngine
  */
 
-#include "ibustext.h"
+#include "ibus-text.h"
 #include "ibus-serializable.h"
 
 /*
@@ -129,8 +111,8 @@ IBusLookupTable     *ibus_lookup_table_new      (guint               page_size,
  * Append a candidate word/phrase to IBusLookupTable, and increase reference.
  */
 void                 ibus_lookup_table_append_candidate
-                                                (IBusLookupTable    *table,
-                                                 IBusText           *text);
+    (IBusLookupTable    *table,
+     IBusText           *text);
 
 /**
  * ibus_lookup_table_get_number_of_candidates:
@@ -141,7 +123,7 @@ void                 ibus_lookup_table_append_candidate
  * Returns: The number of candidates in the table
  */
 guint               ibus_lookup_table_get_number_of_candidates
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 
 /**
  * ibus_lookup_table_get_candidate:
@@ -154,8 +136,8 @@ guint               ibus_lookup_table_get_number_of_candidates
  *         #IBusText.
  */
 IBusText            *ibus_lookup_table_get_candidate
-                                                (IBusLookupTable    *table,
-                                                 guint               index);
+    (IBusLookupTable    *table,
+     guint               index);
 
 /**
  * ibus_lookup_table_append_label:
@@ -167,8 +149,8 @@ IBusText            *ibus_lookup_table_get_candidate
  * non-numeric keys such as "asdfghjkl;".
  */
 void                 ibus_lookup_table_append_label
-                                                (IBusLookupTable    *table,
-                                                 IBusText           *text);
+    (IBusLookupTable    *table,
+     IBusText           *text);
 
 /**
  * ibus_lookup_table_set_label:
@@ -181,9 +163,9 @@ void                 ibus_lookup_table_append_label
  * non-numeric keys such as "asdfghjkl;".
  */
 void                 ibus_lookup_table_set_label
-                                                (IBusLookupTable    *table,
-                                                 guint               index,
-                                                 IBusText           *text);
+    (IBusLookupTable    *table,
+     guint               index,
+     IBusText           *text);
 
 /**
  * ibus_lookup_table_get_label:
@@ -196,8 +178,8 @@ void                 ibus_lookup_table_set_label
  *         #IBusText.
  */
 IBusText            *ibus_lookup_table_get_label
-                                                (IBusLookupTable    *table,
-                                                 guint               index);
+    (IBusLookupTable    *table,
+     guint               index);
 
 
 /**
@@ -208,8 +190,8 @@ IBusText            *ibus_lookup_table_get_label
  * Set the cursor position of IBusLookupTable.
  */
 void                 ibus_lookup_table_set_cursor_pos
-                                                (IBusLookupTable    *table,
-                                                 guint               cursor_pos);
+    (IBusLookupTable    *table,
+     guint               cursor_pos);
 
 /**
  * ibus_lookup_table_get_cursor_pos:
@@ -220,7 +202,7 @@ void                 ibus_lookup_table_set_cursor_pos
  * Returns: The position of cursor.
  */
 guint                ibus_lookup_table_get_cursor_pos
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 
 /**
  * ibus_lookup_table_set_cursor_visible:
@@ -230,8 +212,8 @@ guint                ibus_lookup_table_get_cursor_pos
  * Set whether to make the cursor of an IBusLookupTable visible or not.
  */
 void                 ibus_lookup_table_set_cursor_visible
-                                                (IBusLookupTable    *table,
-                                                 gboolean            visible);
+    (IBusLookupTable    *table,
+     gboolean            visible);
 
 /**
  * ibus_lookup_table_is_cursor_visible:
@@ -242,7 +224,7 @@ void                 ibus_lookup_table_set_cursor_visible
  * Returns: Whether the cursor of @table is visible.
  */
 gboolean             ibus_lookup_table_is_cursor_visible
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 
 /**
  * ibus_lookup_table_get_cursor_in_page:
@@ -253,7 +235,7 @@ gboolean             ibus_lookup_table_is_cursor_visible
  * Returns: The position of cursor in current page.
  */
 guint                ibus_lookup_table_get_cursor_in_page
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 
 /**
  * ibus_lookup_table_set_page_size:
@@ -263,8 +245,8 @@ guint                ibus_lookup_table_get_cursor_in_page
  * Set the number of candidate shown per page.
  */
 void                 ibus_lookup_table_set_page_size
-                                                (IBusLookupTable    *table,
-                                                 guint               page_size);
+    (IBusLookupTable    *table,
+     guint               page_size);
 /**
  * ibus_lookup_table_get_page_size:
  * @table: An IBusLookupTable.
@@ -275,7 +257,7 @@ void                 ibus_lookup_table_set_page_size
 dd
  */
 guint                ibus_lookup_table_get_page_size
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 
 /**
  * ibus_lookup_table_set_round:
@@ -285,8 +267,8 @@ guint                ibus_lookup_table_get_page_size
  * Set whether to make the IBusLookupTable round or not.
  */
 void                 ibus_lookup_table_set_round
-                                                (IBusLookupTable    *table,
-                                                 gboolean            round);
+    (IBusLookupTable    *table,
+     gboolean            round);
 /**
  * ibus_lookup_table_is_round:
  * @table: An IBusLookupTable.
@@ -305,8 +287,8 @@ gboolean             ibus_lookup_table_is_round (IBusLookupTable    *table);
  * Set the orientation.
  */
 void                 ibus_lookup_table_set_orientation
-                                                (IBusLookupTable    *table,
-                                                 gint                orientation);
+    (IBusLookupTable    *table,
+     gint                orientation);
 
 /**
  * ibus_lookup_table_get_orientation:
@@ -317,7 +299,7 @@ void                 ibus_lookup_table_set_orientation
  * Returns: The orientation of the @table.
  */
 gint                 ibus_lookup_table_get_orientation
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 
 
 /**
@@ -383,7 +365,7 @@ gboolean             ibus_lookup_table_cursor_up(IBusLookupTable    *table);
  * Returns: %TRUE if succeed.
  */
 gboolean             ibus_lookup_table_cursor_down
-                                                (IBusLookupTable    *table);
+    (IBusLookupTable    *table);
 G_END_DECLS
-#endif
 
+#endif //GRACEFUL_IBUS_IBUS_LOOKUP_TABLE_H

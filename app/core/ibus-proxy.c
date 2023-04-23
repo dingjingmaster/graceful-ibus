@@ -1,34 +1,17 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* ibus - The Input Bus
- * Copyright (C) 2008-2010 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2008-2010 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
 
-#include "ibusproxy.h"
-#include "ibusmarshalers.h"
+#include "ibus-proxy.h"
+
+#include "ibus-object.h"
 #include "ibus-internal.h"
-#include "ibusobject.h"
+#include "ibusmarshalers.h"
 
-#define IBUS_PROXY_GET_PRIVATE(o)  \
-   (G_TYPE_INSTANCE_GET_PRIVATE ((o), IBUS_TYPE_PROXY, IBusProxyPrivate))
+#define IBUS_PROXY_GET_PRIVATE(o)   (G_TYPE_INSTANCE_GET_PRIVATE ((o), IBUS_TYPE_PROXY, IBusProxyPrivate))
 
-enum {
+enum
+{
     DESTROY,
     LAST_SIGNAL,
 };
@@ -40,17 +23,17 @@ static void      ibus_proxy_dispose         (GObject            *object);
 static void      ibus_proxy_real_destroy    (IBusProxy          *proxy);
 
 static void      ibus_proxy_connection_closed_cb
-                                            (GDBusConnection    *connection,
-                                             gboolean            remote_peer_vanished,
-                                             GError             *error,
-                                             IBusProxy          *proxy);
+    (GDBusConnection    *connection,
+     gboolean            remote_peer_vanished,
+     GError             *error,
+     IBusProxy          *proxy);
 static void      initable_iface_init        (GInitableIface     *initable_iface);
 static void      async_initable_iface_init  (GAsyncInitableIface
-                                                                *async_initable_iface);
+                                             *async_initable_iface);
 G_DEFINE_TYPE_WITH_CODE (IBusProxy, ibus_proxy, G_TYPE_DBUS_PROXY,
                          G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE, initable_iface_init)
-                         G_IMPLEMENT_INTERFACE (G_TYPE_ASYNC_INITABLE, async_initable_iface_init)
-                         );
+                             G_IMPLEMENT_INTERFACE (G_TYPE_ASYNC_INITABLE, async_initable_iface_init)
+);
 
 static void
 ibus_proxy_class_init (IBusProxyClass *class)
@@ -74,12 +57,12 @@ ibus_proxy_class_init (IBusProxyClass *class)
      */
     proxy_signals[DESTROY] =
         g_signal_new (I_("destroy"),
-            G_TYPE_FROM_CLASS (gobject_class),
-            G_SIGNAL_RUN_LAST,
-            G_STRUCT_OFFSET (IBusProxyClass, destroy),
-            NULL, NULL,
-            _ibus_marshal_VOID__VOID,
-            G_TYPE_NONE, 0);
+                      G_TYPE_FROM_CLASS (gobject_class),
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET (IBusProxyClass, destroy),
+                      NULL, NULL,
+                      _ibus_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0);
 }
 
 static void
@@ -157,7 +140,7 @@ ibus_proxy_init_finish (IBusProxy  *proxy,
     g_assert (error == NULL || *error == NULL);
 
     GDBusConnection *connection =
-            g_dbus_proxy_get_connection ((GDBusProxy *)proxy);
+        g_dbus_proxy_get_connection ((GDBusProxy *)proxy);
 
     if (connection == NULL || g_dbus_connection_is_closed (connection)) {
         /*
@@ -167,12 +150,12 @@ ibus_proxy_init_finish (IBusProxy  *proxy,
          */
         if (error != NULL)
             *error = g_error_new (G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
-                    "Connection is closed.");
+                                  "Connection is closed.");
         return FALSE;
     }
 
     g_signal_connect (connection, "closed",
-            G_CALLBACK (ibus_proxy_connection_closed_cb), proxy);
+                      G_CALLBACK (ibus_proxy_connection_closed_cb), proxy);
 
     return TRUE;
 }
@@ -207,7 +190,7 @@ async_initable_init_async (GAsyncInitable      *initable,
                            gpointer             user_data)
 {
     async_initable_iface_parent->init_async (initable,
-            io_priority, cancellable, callback, user_data);
+                                             io_priority, cancellable, callback, user_data);
 }
 
 static gboolean

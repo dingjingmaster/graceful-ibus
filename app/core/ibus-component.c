@@ -4,6 +4,7 @@
 
 #include "ibus-component.h"
 #include <glib/gstdio.h>
+
 #include "ibus-internal.h"
 
 enum

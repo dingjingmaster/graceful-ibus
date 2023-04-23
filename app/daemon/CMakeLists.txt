@@ -51,9 +51,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibusmarshalers.h
         ibusmarshalers.c
 
-        ibustext.c
-        ibustext.h
-
         ibusobject.h
         ibusobject.c
 
@@ -79,26 +76,11 @@ file(GLOB IBUS_DAEMON_SRC
         ibusxevent.c
         ibusxevent.h
 
-        ibusproxy.c
-        ibusproxy.h
-
         ibuskeymap.c
         ibuskeymap.h
 
         ibusattrlist.c
         ibusattrlist.h
-
-        ibusunicode.c
-        ibusunicode.h
-
-        ibuserror.c
-        ibuserror.h
-
-        ibusobservedpath.c
-        ibusobservedpath.h
-
-        ibusattribute.c
-        ibusattribute.h
 
         ibusemoji.c
         ibusemoji.h

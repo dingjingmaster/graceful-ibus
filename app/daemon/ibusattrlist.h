@@ -36,7 +36,7 @@
  *
  */
 
-#include "ibusattribute.h"
+#include "ibus-attribute.h"
 
 G_BEGIN_DECLS
 

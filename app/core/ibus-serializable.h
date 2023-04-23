@@ -35,7 +35,7 @@
  * for function prototype.
  */
 
-#include "ibusobject.h"
+#include "ibus-object.h"
 
 /*
  * Type macros.

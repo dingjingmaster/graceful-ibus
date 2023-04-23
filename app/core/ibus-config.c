@@ -4,12 +4,12 @@
 
 #include "ibus-config.h"
 
+#include "ibus-bus.h"
+#include "ibus-main.h"
+#include "ibus-error.h"
+#include "ibus-types.h"
 #include "ibus-internal.h"
 #include "ibusmarshalers.h"
-#include "ibus-main.h"
-#include "ibus-bus.h"
-#include "ibuserror.h"
-#include "ibus-types.h"
 
 #define IBUS_CONFIG_GET_PRIVATE(o)      ((IBusConfigPrivate *)ibus_config_get_instance_private (o))
 

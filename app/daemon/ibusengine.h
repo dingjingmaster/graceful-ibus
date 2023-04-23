@@ -40,11 +40,11 @@
  * see_also: #IBusComponent, #IBusEngineDesc
  */
 
-#include "ibusservice.h"
-#include "ibusattribute.h"
-#include "ibuslookuptable.h"
-#include "ibusproplist.h"
 #include "ibus-types.h"
+#include "ibusservice.h"
+#include "ibus-attribute.h"
+#include "ibus-lookup-table.h"
+#include "ibus-property-list.h"
 
 /*
  * Type macros.

@@ -1,39 +1,18 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* IBus - The Input Bus
- * Copyright (C) 2008-2010 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2008-2010 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
-#include "ibusproplist.h"
+//
+// Created by dingjing on 23-4-23.
+//
+
+#include "ibus-property-list.h"
 
 /* functions prototype */
-static void         ibus_prop_list_destroy      (IBusPropList       *prop_list);
-static gboolean     ibus_prop_list_serialize    (IBusPropList       *prop_list,
-                                                 GVariantBuilder    *builder);
-static gint         ibus_prop_list_deserialize  (IBusPropList       *prop_list,
-                                                 GVariant           *variant);
-static gboolean     ibus_prop_list_copy         (IBusPropList       *dest,
-                                                 const IBusPropList *src);
+static void ibus_prop_list_destroy (IBusPropList* prop_list);
+static gboolean ibus_prop_list_copy (IBusPropList* dest, const IBusPropList* src);
+static gint ibus_prop_list_deserialize (IBusPropList* prop_list, GVariant* variant);
+static gboolean ibus_prop_list_serialize (IBusPropList* prop_list, GVariantBuilder* builder);
 
 G_DEFINE_TYPE (IBusPropList, ibus_prop_list, IBUS_TYPE_SERIALIZABLE)
 
-static void
-ibus_prop_list_class_init (IBusPropListClass *class)
+static void ibus_prop_list_class_init (IBusPropListClass *class)
 {
     IBusObjectClass *object_class = IBUS_OBJECT_CLASS (class);
     IBusSerializableClass *serializable_class = IBUS_SERIALIZABLE_CLASS (class);
@@ -45,14 +24,12 @@ ibus_prop_list_class_init (IBusPropListClass *class)
     serializable_class->copy        = (IBusSerializableCopyFunc) ibus_prop_list_copy;
 }
 
-static void
-ibus_prop_list_init (IBusPropList *prop_list)
+static void ibus_prop_list_init (IBusPropList *prop_list)
 {
     prop_list->properties = g_array_new (TRUE, TRUE, sizeof (IBusProperty *));
 }
 
-static void
-ibus_prop_list_destroy (IBusPropList *prop_list)
+static void ibus_prop_list_destroy (IBusPropList *prop_list)
 {
     IBusProperty **p;
     gint i;
@@ -67,9 +44,7 @@ ibus_prop_list_destroy (IBusPropList *prop_list)
     IBUS_OBJECT_CLASS (ibus_prop_list_parent_class)->destroy ((IBusObject *) prop_list);
 }
 
-static gboolean
-ibus_prop_list_serialize (IBusPropList    *prop_list,
-                          GVariantBuilder *builder)
+static gboolean ibus_prop_list_serialize (IBusPropList* prop_list, GVariantBuilder* builder)
 {
     gboolean retval;
     guint i;
@@ -91,9 +66,7 @@ ibus_prop_list_serialize (IBusPropList    *prop_list,
     return TRUE;
 }
 
-gint
-ibus_prop_list_deserialize (IBusPropList    *prop_list,
-                            GVariant        *variant)
+gint ibus_prop_list_deserialize (IBusPropList* prop_list, GVariant* variant)
 {
     gint retval;
 
@@ -117,16 +90,14 @@ ibus_prop_list_deserialize (IBusPropList    *prop_list,
 
 
 
-static gboolean
-ibus_prop_list_copy (IBusPropList       *dest,
-                     const IBusPropList *src)
+static gboolean ibus_prop_list_copy (IBusPropList* dest, const IBusPropList* src)
 {
     gboolean retval;
     IBusProperty *prop;
     guint i;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_prop_list_parent_class)->copy ((IBusSerializable *) dest,
-                                 (const IBusSerializable *) src);
+                                                                          (const IBusSerializable *) src);
     g_return_val_if_fail (retval, FALSE);
 
     g_return_val_if_fail (IBUS_IS_PROP_LIST (dest), FALSE);
@@ -142,8 +113,7 @@ ibus_prop_list_copy (IBusPropList       *dest,
 }
 
 
-IBusPropList *
-ibus_prop_list_new ()
+IBusPropList* ibus_prop_list_new ()
 {
     IBusPropList *prop_list;
 
@@ -152,9 +122,7 @@ ibus_prop_list_new ()
     return prop_list;
 }
 
-void
-ibus_prop_list_append (IBusPropList *prop_list,
-                       IBusProperty *prop)
+void ibus_prop_list_append (IBusPropList* prop_list, IBusProperty* prop)
 {
     g_assert (IBUS_IS_PROP_LIST (prop_list));
     g_assert (IBUS_IS_PROPERTY (prop));
@@ -164,9 +132,7 @@ ibus_prop_list_append (IBusPropList *prop_list,
     g_array_append_val (prop_list->properties, prop);
 }
 
-IBusProperty *
-ibus_prop_list_get (IBusPropList *prop_list,
-                    guint         index)
+IBusProperty* ibus_prop_list_get (IBusPropList* prop_list, guint index)
 {
     g_assert (IBUS_IS_PROP_LIST (prop_list));
 
@@ -179,9 +145,7 @@ ibus_prop_list_get (IBusPropList *prop_list,
 
 
 
-gboolean
-ibus_prop_list_update_property (IBusPropList *prop_list,
-                                IBusProperty *prop_update)
+gboolean ibus_prop_list_update_property (IBusPropList* prop_list, IBusProperty* prop_update)
 {
     g_assert (IBUS_IS_PROP_LIST (prop_list));
     g_assert (IBUS_IS_PROPERTY (prop_update));

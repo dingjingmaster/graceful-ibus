@@ -35,10 +35,10 @@
  * An IBusPanelService is a base class for UI services.
  * Developers can "extend" this class for panel UI development.
  */
-#include "ibuslookuptable.h"
-#include "ibusservice.h"
-#include "ibusproplist.h"
 #include "ibusxevent.h"
+#include "ibusservice.h"
+#include "ibus-lookup-table.h"
+#include "ibus-property-list.h"
 
 /*
  * Type macros.

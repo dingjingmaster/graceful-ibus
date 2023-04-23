@@ -103,6 +103,8 @@ static void connection_dbus_signal_cb (GDBusConnection* conn, const gchar* sende
     g_return_if_fail (udata != NULL);
     g_return_if_fail (IBUS_IS_BUS (udata));
 
+    LOG_DEBUG("dbus signal: %s", sigName)
+
     if (g_strcmp0 (sigName, "NameOwnerChanged") == 0) {
         gchar *name = NULL;
         gchar *old_owner = NULL;
@@ -122,6 +124,8 @@ static void connection_ibus_signal_cb (GDBusConnection *conn, const gchar *sende
 {
     g_return_if_fail (udata != NULL);
     g_return_if_fail (IBUS_IS_BUS (udata));
+
+    LOG_DEBUG("ibus signal: %s", sigName)
 
     if (g_strcmp0 (sigName, "GlobalEngineChanged") == 0) {
         gchar *engine_name = NULL;
@@ -305,17 +309,16 @@ static gboolean ibus_bus_should_connect_portal (IBusBus* bus)
     return bus->priv->client_only && (is_in_flatpak () || g_getenv ("IBUS_USE_PORTAL") != NULL);
 }
 
-static void
-ibus_bus_connect (IBusBus *bus)
+static void ibus_bus_connect (IBusBus *bus)
 {
     const gchar *bus_address = ibus_get_address ();
 
     if (bus_address == NULL)
         return;
 
-    if (g_strcmp0 (bus_address, bus->priv->bus_address) == 0 &&
-        bus->priv->connection != NULL)
+    if (g_strcmp0 (bus_address, bus->priv->bus_address) == 0 && bus->priv->connection != NULL) {
         return;
+    }
 
     /* Close current connection and cancel ongoing connect request. */
     ibus_bus_close_connection (bus);
@@ -656,8 +659,13 @@ IBusInputContext* ibus_bus_create_input_context (IBusBus* bus, const gchar* clie
 
     gchar* path;
     IBusInputContext* context = NULL;
-    GVariant* result = ibus_bus_call_sync (bus, IBUS_SERVICE_IBUS, IBUS_PATH_IBUS, IBUS_INTERFACE_IBUS, "CreateInputContext", g_variant_new ("(s)", clientName), G_VARIANT_TYPE ("(o)"));
-
+    GVariant* result = ibus_bus_call_sync (bus,
+                                           IBUS_SERVICE_IBUS,
+                                           IBUS_PATH_IBUS,
+                                           IBUS_INTERFACE_IBUS,
+                                           "CreateInputContext",
+                                           g_variant_new ("(s)", clientName),
+                                           G_VARIANT_TYPE ("(o)"));
     if (result != NULL) {
         GError *error = NULL;
         g_variant_get (result, "(&o)", &path);
@@ -719,15 +727,15 @@ static void create_input_context_async_step_one_done (GDBusConnection *connectio
     ibus_input_context_new_async (path, bus->priv->connection, cancellable, (GAsyncReadyCallback)create_input_context_async_step_two_done, task);
 }
 
-void ibus_bus_create_input_context_async (IBusBus* bus, const gchar* client_name,  gint timeout_msec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer user_data)
+void ibus_bus_create_input_context_async (IBusBus* bus, const gchar* cliName,  gint timMs, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata)
 {
     GTask *task;
 
     g_return_if_fail (IBUS_IS_BUS (bus));
-    g_return_if_fail (client_name != NULL);
-    g_return_if_fail (callback != NULL);
+    g_return_if_fail (cliName != NULL);
+    g_return_if_fail (cb != NULL);
 
-    task = g_task_new (bus, cancellable, callback, user_data);
+    task = g_task_new (bus, cancel, cb, udata);
     g_task_set_source_tag (task, ibus_bus_create_input_context_async);
 
     g_dbus_connection_call (bus->priv->connection,
@@ -735,11 +743,11 @@ void ibus_bus_create_input_context_async (IBusBus* bus, const gchar* client_name
                             IBUS_PATH_IBUS,
                             bus->priv->use_portal ? IBUS_INTERFACE_PORTAL : IBUS_INTERFACE_IBUS,
                             "CreateInputContext",
-                            g_variant_new ("(s)", client_name),
+                            g_variant_new ("(s)", cliName),
                             G_VARIANT_TYPE("(o)"),
                             G_DBUS_CALL_FLAGS_NO_AUTO_START,
-                            timeout_msec,
-                            cancellable,
+                            timMs,
+                            cancel,
                             (GAsyncReadyCallback) create_input_context_async_step_one_done, task);
 }
 
@@ -761,6 +769,7 @@ IBusInputContext* ibus_bus_create_input_context_async_finish (IBusBus* bus, GAsy
         return NULL;
     }
     g_assert (IBUS_IS_INPUT_CONTEXT (context));
+
     return context;
 }
 
@@ -789,7 +798,7 @@ gchar* ibus_bus_current_input_context (IBusBus* bus)
     return path;
 }
 
-void ibus_bus_current_input_context_async (IBusBus* bus, gint timeout_msec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer user_data)
+void ibus_bus_current_input_context_async (IBusBus* bus, gint timMsc, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata)
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
 
@@ -801,10 +810,10 @@ void ibus_bus_current_input_context_async (IBusBus* bus, gint timeout_msec, GCan
                          g_variant_new ("(ss)", IBUS_INTERFACE_IBUS, "CurrentInputContext"),
                          G_VARIANT_TYPE ("(v)"),
                          ibus_bus_current_input_context_async,
-                         timeout_msec,
-                         cancellable,
-                         callback,
-                         user_data);
+                         timMsc,
+                         cancel,
+                         cb,
+                         udata);
 }
 
 gchar* ibus_bus_current_input_context_async_finish (IBusBus* bus, GAsyncResult* res, GError** error)
@@ -947,7 +956,7 @@ guint32 ibus_bus_request_name (IBusBus* bus, const gchar* name, guint32 flags)
     return retval;
 }
 
-void ibus_bus_request_name_async (IBusBus* bus, const gchar* name,  guint flags, gint timeout_msec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer user_data)
+void ibus_bus_request_name_async (IBusBus* bus, const gchar* name,  guint flags, gint timMs, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata)
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (name != NULL);
@@ -960,10 +969,10 @@ void ibus_bus_request_name_async (IBusBus* bus, const gchar* name,  guint flags,
                          g_variant_new ("(su)", name, flags),
                          G_VARIANT_TYPE ("(u)"),
                          ibus_bus_request_name_async,
-                         timeout_msec,
-                         cancellable,
-                         callback,
-                         user_data);
+                         timMs,
+                         cancel,
+                         cb,
+                         udata);
 }
 
 guint ibus_bus_request_name_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 
@@ -1002,7 +1011,7 @@ guint ibus_bus_release_name (IBusBus* bus, const gchar* name)
     return retval;
 }
 
-void ibus_bus_release_name_async (IBusBus* bus, const gchar* name, gint timeout_msec, GCancellable* cancellable, GAsyncReadyCallback callback, gpointer user_data)
+void ibus_bus_release_name_async (IBusBus* bus, const gchar* name, gint timMs, GCancellable* cancel, GAsyncReadyCallback cb, gpointer udata)
 {
     g_return_if_fail (IBUS_IS_BUS (bus));
     g_return_if_fail (name != NULL);
@@ -1015,10 +1024,10 @@ void ibus_bus_release_name_async (IBusBus* bus, const gchar* name, gint timeout_
                          g_variant_new ("(s)", name),
                          G_VARIANT_TYPE ("(u)"),
                          ibus_bus_release_name_async,
-                         timeout_msec,
-                         cancellable,
-                         callback,
-                         user_data);
+                         timMs,
+                         cancel,
+                         cb,
+                         udata);
 }
 
 guint ibus_bus_release_name_async_finish (IBusBus* bus, GAsyncResult* res, GError** error) 

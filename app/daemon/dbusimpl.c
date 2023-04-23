@@ -29,7 +29,6 @@
 #include "ibusimpl.h"
 #include "marshalers.h"
 #include "matchrule.h"
-#include "types.h"
 
 enum {
     NAME_OWNER_CHANGED,
@@ -554,7 +553,7 @@ bus_dbus_impl_class_init (BusDBusImplClass *class)
 
     /* install signals */
     dbus_signals[NAME_OWNER_CHANGED] =
-        g_signal_new (I_("name-owner-changed"),
+        g_signal_new (g_intern_static_string("name-owner-changed"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_FIRST,
             G_STRUCT_OFFSET (BusDBusImplClass, name_owner_changed),
@@ -568,7 +567,7 @@ bus_dbus_impl_class_init (BusDBusImplClass *class)
             G_TYPE_STRING);
 
     dbus_signals[NAME_LOST] =
-        g_signal_new (I_("name-lost"),
+        g_signal_new (g_intern_static_string("name-lost"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_FIRST,
             G_STRUCT_OFFSET (BusDBusImplClass, name_lost),
@@ -580,7 +579,7 @@ bus_dbus_impl_class_init (BusDBusImplClass *class)
             G_TYPE_STRING);
 
     dbus_signals[NAME_ACQUIRED] =
-        g_signal_new (I_("name-acquired"),
+        g_signal_new (g_intern_static_string("name-acquired"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_FIRST,
             G_STRUCT_OFFSET (BusDBusImplClass, name_acquired),

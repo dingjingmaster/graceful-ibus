@@ -8,17 +8,18 @@
 #include <config.h>
 #endif
 
-#include "ibusresources.h"
 #include <glib.h>
-#include <glib/gstdio.h>
-#include <glib-object.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <glib/gstdio.h>
+#include <glib-object.h>
+
 #include "ibus.h"
+#include "ibusresources.h"
 
 static gchar *_display = NULL;
 

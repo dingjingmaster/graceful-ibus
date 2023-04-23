@@ -21,8 +21,8 @@
  */
 #include "ibus-internal.h"
 #include "ibusproperty.h"
-#include "ibusproplist.h"
 #include "ibusenumtypes.h"
+#include "ibus-property-list.h"
 
 enum {
     LAST_SIGNAL,

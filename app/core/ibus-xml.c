@@ -1,19 +1,16 @@
 //
 // Created by dingjing on 23-4-23.
 //
-
 #include "ibus-xml.h"
+
 #include <stdio.h>
 #include <string.h>
 
 static GMarkupParser parser;
 
-G_DEFINE_BOXED_TYPE (IBusXML, ibus_xml,
-                     ibus_xml_copy,
-                     ibus_xml_free);
+G_DEFINE_BOXED_TYPE (IBusXML, ibus_xml, ibus_xml_copy, ibus_xml_free)
 
-XMLNode*
-ibus_xml_copy (const XMLNode *node)
+XMLNode* ibus_xml_copy (const XMLNode *node)
 {
     XMLNode *ret;
 
@@ -27,8 +24,7 @@ ibus_xml_copy (const XMLNode *node)
     return ret;
 }
 
-void
-ibus_xml_free (XMLNode *node)
+void ibus_xml_free (XMLNode *node)
 {
     g_free (node->name);
 
@@ -41,13 +37,7 @@ ibus_xml_free (XMLNode *node)
     g_slice_free (XMLNode, node);
 }
 
-static void
-_start_root_element_cb (GMarkupParseContext *context,
-                        const gchar         *element_name,
-                        const gchar        **attribute_names,
-                        const gchar        **attribute_values,
-                        gpointer             user_data,
-                        GError             **error)
+static void start_root_element_cb (GMarkupParseContext *context, const gchar* element_name, const gchar** attribute_names, const gchar** attribute_values, gpointer user_data, GError** error)
 {
     XMLNode **node = (XMLNode **) user_data;
     g_assert (node != NULL);
@@ -73,13 +63,7 @@ _start_root_element_cb (GMarkupParseContext *context,
 }
 
 
-static void
-_start_element_cb (GMarkupParseContext *context,
-                   const gchar         *element_name,
-                   const gchar        **attribute_names,
-                   const gchar        **attribute_values,
-                   gpointer             user_data,
-                   GError             **error)
+static void start_element_cb (GMarkupParseContext* context, const gchar* element_name, const gchar** attribute_names, const gchar** attribute_values, gpointer user_data, GError** error)
 {
     XMLNode *node = (XMLNode *) user_data;
 
@@ -107,11 +91,7 @@ _start_element_cb (GMarkupParseContext *context,
     p->attributes = (gchar **)g_array_free (attributes, FALSE);
 }
 
-static void
-_end_element_cb (GMarkupParseContext *context,
-                 const gchar         *element_name,
-                 gpointer             user_data,
-                 GError             **error)
+static void end_element_cb (GMarkupParseContext* context, const gchar* eleName, gpointer udata, GError** error)
 {
     XMLNode *p = (XMLNode *) g_markup_parse_context_pop (context);
 
@@ -122,6 +102,10 @@ _end_element_cb (GMarkupParseContext *context,
     if (p->text == NULL && p->sub_nodes == NULL) {
         p->text = g_strdup ("");
     }
+
+    (void*) udata;
+    (void*) error;
+    (void*) eleName;
 }
 
 static gboolean
@@ -167,8 +151,8 @@ _text_cb (GMarkupParseContext *context,
 }
 
 static GMarkupParser parser = {
-    _start_element_cb,
-    _end_element_cb,
+    start_element_cb,
+    end_element_cb,
     _text_cb,
     0,
     0,
@@ -189,8 +173,8 @@ ibus_xml_parse_file (const gchar *filename)
     XMLNode *node;
 
     const static GMarkupParser root_parser = {
-        _start_root_element_cb,
-        _end_element_cb,
+        start_root_element_cb,
+        end_element_cb,
         _text_cb,
         0,
         0,
@@ -241,8 +225,8 @@ ibus_xml_parse_buffer (const gchar *buffer)
     XMLNode *node;
 
     const static GMarkupParser root_parser = {
-        _start_root_element_cb,
-        _end_element_cb,
+        start_root_element_cb,
+        end_element_cb,
         _text_cb,
         0,
         0,

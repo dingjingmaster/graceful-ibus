@@ -20,7 +20,7 @@
  * Currently, IBusConfig supports gconf.
  */
 
-#include "ibusproxy.h"
+#include "ibus-proxy.h"
 
 /*
  * Type macros.

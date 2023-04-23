@@ -22,9 +22,9 @@
  * Clients call the IBusInputContext to invoke BusInputContext,
  * through which invokes IBusEngine.
  */
-#include "ibusproxy.h"
+#include "ibus-text.h"
+#include "ibus-proxy.h"
 #include "ibus-engine-desc.h"
-#include "ibustext.h"
 
 /*
  * Type macros.

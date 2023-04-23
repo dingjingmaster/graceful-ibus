@@ -1,18 +1,20 @@
 //
 // Created by dingjing on 23-4-23.
 //
-
 #include "ibus-engine-desc.h"
+
 #include <stdlib.h>
 
 #include "ibus-xml.h"
 #include "ibus-internal.h"
 
-enum {
+enum
+{
     LAST_SIGNAL,
 };
 
-enum {
+enum
+{
     PROP_0 = 0,
     PROP_NAME,
     PROP_LONGNAME,
@@ -35,7 +37,8 @@ enum {
 
 
 /* IBusEngineDescPriv */
-struct _IBusEngineDescPrivate {
+struct _IBusEngineDescPrivate
+{
     gchar      *name;
     gchar      *longname;
     gchar      *description;
@@ -55,8 +58,7 @@ struct _IBusEngineDescPrivate {
     gchar      *icon_prop_key;
 };
 
-#define IBUS_ENGINE_DESC_GET_PRIVATE(o)  \
-   ((IBusEngineDescPrivate *)ibus_engine_desc_get_instance_private (o))
+#define IBUS_ENGINE_DESC_GET_PRIVATE(o)     ((IBusEngineDescPrivate*) ibus_engine_desc_get_instance_private (o))
 
 // static guint            _signals[LAST_SIGNAL] = { 0 };
 

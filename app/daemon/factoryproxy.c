@@ -24,7 +24,6 @@
 #include "dbusimpl.h"
 #include "gi-global.h"
 #include "marshalers.h"
-#include "types.h"
 
 struct _BusFactoryProxy {
     IBusProxy parent;

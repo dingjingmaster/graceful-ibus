@@ -1,29 +1,12 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* ibus - The Input IBus
- * Copyright (C) 2008-2015 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2020 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2020 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
-#include <glib/gstdio.h>
+//
+// Created by dingjing on 23-4-23.
+//
+
+#include "ibus-observed-path.h"
 #include <stdlib.h>
+#include <glib/gstdio.h>
+
 #include "ibus-internal.h"
-#include "ibusobservedpath.h"
 
 
 enum {
@@ -92,7 +75,7 @@ ibus_observed_path_serialize (IBusObservedPath *path,
     guint i;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_observed_path_parent_class)->
-            serialize ((IBusSerializable *)path, builder);
+        serialize ((IBusSerializable *)path, builder);
     g_return_val_if_fail (retval, FALSE);
 
     g_variant_builder_add (builder, "s", path->path);
@@ -119,7 +102,7 @@ ibus_observed_path_deserialize (IBusObservedPath *path,
     guint i, length = 0;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_observed_path_parent_class)->
-            deserialize ((IBusSerializable *)path, variant);
+        deserialize ((IBusSerializable *)path, variant);
     g_return_val_if_fail (retval, 0);
 
     ibus_g_variant_get_child_string (variant, retval++, &path->path);
@@ -143,12 +126,12 @@ ibus_observed_path_copy (IBusObservedPath       *dest,
 {
     IBusObservedPathPrivate *dest_priv = IBUS_OBSERVED_PATH_GET_PRIVATE (dest);
     IBusObservedPathPrivate *src_priv =
-            IBUS_OBSERVED_PATH_GET_PRIVATE ((IBusObservedPath *)src);
+        IBUS_OBSERVED_PATH_GET_PRIVATE ((IBusObservedPath *)src);
     gboolean retval;
     guint i;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_observed_path_parent_class)->
-            copy ((IBusSerializable *)dest, (IBusSerializable *)src);
+        copy ((IBusSerializable *)dest, (IBusSerializable *)src);
     g_return_val_if_fail (retval, FALSE);
 
     dest->path = g_strdup (src->path);
@@ -192,10 +175,10 @@ ibus_observed_path_output (IBusObservedPath *path,
     } else {
         g_string_append_indent (output, indent);
         g_string_append_printf (
-                output,
-                "<path mtime=\"%ld\" type=\"dir\" path=\"%s\">\n",
-                path->mtime,
-                path->path);
+            output,
+            "<path mtime=\"%ld\" type=\"dir\" path=\"%s\">\n",
+            path->mtime,
+            path->path);
         for (i = 0; priv->file_hash_list[i]; i++) {
             g_string_append_indent (output, indent + 1);
             g_string_append_printf (output, "<file hash=\"%u\" />\n",
@@ -454,7 +437,7 @@ ibus_observed_path_parse_xml_node (IBusObservedPath *path,
 
 IBusObservedPath *
 ibus_observed_path_new_from_xml_node (XMLNode *node,
-                                     gboolean fill_stat)
+                                      gboolean fill_stat)
 {
     g_assert (node);
 

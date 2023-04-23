@@ -37,7 +37,6 @@
 #include "inputcontext.h"
 #include "panelproxy.h"
 #include "server.h"
-#include "types.h"
 
 struct _BusIBusImpl {
     IBusService parent;

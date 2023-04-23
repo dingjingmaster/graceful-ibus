@@ -1,42 +1,27 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* bus - The Input Bus
- * Copyright (C) 2018-2021 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2018-2021 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
+
+#include "ibus-unicode.h"
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include <glib.h>
 #include <glib/gstdio.h>
-#include "ibus-internal.h"
-#include "ibuserror.h"
-#include "ibusunicode.h"
+
 #include "ibus-types.h"
+#include "ibus-error.h"
+#include "ibus-unicode.h"
+#include "ibus-internal.h"
 
-#define IBUS_UNICODE_DATA_MAGIC "IBusUnicodeData"
-#define IBUS_UNICODE_BLOCK_MAGIC "IBusUnicodeBlock"
-#define IBUS_UNICODE_DATA_VERSION (1)
-#define IBUS_UNICODE_DESERIALIZE_SIGNALL_STR \
-        "deserialize-unicode"
+#define IBUS_UNICODE_DATA_VERSION                   (1)
+#define IBUS_UNICODE_DATA_MAGIC                     "IBusUnicodeData"
+#define IBUS_UNICODE_BLOCK_MAGIC                    "IBusUnicodeBlock"
+#define IBUS_UNICODE_DESERIALIZE_SIGNALL_STR        "deserialize-unicode"
 
-enum {
+enum
+{
     PROP_0 = 0,
     PROP_CODE,
     PROP_NAME,
@@ -46,28 +31,29 @@ enum {
     PROP_END
 };
 
-struct _IBusUnicodeDataPrivate {
+struct _IBusUnicodeDataPrivate
+{
     gunichar    code;
     gchar      *name;
     gchar      *alias;
     gchar      *block_name;
 };
 
-struct _IBusUnicodeBlockPrivate {
+struct _IBusUnicodeBlockPrivate
+{
     gunichar    start;
     gunichar    end;
     gchar      *name;
 };
 
-typedef struct {
+typedef struct
+{
     IBusUnicodeDataLoadAsyncFinish callback;
     gpointer                       user_data;
 } IBusUnicodeDataLoadData;
 
-#define IBUS_UNICODE_DATA_GET_PRIVATE(o)  \
-   ((IBusUnicodeDataPrivate *)ibus_unicode_data_get_instance_private (o))
-#define IBUS_UNICODE_BLOCK_GET_PRIVATE(o)  \
-   ((IBusUnicodeBlockPrivate *)ibus_unicode_block_get_instance_private (o))
+#define IBUS_UNICODE_DATA_GET_PRIVATE(o)    ((IBusUnicodeDataPrivate *)ibus_unicode_data_get_instance_private (o))
+#define IBUS_UNICODE_BLOCK_GET_PRIVATE(o)   ((IBusUnicodeBlockPrivate *)ibus_unicode_block_get_instance_private (o))
 
 /* functions prototype */
 static void      ibus_unicode_data_set_property (IBusUnicodeData      *unicode,
@@ -84,24 +70,24 @@ static gboolean  ibus_unicode_data_serialize    (IBusUnicodeData      *unicode,
 static gint      ibus_unicode_data_deserialize  (IBusUnicodeData      *unicode,
                                                  GVariant             *variant);
 static gboolean  ibus_unicode_data_copy         (IBusUnicodeData      *dest,
-                                                const IBusUnicodeData *src);
+                                                 const IBusUnicodeData *src);
 static void      ibus_unicode_block_set_property
-                                                (IBusUnicodeBlock     *block,
-                                                 guint                 prop_id,
-                                                 const GValue         *value,
-                                                 GParamSpec           *pspec);
+    (IBusUnicodeBlock     *block,
+     guint                 prop_id,
+     const GValue         *value,
+     GParamSpec           *pspec);
 static void      ibus_unicode_block_get_property
-                                                (IBusUnicodeBlock     *block,
-                                                 guint                 prop_id,
-                                                 GValue               *value,
-                                                 GParamSpec           *pspec);
+    (IBusUnicodeBlock     *block,
+     guint                 prop_id,
+     GValue               *value,
+     GParamSpec           *pspec);
 static void      ibus_unicode_block_destroy     (IBusUnicodeBlock     *block);
 static gboolean  ibus_unicode_block_serialize   (IBusUnicodeBlock     *block,
                                                  GVariantBuilder      *builder);
 static gint      ibus_unicode_block_deserialize (IBusUnicodeBlock     *block,
                                                  GVariant             *variant);
 static gboolean  ibus_unicode_block_copy        (IBusUnicodeBlock     *dest,
-                                                const IBusUnicodeBlock *src);
+                                                 const IBusUnicodeBlock *src);
 
 G_DEFINE_TYPE_WITH_PRIVATE (IBusUnicodeData,
                             ibus_unicode_data,
@@ -119,15 +105,15 @@ ibus_unicode_data_class_init (IBusUnicodeDataClass *class)
 
     object_class->destroy = (IBusObjectDestroyFunc) ibus_unicode_data_destroy;
     gobject_class->set_property =
-            (GObjectSetPropertyFunc) ibus_unicode_data_set_property;
+        (GObjectSetPropertyFunc) ibus_unicode_data_set_property;
     gobject_class->get_property =
-            (GObjectGetPropertyFunc) ibus_unicode_data_get_property;
+        (GObjectGetPropertyFunc) ibus_unicode_data_get_property;
     serializable_class->serialize   =
-            (IBusSerializableSerializeFunc) ibus_unicode_data_serialize;
+        (IBusSerializableSerializeFunc) ibus_unicode_data_serialize;
     serializable_class->deserialize =
-            (IBusSerializableDeserializeFunc) ibus_unicode_data_deserialize;
+        (IBusSerializableDeserializeFunc) ibus_unicode_data_deserialize;
     serializable_class->copy        =
-            (IBusSerializableCopyFunc) ibus_unicode_data_copy;
+        (IBusSerializableCopyFunc) ibus_unicode_data_copy;
 
     /* install properties */
     /**
@@ -136,12 +122,12 @@ ibus_unicode_data_class_init (IBusUnicodeDataClass *class)
      * The Uniode code point
      */
     g_object_class_install_property (gobject_class,
-                    PROP_CODE,
-                    g_param_spec_unichar ("code",
-                        "code point",
-                        "The Unicode code point",
-                        0,
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_CODE,
+                                     g_param_spec_unichar ("code",
+                                                           "code point",
+                                                           "The Unicode code point",
+                                                           0,
+                                                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 
     /**
@@ -150,12 +136,12 @@ ibus_unicode_data_class_init (IBusUnicodeDataClass *class)
      * The Uniode name
      */
     g_object_class_install_property (gobject_class,
-                    PROP_NAME,
-                    g_param_spec_string ("name",
-                        "name",
-                        "The Unicode name",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                     PROP_NAME,
+                                     g_param_spec_string ("name",
+                                                          "name",
+                                                          "The Unicode name",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     /**
      * IBusUnicodeData:alias:
@@ -163,12 +149,12 @@ ibus_unicode_data_class_init (IBusUnicodeDataClass *class)
      * The Uniode alias name
      */
     g_object_class_install_property (gobject_class,
-                    PROP_ALIAS,
-                    g_param_spec_string ("alias",
-                        "alias name",
-                        "The Unicode alias name",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                     PROP_ALIAS,
+                                     g_param_spec_string ("alias",
+                                                          "alias name",
+                                                          "The Unicode alias name",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     /**
      * IBusUnicodeData:block-name:
@@ -176,12 +162,12 @@ ibus_unicode_data_class_init (IBusUnicodeDataClass *class)
      * The Uniode block name
      */
     g_object_class_install_property (gobject_class,
-                    PROP_BLOCK_NAME,
-                    g_param_spec_string ("block-name",
-                        "block name",
-                        "The Unicode block name",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                     PROP_BLOCK_NAME,
+                                     g_param_spec_string ("block-name",
+                                                          "block name",
+                                                          "The Unicode block name",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -198,7 +184,7 @@ ibus_unicode_data_destroy (IBusUnicodeData *unicode)
     g_clear_pointer (&unicode->priv->block_name, g_free);
 
     IBUS_OBJECT_CLASS (ibus_unicode_data_parent_class)->
-            destroy (IBUS_OBJECT (unicode));
+        destroy (IBUS_OBJECT (unicode));
 }
 
 static void
@@ -208,24 +194,24 @@ ibus_unicode_data_set_property (IBusUnicodeData *unicode,
                                 GParamSpec      *pspec)
 {
     switch (prop_id) {
-    case PROP_CODE:
-        g_assert (unicode->priv->code == 0);
-        unicode->priv->code = g_value_get_uint (value);
-        break;
-    case PROP_NAME:
-        g_assert (unicode->priv->name == NULL);
-        unicode->priv->name = g_value_dup_string (value);
-        break;
-    case PROP_ALIAS:
-        g_assert (unicode->priv->alias == NULL);
-        unicode->priv->alias = g_value_dup_string (value);
-        break;
-    case PROP_BLOCK_NAME:
-        g_free (unicode->priv->block_name);
-        unicode->priv->block_name = g_value_dup_string (value);
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (unicode, prop_id, pspec);
+        case PROP_CODE:
+            g_assert (unicode->priv->code == 0);
+            unicode->priv->code = g_value_get_uint (value);
+            break;
+        case PROP_NAME:
+            g_assert (unicode->priv->name == NULL);
+            unicode->priv->name = g_value_dup_string (value);
+            break;
+        case PROP_ALIAS:
+            g_assert (unicode->priv->alias == NULL);
+            unicode->priv->alias = g_value_dup_string (value);
+            break;
+        case PROP_BLOCK_NAME:
+            g_free (unicode->priv->block_name);
+            unicode->priv->block_name = g_value_dup_string (value);
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (unicode, prop_id, pspec);
     }
 }
 
@@ -236,20 +222,20 @@ ibus_unicode_data_get_property (IBusUnicodeData *unicode,
                                 GParamSpec      *pspec)
 {
     switch (prop_id) {
-    case PROP_CODE:
-        g_value_set_uint (value, ibus_unicode_data_get_code (unicode));
-        break;
-    case PROP_NAME:
-        g_value_set_string (value, ibus_unicode_data_get_name (unicode));
-        break;
-    case PROP_ALIAS:
-        g_value_set_string (value, ibus_unicode_data_get_alias (unicode));
-        break;
-    case PROP_BLOCK_NAME:
-        g_value_set_string (value, ibus_unicode_data_get_block_name (unicode));
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (unicode, prop_id, pspec);
+        case PROP_CODE:
+            g_value_set_uint (value, ibus_unicode_data_get_code (unicode));
+            break;
+        case PROP_NAME:
+            g_value_set_string (value, ibus_unicode_data_get_name (unicode));
+            break;
+        case PROP_ALIAS:
+            g_value_set_string (value, ibus_unicode_data_get_alias (unicode));
+            break;
+        case PROP_BLOCK_NAME:
+            g_value_set_string (value, ibus_unicode_data_get_block_name (unicode));
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (unicode, prop_id, pspec);
     }
 }
 
@@ -258,7 +244,7 @@ ibus_unicode_data_serialize (IBusUnicodeData   *unicode,
                              GVariantBuilder   *builder)
 {
     gboolean retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_data_parent_class)->
-            serialize ((IBusSerializable *)unicode, builder);
+        serialize ((IBusSerializable *)unicode, builder);
     g_return_val_if_fail (retval, FALSE);
 
 #define NOTNULL(s) ((s) != NULL ? (s) : "")
@@ -281,7 +267,7 @@ ibus_unicode_data_deserialize (IBusUnicodeData *unicode,
                                GVariant        *variant)
 {
     gint retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_data_parent_class)->
-            deserialize ((IBusSerializable *)unicode, variant);
+        deserialize ((IBusSerializable *)unicode, variant);
     g_return_val_if_fail (retval, 0);
 
     /* If you will add a new property, you can append it at the end and
@@ -305,8 +291,8 @@ ibus_unicode_data_copy (IBusUnicodeData       *dest,
                         const IBusUnicodeData *src)
 {
     gboolean retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_data_parent_class)->
-            copy ((IBusSerializable *)dest,
-                  (IBusSerializable *)src);
+        copy ((IBusSerializable *)dest,
+              (IBusSerializable *)src);
     g_return_val_if_fail (retval, FALSE);
 
     dest->priv->code             = src->priv->code;
@@ -382,8 +368,8 @@ variant_foreach_add_unicode (IBusUnicodeData *unicode,
                              GVariantBuilder *builder)
 {
     g_variant_builder_add (
-            builder, "v",
-            ibus_serializable_serialize (IBUS_SERIALIZABLE (unicode)));
+        builder, "v",
+        ibus_serializable_serialize (IBUS_SERIALIZABLE (unicode)));
 }
 
 static GVariant *
@@ -408,11 +394,11 @@ ibus_unicode_data_list_deserialize (GVariant *variant,
 
     if (G_IS_OBJECT (source_object)) {
         has_signal = g_signal_lookup (
-                IBUS_UNICODE_DESERIALIZE_SIGNALL_STR,
-                G_OBJECT_TYPE (source_object));
+            IBUS_UNICODE_DESERIALIZE_SIGNALL_STR,
+            G_OBJECT_TYPE (source_object));
         if (!has_signal) {
             const gchar *type_name =
-                    g_type_name (G_OBJECT_TYPE (source_object));
+                g_type_name (G_OBJECT_TYPE (source_object));
             g_warning ("GObject %s does not have the signal \"%s\"",
                        type_name ? type_name : "(null)",
                        IBUS_UNICODE_DESERIALIZE_SIGNALL_STR);
@@ -423,8 +409,8 @@ ibus_unicode_data_list_deserialize (GVariant *variant,
     i = 0;
     while (g_variant_iter_loop (&iter, "v", &unicode_variant)) {
         IBusUnicodeData *data =
-                IBUS_UNICODE_DATA (ibus_serializable_deserialize (
-                        unicode_variant));
+            IBUS_UNICODE_DATA (ibus_serializable_deserialize (
+                unicode_variant));
         list = g_slist_append (list, data);
         g_clear_pointer (&unicode_variant, g_variant_unref);
         if (has_signal && (i == 0 || ((i + 1) % 100) == 0)) {
@@ -655,7 +641,7 @@ ibus_unicode_data_load_async (const gchar        *path,
                               GObject            *source_object,
                               GCancellable       *cancellable,
                               IBusUnicodeDataLoadAsyncFinish
-                                                  callback,
+                              callback,
                               gpointer            user_data)
 {
     GTask *task;
@@ -684,15 +670,15 @@ ibus_unicode_block_class_init (IBusUnicodeBlockClass *class)
 
     object_class->destroy = (IBusObjectDestroyFunc) ibus_unicode_block_destroy;
     gobject_class->set_property =
-            (GObjectSetPropertyFunc) ibus_unicode_block_set_property;
+        (GObjectSetPropertyFunc) ibus_unicode_block_set_property;
     gobject_class->get_property =
-            (GObjectGetPropertyFunc) ibus_unicode_block_get_property;
+        (GObjectGetPropertyFunc) ibus_unicode_block_get_property;
     serializable_class->serialize   =
-            (IBusSerializableSerializeFunc) ibus_unicode_block_serialize;
+        (IBusSerializableSerializeFunc) ibus_unicode_block_serialize;
     serializable_class->deserialize =
-            (IBusSerializableDeserializeFunc) ibus_unicode_block_deserialize;
+        (IBusSerializableDeserializeFunc) ibus_unicode_block_deserialize;
     serializable_class->copy        =
-            (IBusSerializableCopyFunc) ibus_unicode_block_copy;
+        (IBusSerializableCopyFunc) ibus_unicode_block_copy;
 
     /* install properties */
     /**
@@ -701,18 +687,18 @@ ibus_unicode_block_class_init (IBusUnicodeBlockClass *class)
      * The Uniode start code point
      */
     g_object_class_install_property (gobject_class,
-                    PROP_START,
-                    /* Cannot use g_param_spec_unichar() for the Unicode
-                     * boundary values because the function checks
-                     * if the value is a valid Unicode besides MAXUINT.
-                     */
-                    g_param_spec_uint ("start",
-                        "start code point",
-                        "The Unicode start code point",
-                        0,
-                        G_MAXUINT,
-                        0,
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_START,
+        /* Cannot use g_param_spec_unichar() for the Unicode
+         * boundary values because the function checks
+         * if the value is a valid Unicode besides MAXUINT.
+         */
+                                     g_param_spec_uint ("start",
+                                                        "start code point",
+                                                        "The Unicode start code point",
+                                                        0,
+                                                        G_MAXUINT,
+                                                        0,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 
     /**
@@ -721,18 +707,18 @@ ibus_unicode_block_class_init (IBusUnicodeBlockClass *class)
      * The Uniode end code point
      */
     g_object_class_install_property (gobject_class,
-                    PROP_END,
-                    /* Cannot use g_param_spec_unichar() for the Unicode
-                     * boundary values because the function checks
-                     * if the value is a valid Unicode besides MAXUINT.
-                     */
-                    g_param_spec_uint ("end",
-                        "end code point",
-                        "The Unicode end code point",
-                        0,
-                        G_MAXUINT,
-                        0,
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_END,
+        /* Cannot use g_param_spec_unichar() for the Unicode
+         * boundary values because the function checks
+         * if the value is a valid Unicode besides MAXUINT.
+         */
+                                     g_param_spec_uint ("end",
+                                                        "end code point",
+                                                        "The Unicode end code point",
+                                                        0,
+                                                        G_MAXUINT,
+                                                        0,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 
     /**
@@ -741,12 +727,12 @@ ibus_unicode_block_class_init (IBusUnicodeBlockClass *class)
      * The Uniode block name
      */
     g_object_class_install_property (gobject_class,
-                    PROP_NAME,
-                    g_param_spec_string ("name",
-                        "name",
-                        "The Unicode name",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                     PROP_NAME,
+                                     g_param_spec_string ("name",
+                                                          "name",
+                                                          "The Unicode name",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -761,7 +747,7 @@ ibus_unicode_block_destroy (IBusUnicodeBlock *block)
     g_clear_pointer (&block->priv->name, g_free);
 
     IBUS_OBJECT_CLASS (ibus_unicode_data_parent_class)->
-            destroy (IBUS_OBJECT (block));
+        destroy (IBUS_OBJECT (block));
 }
 
 static void
@@ -771,20 +757,20 @@ ibus_unicode_block_set_property (IBusUnicodeBlock *block,
                                  GParamSpec       *pspec)
 {
     switch (prop_id) {
-    case PROP_START:
-        g_assert (block->priv->start == 0);
-        block->priv->start = g_value_get_uint (value);
-        break;
-    case PROP_END:
-        g_assert (block->priv->end == 0);
-        block->priv->end = g_value_get_uint (value);
-        break;
-    case PROP_NAME:
-        g_assert (block->priv->name == NULL);
-        block->priv->name = g_value_dup_string (value);
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (block, prop_id, pspec);
+        case PROP_START:
+            g_assert (block->priv->start == 0);
+            block->priv->start = g_value_get_uint (value);
+            break;
+        case PROP_END:
+            g_assert (block->priv->end == 0);
+            block->priv->end = g_value_get_uint (value);
+            break;
+        case PROP_NAME:
+            g_assert (block->priv->name == NULL);
+            block->priv->name = g_value_dup_string (value);
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (block, prop_id, pspec);
     }
 }
 
@@ -795,26 +781,23 @@ ibus_unicode_block_get_property (IBusUnicodeBlock *block,
                                  GParamSpec       *pspec)
 {
     switch (prop_id) {
-    case PROP_START:
-        g_value_set_uint (value, ibus_unicode_block_get_start (block));
-        break;
-    case PROP_END:
-        g_value_set_uint (value, ibus_unicode_block_get_end (block));
-        break;
-    case PROP_NAME:
-        g_value_set_string (value, ibus_unicode_block_get_name (block));
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (block, prop_id, pspec);
+        case PROP_START:
+            g_value_set_uint (value, ibus_unicode_block_get_start (block));
+            break;
+        case PROP_END:
+            g_value_set_uint (value, ibus_unicode_block_get_end (block));
+            break;
+        case PROP_NAME:
+            g_value_set_string (value, ibus_unicode_block_get_name (block));
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (block, prop_id, pspec);
     }
 }
 
-static gboolean
-ibus_unicode_block_serialize (IBusUnicodeBlock *block,
-                              GVariantBuilder  *builder)
+static gboolean ibus_unicode_block_serialize (IBusUnicodeBlock* block, GVariantBuilder* builder)
 {
-    gboolean retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_block_parent_class)->
-            serialize ((IBusSerializable *)block, builder);
+    gboolean retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_block_parent_class)->serialize ((IBusSerializable *)block, builder);
     g_return_val_if_fail (retval, FALSE);
 
 #define NOTNULL(s) ((s) != NULL ? (s) : "")
@@ -826,15 +809,13 @@ ibus_unicode_block_serialize (IBusUnicodeBlock *block,
     g_variant_builder_add (builder, "u", block->priv->end);
     g_variant_builder_add (builder, "s", NOTNULL (block->priv->name));
 #undef NOTNULL
+
     return TRUE;
 }
 
-static gint
-ibus_unicode_block_deserialize (IBusUnicodeBlock *block,
-                                GVariant        *variant)
+static gint ibus_unicode_block_deserialize (IBusUnicodeBlock* block, GVariant* variant)
 {
-    gint retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_block_parent_class)->
-            deserialize ((IBusSerializable *)block, variant);
+    gint retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_block_parent_class)->deserialize ((IBusSerializable *)block, variant);
     g_return_val_if_fail (retval, 0);
 
     /* If you will add a new property, you can append it at the end and
@@ -843,18 +824,14 @@ ibus_unicode_block_deserialize (IBusUnicodeBlock *block,
      * likes ibus-qt. */
     g_variant_get_child (variant, retval++, "u", &block->priv->start);
     g_variant_get_child (variant, retval++, "u", &block->priv->end);
-    ibus_g_variant_get_child_string (variant, retval++,
-                                     &block->priv->name);
+    ibus_g_variant_get_child_string (variant, retval++, &block->priv->name);
+
     return retval;
 }
 
-static gboolean
-ibus_unicode_block_copy (IBusUnicodeBlock       *dest,
-                         const IBusUnicodeBlock *src)
+static gboolean ibus_unicode_block_copy (IBusUnicodeBlock* dest, const IBusUnicodeBlock* src)
 {
-    gboolean retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_block_parent_class)->
-            copy ((IBusSerializable *)dest,
-                  (IBusSerializable *)src);
+    gboolean retval = IBUS_SERIALIZABLE_CLASS (ibus_unicode_block_parent_class)->copy ((IBusSerializable *)dest, (IBusSerializable *)src);
     g_return_val_if_fail (retval, FALSE);
 
     dest->priv->start            = src->priv->start;
@@ -863,8 +840,7 @@ ibus_unicode_block_copy (IBusUnicodeBlock       *dest,
     return TRUE;
 }
 
-IBusUnicodeBlock *
-ibus_unicode_block_new (const gchar *first_property_name, ...)
+IBusUnicodeBlock* ibus_unicode_block_new (const gchar* first_property_name, ...)
 {
     va_list var_args;
     IBusUnicodeBlock *block;
@@ -872,8 +848,8 @@ ibus_unicode_block_new (const gchar *first_property_name, ...)
     g_assert (first_property_name != NULL);
     va_start (var_args, first_property_name);
     block = (IBusUnicodeBlock *) g_object_new_valist (IBUS_TYPE_UNICODE_BLOCK,
-                                                     first_property_name,
-                                                     var_args);
+                                                      first_property_name,
+                                                      var_args);
     va_end (var_args);
     /* end is required. Other properties are set in class_init by default. */
     g_assert (block->priv->start != block->priv->end);
@@ -881,41 +857,35 @@ ibus_unicode_block_new (const gchar *first_property_name, ...)
     return block;
 }
 
-gunichar
-ibus_unicode_block_get_start (IBusUnicodeBlock *block)
+gunichar ibus_unicode_block_get_start (IBusUnicodeBlock* block)
 {
     g_return_val_if_fail (IBUS_IS_UNICODE_BLOCK (block), G_MAXUINT32);
 
     return block->priv->start;
 }
 
-gunichar
-ibus_unicode_block_get_end (IBusUnicodeBlock *block)
+gunichar ibus_unicode_block_get_end (IBusUnicodeBlock* block)
 {
     g_return_val_if_fail (IBUS_IS_UNICODE_BLOCK (block), G_MAXUINT32);
 
     return block->priv->end;
 }
 
-const gchar *
-ibus_unicode_block_get_name (IBusUnicodeBlock *block)
+const gchar* ibus_unicode_block_get_name (IBusUnicodeBlock* block)
 {
     g_return_val_if_fail (IBUS_IS_UNICODE_BLOCK (block), "");
 
     return block->priv->name;
 }
 
-static void
-variant_foreach_add_block (IBusUnicodeBlock *block,
-                           GVariantBuilder *builder)
+static void variant_foreach_add_block (IBusUnicodeBlock* block, GVariantBuilder* builder)
 {
     g_variant_builder_add (
-            builder, "v",
-            ibus_serializable_serialize (IBUS_SERIALIZABLE (block)));
+        builder, "v",
+        ibus_serializable_serialize (IBUS_SERIALIZABLE (block)));
 }
 
-static GVariant *
-ibus_unicode_block_list_serialize (GSList *list)
+static GVariant* ibus_unicode_block_list_serialize (GSList *list)
 {
     GVariantBuilder builder;
 
@@ -924,8 +894,7 @@ ibus_unicode_block_list_serialize (GSList *list)
     return g_variant_builder_end (&builder);
 }
 
-static GSList *
-ibus_unicode_block_list_deserialize (GVariant *variant)
+static GSList* ibus_unicode_block_list_deserialize (GVariant* variant)
 {
     GSList *list = NULL;
     GVariantIter iter;
@@ -933,9 +902,7 @@ ibus_unicode_block_list_deserialize (GVariant *variant)
 
     g_variant_iter_init (&iter, variant);
     while (g_variant_iter_loop (&iter, "v", &unicode_variant)) {
-        IBusUnicodeBlock *data =
-                IBUS_UNICODE_BLOCK (ibus_serializable_deserialize (
-                        unicode_variant));
+        IBusUnicodeBlock *data = IBUS_UNICODE_BLOCK (ibus_serializable_deserialize (unicode_variant));
         list = g_slist_append (list, data);
         g_clear_pointer (&unicode_variant, g_variant_unref);
     }
@@ -943,9 +910,7 @@ ibus_unicode_block_list_deserialize (GVariant *variant)
     return list;
 }
 
-void
-ibus_unicode_block_save (const gchar *path,
-                         GSList      *list)
+void ibus_unicode_block_save (const gchar* path, GSList* list)
 {
     GVariant *variant;
     const gchar *header = IBUS_UNICODE_BLOCK_MAGIC;
@@ -988,8 +953,7 @@ ibus_unicode_block_save (const gchar *path,
     g_variant_unref (variant);
 }
 
-GSList *
-ibus_unicode_block_load (const gchar *path)
+GSList* ibus_unicode_block_load (const gchar* path)
 {
     gchar *contents = NULL;
     gsize length = 0;

@@ -29,9 +29,9 @@
  */
 
 #include "ibus-xml.h"
-#include "ibusobservedpath.h"
 #include "ibus-engine-desc.h"
 #include "ibus-serializable.h"
+#include "ibus-observed-path.h"
 
 /*
  * Type macros.

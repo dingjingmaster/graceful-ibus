@@ -24,7 +24,6 @@
 
 #include "gi-global.h"
 #include "marshalers.h"
-#include "types.h"
 
 /* panelproxy.c is a very simple proxy class for the panel component that does only the following:
  *
@@ -167,7 +166,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
 
     /* install signals */
     panel_signals[PAGE_UP] =
-        g_signal_new (I_("page-up"),
+        g_signal_new (g_intern_static_string("page-up"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, page_up),
@@ -176,7 +175,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_NONE, 0);
 
     panel_signals[PAGE_DOWN] =
-        g_signal_new (I_("page-down"),
+        g_signal_new (g_intern_static_string("page-down"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, page_down),
@@ -185,7 +184,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_NONE, 0);
 
     panel_signals[CURSOR_UP] =
-        g_signal_new (I_("cursor-up"),
+        g_signal_new (g_intern_static_string("cursor-up"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, cursor_up),
@@ -194,7 +193,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_NONE, 0);
 
     panel_signals[CURSOR_DOWN] =
-        g_signal_new (I_("cursor-down"),
+        g_signal_new (g_intern_static_string("cursor-down"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, cursor_down),
@@ -203,7 +202,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_NONE, 0);
 
     panel_signals[CANDIDATE_CLICKED] =
-        g_signal_new (I_("candidate-clicked"),
+        g_signal_new (g_intern_static_string("candidate-clicked"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, candidate_clicked),
@@ -215,7 +214,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_UINT);
 
     panel_signals[PROPERTY_ACTIVATE] =
-        g_signal_new (I_("property-activate"),
+        g_signal_new (g_intern_static_string("property-activate"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, property_activate),
@@ -226,7 +225,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_INT);
 
     panel_signals[PROPERTY_SHOW] =
-        g_signal_new (I_("property-show"),
+        g_signal_new (g_intern_static_string("property-show"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,
@@ -236,7 +235,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_STRING);
 
     panel_signals[PROPERTY_HIDE] =
-        g_signal_new (I_("property-hide"),
+        g_signal_new (g_intern_static_string("property-hide"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,
@@ -246,7 +245,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_STRING);
 
     panel_signals[COMMIT_TEXT] =
-        g_signal_new (I_("commit-text"),
+        g_signal_new (g_intern_static_string("commit-text"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             G_STRUCT_OFFSET(BusPanelProxyClass, commit_text),
@@ -256,7 +255,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             IBUS_TYPE_TEXT);
 
     panel_signals[PANEL_EXTENSION] =
-        g_signal_new (I_("panel-extension"),
+        g_signal_new (g_intern_static_string("panel-extension"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,
@@ -266,7 +265,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             IBUS_TYPE_EXTENSION_EVENT);
 
     panel_signals[PANEL_EXTENSION_REGISTER_KEYS] =
-        g_signal_new (I_("panel-extension-register-keys"),
+        g_signal_new (g_intern_static_string("panel-extension-register-keys"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,
@@ -276,7 +275,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_VARIANT);
 
     panel_signals[UPDATE_PREEDIT_TEXT_RECEIVED] =
-        g_signal_new (I_("update-preedit-text-received"),
+        g_signal_new (g_intern_static_string("update-preedit-text-received"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,
@@ -288,7 +287,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_BOOLEAN);
 
     panel_signals[UPDATE_LOOKUP_TABLE_RECEIVED] =
-        g_signal_new (I_("update-lookup-table-received"),
+        g_signal_new (g_intern_static_string("update-lookup-table-received"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,
@@ -299,7 +298,7 @@ bus_panel_proxy_class_init (BusPanelProxyClass *class)
             G_TYPE_BOOLEAN);
 
     panel_signals[UPDATE_AUXILIARY_TEXT_RECEIVED] =
-        g_signal_new (I_("update-auxiliary-text-received"),
+        g_signal_new (g_intern_static_string("update-auxiliary-text-received"),
             G_TYPE_FROM_CLASS (class),
             G_SIGNAL_RUN_LAST,
             0,

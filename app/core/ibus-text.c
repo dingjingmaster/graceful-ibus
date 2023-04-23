@@ -1,26 +1,8 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* IBus - The Input Bus
- * Copyright (C) 2008-2010 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2011-2021 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2021 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
-#include "ibustext.h"
+//
+// Created by dingjing on 23-4-23.
+//
+
+#include "ibus-text.h"
 
 /* functions prototype */
 static void         ibus_text_destroy      (IBusText            *text);
@@ -79,7 +61,7 @@ ibus_text_serialize (IBusText        *text,
     gboolean retval;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_text_parent_class)->serialize (
-                        (IBusSerializable *)text, builder);
+        (IBusSerializable *)text, builder);
     g_return_val_if_fail (retval, FALSE);
 
     g_variant_builder_add (builder, "s", text->text);
@@ -99,7 +81,7 @@ ibus_text_deserialize (IBusText *text,
 {
     gint retval;
     retval = IBUS_SERIALIZABLE_CLASS (ibus_text_parent_class)->deserialize (
-                            (IBusSerializable *)text, variant);
+        (IBusSerializable *)text, variant);
 
     if (text->is_static == FALSE)
         g_free (text->text);
@@ -124,8 +106,8 @@ ibus_text_copy (IBusText       *dest,
     gboolean retval;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_text_parent_class)->copy (
-                            (IBusSerializable *)dest,
-                            (IBusSerializable *)src);
+        (IBusSerializable *)dest,
+        (IBusSerializable *)src);
     g_return_val_if_fail (retval, FALSE);
 
     g_return_val_if_fail (IBUS_IS_TEXT (dest), FALSE);

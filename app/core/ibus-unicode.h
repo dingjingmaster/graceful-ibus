@@ -1,31 +1,14 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* bus - The Input Bus
- * Copyright (C) 2018-2019 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2018-2019 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
 
 #if !defined (__IBUS_H_INSIDE__) && !defined (IBUS_COMPILATION)
 #error "Only <ibus.h> can be included directly"
 #endif
 
-#ifndef __IBUS_UNICODE_H_
-#define __IBUS_UNICODE_H_
+#ifndef GRACEFUL_IBUS_IBUS_UNICODE_H
+#define GRACEFUL_IBUS_IBUS_UNICODE_H
+
 
 /**
  * SECTION: ibusunicode
@@ -169,7 +152,7 @@ const gchar *     ibus_unicode_data_get_alias (IBusUnicodeData    *unicode);
  * Returns: block-name property in #IBusUnicodeData
  */
 const gchar *     ibus_unicode_data_get_block_name
-                                              (IBusUnicodeData    *unicode);
+    (IBusUnicodeData    *unicode);
 
 /**
  * ibus_unicode_data_set_block_name:
@@ -179,8 +162,8 @@ const gchar *     ibus_unicode_data_get_block_name
  * Sets the block name in #IBusUnicodeData.
  */
 void              ibus_unicode_data_set_block_name
-                                              (IBusUnicodeData    *unicode,
-                                               const gchar        *block_name);
+    (IBusUnicodeData    *unicode,
+     const gchar        *block_name);
 
 /**
  * ibus_unicode_data_save:
@@ -221,12 +204,12 @@ GSList *          ibus_unicode_data_load      (const gchar        *path,
  * IBusUnicodeDataLoadAsyncFinish can receive the list of #IBusUnicodeData.
  */
 void              ibus_unicode_data_load_async
-                                              (const gchar        *path,
-                                               GObject            *object,
-                                               GCancellable       *cancellable,
-                                               IBusUnicodeDataLoadAsyncFinish
-                                                                   callback,
-                                               gpointer            user_data);
+    (const gchar        *path,
+     GObject            *object,
+     GCancellable       *cancellable,
+     IBusUnicodeDataLoadAsyncFinish
+     callback,
+     gpointer            user_data);
 
 /**
  * ibus_unicode_block_new:
@@ -252,7 +235,7 @@ IBusUnicodeBlock *ibus_unicode_block_new      (const gchar *first_property_name,
  * Returns: start property in #IBusUnicodeBlock
  */
 gunichar          ibus_unicode_block_get_start
-                                              (IBusUnicodeBlock   *block);
+    (IBusUnicodeBlock   *block);
 
 /**
  * ibus_unicode_block_get_end:
@@ -263,7 +246,7 @@ gunichar          ibus_unicode_block_get_start
  * Returns: end property in #IBusUnicodeBlock
  */
 gunichar          ibus_unicode_block_get_end
-                                              (IBusUnicodeBlock   *block);
+    (IBusUnicodeBlock   *block);
 
 /**
  * ibus_unicode_block_get_name:
@@ -296,4 +279,5 @@ void              ibus_unicode_block_save     (const gchar        *path,
 GSList *          ibus_unicode_block_load     (const gchar        *path);
 
 G_END_DECLS
-#endif
+
+#endif //GRACEFUL_IBUS_IBUS_UNICODE_H

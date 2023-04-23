@@ -21,14 +21,13 @@
  */
 #include "component.h"
 
-#include <gio/gio.h>
-#include <glib/gstdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gio/gio.h>
+#include <glib/gstdio.h>
 
 #include "gi-global.h"
 #include "marshalers.h"
-#include "types.h"
 
 enum {
     LAST_SIGNAL,
