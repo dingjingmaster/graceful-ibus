@@ -38,6 +38,9 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
 
         ${CMAKE_SOURCE_DIR}/app/core/ibus-internal.h
 
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-property.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-property.c
+
         ${CMAKE_SOURCE_DIR}/app/core/ibus-attribute.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-attribute.c
 
@@ -61,6 +64,9 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
 
         ${CMAKE_SOURCE_DIR}/app/core/ibus-observed-path.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-observed-path.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-attribute-list.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-attribute-list.c
 
         ${CMAKE_SOURCE_DIR}/app/core/interface/ibus-service.h
         ${CMAKE_SOURCE_DIR}/app/core/interface/ibus-service.c

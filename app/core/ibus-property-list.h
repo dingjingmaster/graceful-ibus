@@ -9,7 +9,6 @@
 #ifndef GRACEFUL_IBUS_IBUS_PROPERTY_LIST_H
 #define GRACEFUL_IBUS_IBUS_PROPERTY_LIST_H
 
-
 /**
  * SECTION: ibusproplist
  * @Title: IBusPropList
@@ -20,7 +19,7 @@
  *
  */
 
-#include "ibusproperty.h"
+#include "ibus-property.h"
 #include "ibus-serializable.h"
 
 G_BEGIN_DECLS

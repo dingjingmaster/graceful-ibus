@@ -62,9 +62,6 @@ file(GLOB IBUS_DAEMON_SRC
 
         ibusservice.h
 
-        ibusproperty.c
-        ibusproperty.h
-
         ibusproplist.c
         ibusproplist.h
 
@@ -78,9 +75,6 @@ file(GLOB IBUS_DAEMON_SRC
 
         ibuskeymap.c
         ibuskeymap.h
-
-        ibusattrlist.c
-        ibusattrlist.h
 
         ibusemoji.c
         ibusemoji.h

@@ -1,26 +1,9 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* IBus - The Input Bus
- * Copyright (C) 2008-2010 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2008-2019 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
+
+#include "ibus-property.h"
 #include "ibus-internal.h"
-#include "ibusproperty.h"
 #include "ibusenumtypes.h"
 #include "ibus-property-list.h"
 
@@ -103,12 +86,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The key of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_KEY,
-            g_param_spec_string ("key",
-                    "key",
-                    "The key of property",
-                    "",
-                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_KEY,
+                                     g_param_spec_string ("key",
+                                                          "key",
+                                                          "The key of property",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusPropert:icon:
@@ -116,12 +99,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The icon of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_ICON,
-            g_param_spec_string ("icon",
-                    "icon",
-                    "The icon of property",
-                    "",
-                    G_PARAM_READWRITE));
+                                     PROP_ICON,
+                                     g_param_spec_string ("icon",
+                                                          "icon",
+                                                          "The icon of property",
+                                                          "",
+                                                          G_PARAM_READWRITE));
 
     /**
      * IBusPropert:label:
@@ -129,12 +112,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The label of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_LABEL,
-            g_param_spec_object("label",
-                    "label",
-                    "The label of property",
-                    IBUS_TYPE_TEXT,
-                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                     PROP_LABEL,
+                                     g_param_spec_object("label",
+                                                         "label",
+                                                         "The label of property",
+                                                         IBUS_TYPE_TEXT,
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     /**
      * IBusPropert:symbol:
@@ -142,12 +125,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The symbol of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_SYMBOL,
-            g_param_spec_object("symbol",
-                    "symbol",
-                    "The symbol of property",
-                    IBUS_TYPE_TEXT,
-                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                     PROP_SYMBOL,
+                                     g_param_spec_object("symbol",
+                                                         "symbol",
+                                                         "The symbol of property",
+                                                         IBUS_TYPE_TEXT,
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     /**
      * IBusPropert:tooltip:
@@ -155,12 +138,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The tooltip of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_TOOLTIP,
-            g_param_spec_object("tooltip",
-                    "tooltip",
-                    "The tooltip of property",
-                    IBUS_TYPE_TEXT,
-                    G_PARAM_READWRITE));
+                                     PROP_TOOLTIP,
+                                     g_param_spec_object("tooltip",
+                                                         "tooltip",
+                                                         "The tooltip of property",
+                                                         IBUS_TYPE_TEXT,
+                                                         G_PARAM_READWRITE));
 
     /**
      * IBusPropert:sensitive:
@@ -168,12 +151,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The sensitive of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_SENSITIVE,
-            g_param_spec_boolean("sensitive",
-                    "sensitive",
-                    "The sensitive of property",
-                    TRUE,
-                    G_PARAM_READWRITE));
+                                     PROP_SENSITIVE,
+                                     g_param_spec_boolean("sensitive",
+                                                          "sensitive",
+                                                          "The sensitive of property",
+                                                          TRUE,
+                                                          G_PARAM_READWRITE));
 
     /**
      * IBusPropert:visible:
@@ -181,12 +164,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The visible of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_VISIBLE,
-            g_param_spec_boolean("visible",
-                    "visible",
-                    "The visible of property",
-                    TRUE,
-                    G_PARAM_READWRITE));
+                                     PROP_VISIBLE,
+                                     g_param_spec_boolean("visible",
+                                                          "visible",
+                                                          "The visible of property",
+                                                          TRUE,
+                                                          G_PARAM_READWRITE));
 
     /**
      * IBusPropert:type:
@@ -194,26 +177,26 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The type of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_PROP_TYPE,
-            g_param_spec_enum("prop-type",
-                    "prop-type",
-                    "The type of property",
-                    IBUS_TYPE_PROP_TYPE,
-                    PROP_TYPE_NORMAL,
-                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_PROP_TYPE,
+                                     g_param_spec_enum("prop-type",
+                                                       "prop-type",
+                                                       "The type of property",
+                                                       IBUS_TYPE_PROP_TYPE,
+                                                       PROP_TYPE_NORMAL,
+                                                       G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
     /**
      * IBusPropert:state:
      *
      * The state of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_STATE,
-            g_param_spec_enum("state",
-                    "state",
-                    "The state of property",
-                    IBUS_TYPE_PROP_STATE,
-                    PROP_STATE_UNCHECKED,
-                    G_PARAM_READWRITE));
+                                     PROP_STATE,
+                                     g_param_spec_enum("state",
+                                                       "state",
+                                                       "The state of property",
+                                                       IBUS_TYPE_PROP_STATE,
+                                                       PROP_STATE_UNCHECKED,
+                                                       G_PARAM_READWRITE));
 
     /**
      * IBusPropert:sub-props:
@@ -221,12 +204,12 @@ ibus_property_class_init (IBusPropertyClass *class)
      * The sub properties of property
      */
     g_object_class_install_property (gobject_class,
-            PROP_SUB_PROPS,
-            g_param_spec_object("sub-props",
-                    "sub properties",
-                    "The sub properties of property",
-                    IBUS_TYPE_PROP_LIST,
-                    G_PARAM_READWRITE));
+                                     PROP_SUB_PROPS,
+                                     g_param_spec_object("sub-props",
+                                                         "sub properties",
+                                                         "The sub properties of property",
+                                                         IBUS_TYPE_PROP_LIST,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
@@ -247,40 +230,40 @@ ibus_property_set_property (IBusProperty *prop,
                             GParamSpec   *pspec)
 {
     switch (prop_id) {
-    case PROP_KEY:
-        g_assert (prop->priv->key == NULL);
-        prop->priv->key = g_value_dup_string (value);
-        break;
-    case PROP_ICON:
-        ibus_property_set_icon (prop, g_value_get_string (value));
-        break;
-    case PROP_LABEL:
-        ibus_property_set_label (prop, g_value_get_object (value));
-        break;
-    case PROP_SYMBOL:
-        ibus_property_set_symbol (prop, g_value_get_object (value));
-        break;
-    case PROP_TOOLTIP:
-        ibus_property_set_tooltip (prop, g_value_get_object (value));
-        break;
-    case PROP_SENSITIVE:
-        ibus_property_set_sensitive (prop, g_value_get_boolean (value));
-        break;
-    case PROP_VISIBLE:
-        ibus_property_set_visible (prop, g_value_get_boolean (value));
-        break;
-    case PROP_PROP_TYPE:
-        prop->priv->type = g_value_get_enum (value);
-        break;
-    case PROP_STATE:
-        ibus_property_set_state (prop, g_value_get_enum (value));
-        break;
-    case PROP_SUB_PROPS:
-        ibus_property_set_sub_props (prop,
-                (IBusPropList *)g_value_get_object (value));
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (prop, prop_id, pspec);
+        case PROP_KEY:
+            g_assert (prop->priv->key == NULL);
+            prop->priv->key = g_value_dup_string (value);
+            break;
+        case PROP_ICON:
+            ibus_property_set_icon (prop, g_value_get_string (value));
+            break;
+        case PROP_LABEL:
+            ibus_property_set_label (prop, g_value_get_object (value));
+            break;
+        case PROP_SYMBOL:
+            ibus_property_set_symbol (prop, g_value_get_object (value));
+            break;
+        case PROP_TOOLTIP:
+            ibus_property_set_tooltip (prop, g_value_get_object (value));
+            break;
+        case PROP_SENSITIVE:
+            ibus_property_set_sensitive (prop, g_value_get_boolean (value));
+            break;
+        case PROP_VISIBLE:
+            ibus_property_set_visible (prop, g_value_get_boolean (value));
+            break;
+        case PROP_PROP_TYPE:
+            prop->priv->type = g_value_get_enum (value);
+            break;
+        case PROP_STATE:
+            ibus_property_set_state (prop, g_value_get_enum (value));
+            break;
+        case PROP_SUB_PROPS:
+            ibus_property_set_sub_props (prop,
+                                         (IBusPropList *)g_value_get_object (value));
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (prop, prop_id, pspec);
     }
 }
 
@@ -291,38 +274,38 @@ ibus_property_get_property (IBusProperty *prop,
                             GParamSpec   *pspec)
 {
     switch (prop_id) {
-    case PROP_KEY:
-        g_value_set_string (value, ibus_property_get_key (prop));
-        break;
-    case PROP_ICON:
-        g_value_set_string (value, ibus_property_get_icon (prop));
-        break;
-    case PROP_LABEL:
-        g_value_set_object (value, ibus_property_get_label (prop));
-        break;
-    case PROP_SYMBOL:
-        g_value_set_object (value, ibus_property_get_symbol (prop));
-        break;
-    case PROP_TOOLTIP:
-        g_value_set_object (value, ibus_property_get_tooltip (prop));
-        break;
-    case PROP_SENSITIVE:
-        g_value_set_boolean (value, ibus_property_get_sensitive (prop));
-        break;
-    case PROP_VISIBLE:
-        g_value_set_boolean (value, ibus_property_get_visible (prop));
-        break;
-    case PROP_PROP_TYPE:
-        g_value_set_enum (value, ibus_property_get_prop_type (prop));
-        break;
-    case PROP_STATE:
-        g_value_set_enum (value, ibus_property_get_state (prop));
-        break;
-    case PROP_SUB_PROPS:
-        g_value_set_object (value, ibus_property_get_sub_props (prop));
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (prop, prop_id, pspec);
+        case PROP_KEY:
+            g_value_set_string (value, ibus_property_get_key (prop));
+            break;
+        case PROP_ICON:
+            g_value_set_string (value, ibus_property_get_icon (prop));
+            break;
+        case PROP_LABEL:
+            g_value_set_object (value, ibus_property_get_label (prop));
+            break;
+        case PROP_SYMBOL:
+            g_value_set_object (value, ibus_property_get_symbol (prop));
+            break;
+        case PROP_TOOLTIP:
+            g_value_set_object (value, ibus_property_get_tooltip (prop));
+            break;
+        case PROP_SENSITIVE:
+            g_value_set_boolean (value, ibus_property_get_sensitive (prop));
+            break;
+        case PROP_VISIBLE:
+            g_value_set_boolean (value, ibus_property_get_visible (prop));
+            break;
+        case PROP_PROP_TYPE:
+            g_value_set_enum (value, ibus_property_get_prop_type (prop));
+            break;
+        case PROP_STATE:
+            g_value_set_enum (value, ibus_property_get_state (prop));
+            break;
+        case PROP_SUB_PROPS:
+            g_value_set_object (value, ibus_property_get_sub_props (prop));
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (prop, prop_id, pspec);
     }
 }
 
@@ -372,18 +355,18 @@ ibus_property_serialize (IBusProperty    *prop,
     g_variant_builder_add (builder, "s", prop->priv->key);
     g_variant_builder_add (builder, "u", prop->priv->type);
     g_variant_builder_add (builder, "v",
-            ibus_serializable_serialize ((IBusSerializable *)prop->priv->label));
+                           ibus_serializable_serialize ((IBusSerializable *)prop->priv->label));
     g_variant_builder_add (builder, "s", prop->priv->icon);
     g_variant_builder_add (builder, "v",
-            ibus_serializable_serialize ((IBusSerializable *)prop->priv->tooltip));
+                           ibus_serializable_serialize ((IBusSerializable *)prop->priv->tooltip));
     g_variant_builder_add (builder, "b", prop->priv->sensitive);
     g_variant_builder_add (builder, "b", prop->priv->visible);
     g_variant_builder_add (builder, "u", prop->priv->state);
     g_variant_builder_add (builder, "v",
-            ibus_serializable_serialize ((IBusSerializable *)prop->priv->sub_props));
+                           ibus_serializable_serialize ((IBusSerializable *)prop->priv->sub_props));
     /* Keep the serialized order for the compatibility when add new members. */
     g_variant_builder_add (builder, "v",
-            ibus_serializable_serialize ((IBusSerializable *)prop->priv->symbol));
+                           ibus_serializable_serialize ((IBusSerializable *)prop->priv->symbol));
 
     return TRUE;
 }
