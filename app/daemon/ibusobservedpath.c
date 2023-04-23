@@ -22,7 +22,7 @@
  */
 #include <glib/gstdio.h>
 #include <stdlib.h>
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusobservedpath.h"
 
 

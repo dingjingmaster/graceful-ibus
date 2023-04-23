@@ -6,7 +6,7 @@
 
 #include <gio/gio.h>
 #include "ibus-main.h"
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusmarshalers.h"
 #include "ibusattribute.h"
 #include "ibuslookuptable.h"

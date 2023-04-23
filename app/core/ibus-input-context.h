@@ -23,7 +23,7 @@
  * through which invokes IBusEngine.
  */
 #include "ibusproxy.h"
-#include "ibusenginedesc.h"
+#include "ibus-engine-desc.h"
 #include "ibustext.h"
 
 /*

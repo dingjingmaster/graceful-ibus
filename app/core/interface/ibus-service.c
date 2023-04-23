@@ -3,7 +3,7 @@
 //
 
 #include "ibus-service.h"
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 
 
 #define IBUS_SERVICE_GET_PRIVATE(o)     ((IBusServicePrivate *)ibus_service_get_instance_private (o))

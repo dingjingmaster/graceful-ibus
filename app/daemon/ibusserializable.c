@@ -20,7 +20,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  * USA
  */
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusserializable.h"
 
 #define IBUS_SERIALIZABLE_GET_PRIVATE(o)  \

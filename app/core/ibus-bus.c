@@ -13,9 +13,9 @@
 #include "ibus-log.h"
 #include "ibus-main.h"
 #include "ibus-config.h"
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusmarshalers.h"
-#include "ibusenginedesc.h"
+#include "ibus-engine-desc.h"
 #include "ibusserializable.h"
 
 #define IBUS_BUS_GET_PRIVATE(o)     ((IBusBusPrivate*) ibus_bus_get_instance_private (o))

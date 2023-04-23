@@ -22,7 +22,7 @@
 #include "ibus-main.h"
 #include "ibus-config.h"
 #include "ibus-component.h"
-#include "ibusinputcontext.h"
+#include "ibus-input-context.h"
 
 /*
  * Type macros.

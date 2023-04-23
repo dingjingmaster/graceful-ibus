@@ -26,7 +26,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include "ibusemoji.h"
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 
 #define IBUS_EMOJI_DATA_MAGIC "IBusEmojiData"
 #define IBUS_EMOJI_DATA_VERSION (5)

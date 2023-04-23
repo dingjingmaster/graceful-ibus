@@ -21,8 +21,13 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
         ${CMAKE_SOURCE_DIR}/app/core/ibus-config.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-config.c
 
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-internal.h
+
         ${CMAKE_SOURCE_DIR}/app/core/ibus-component.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-component.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-engine-desc.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-engine-desc.c
 
         ${CMAKE_SOURCE_DIR}/app/core/ibus-input-context.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-input-context.c

@@ -85,9 +85,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibusproxy.c
         ibusproxy.h
 
-        ibusenginedesc.c
-        ibusenginedesc.h
-
         ibuskeymap.c
         ibuskeymap.h
 
@@ -116,9 +113,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibuskeynames.c
 
         ibuskeyuni.c
-
-        ibusinputcontext.c
-        ibusinputcontext.h
         )
 
 add_executable(ibus-daemon main.c ${IBUS_DAEMON_SRC} ${GRACEFUL_IBUS_CORE_SRC})

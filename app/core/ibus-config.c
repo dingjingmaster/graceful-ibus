@@ -4,7 +4,7 @@
 
 #include "ibus-config.h"
 
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusmarshalers.h"
 #include "ibus-main.h"
 #include "ibus-bus.h"

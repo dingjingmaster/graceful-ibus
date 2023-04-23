@@ -30,7 +30,7 @@
 
 #include "ibusserializable.h"
 #include "ibusobservedpath.h"
-#include "ibusenginedesc.h"
+#include "ibus-engine-desc.h"
 #include "ibusxml.h"
 
 /*

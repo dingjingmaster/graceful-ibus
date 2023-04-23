@@ -1,32 +1,13 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* bus - The Input Bus
- * Copyright (C) 2008-2015 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2011-2018 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2008-2018 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
 
 #if !defined (__IBUS_H_INSIDE__) && !defined (IBUS_COMPILATION)
 #error "Only <ibus.h> can be included directly"
 #endif
 
-#ifndef __IBUS_ENGINE_DESC_H_
-#define __IBUS_ENGINE_DESC_H_
+#ifndef GRACEFUL_IBUS_IBUS_ENGINE_DESC_H
+#define GRACEFUL_IBUS_IBUS_ENGINE_DESC_H
 
 /**
  * SECTION: ibusenginedesc
@@ -157,7 +138,7 @@ IBusEngineDesc  *ibus_engine_desc_new_varargs   (const gchar *first_property_nam
  * @node.
  */
 IBusEngineDesc  *ibus_engine_desc_new_from_xml_node
-                                                (XMLNode        *node);
+    (XMLNode        *node);
 /**
  * ibus_engine_desc_get_name:
  * @info: An IBusEngineDesc
@@ -187,7 +168,7 @@ const gchar     *ibus_engine_desc_get_longname  (IBusEngineDesc *info);
  * Returns: description property in IBusEngineDesc
  */
 const gchar     *ibus_engine_desc_get_description
-                                                (IBusEngineDesc *info);
+    (IBusEngineDesc *info);
 
 /**
  * ibus_engine_desc_get_language:
@@ -249,7 +230,7 @@ const gchar     *ibus_engine_desc_get_layout    (IBusEngineDesc *info);
  * Returns: keyboard variant property in IBusEngineDesc
  */
 const gchar     *ibus_engine_desc_get_layout_variant
-                                                (IBusEngineDesc *info);
+    (IBusEngineDesc *info);
 
 /**
  * ibus_engine_desc_get_layout_option:
@@ -260,7 +241,7 @@ const gchar     *ibus_engine_desc_get_layout_variant
  * Returns: keyboard option property in IBusEngineDesc
  */
 const gchar     *ibus_engine_desc_get_layout_option
-                                                (IBusEngineDesc *info);
+    (IBusEngineDesc *info);
 
 /**
  * ibus_engine_desc_get_rank:
@@ -321,7 +302,7 @@ const gchar     *ibus_engine_desc_get_version   (IBusEngineDesc *info);
  * Returns: textdomain in IBusEngineDesc
  */
 const gchar     *ibus_engine_desc_get_textdomain
-                                                (IBusEngineDesc *info);
+    (IBusEngineDesc *info);
 
 /**
  * ibus_engine_desc_get_icon_prop_key:
@@ -333,7 +314,7 @@ const gchar     *ibus_engine_desc_get_textdomain
  * Returns: IBusProperty.key for dynamic panel icon in IBusEngineDesc
  */
 const gchar     *ibus_engine_desc_get_icon_prop_key
-                                                (IBusEngineDesc *info);
+    (IBusEngineDesc *info);
 
 /**
  * ibus_engine_desc_output:
@@ -348,4 +329,5 @@ void             ibus_engine_desc_output        (IBusEngineDesc *info,
                                                  GString        *output,
                                                  gint            indent);
 G_END_DECLS
-#endif
+
+#endif //GRACEFUL_IBUS_IBUS_ENGINE_DESC_H

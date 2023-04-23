@@ -25,7 +25,7 @@
 
 #include <glib.h>
 #include <glib/gstdio.h>
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibuserror.h"
 #include "ibusunicode.h"
 #include "ibus-types.h"

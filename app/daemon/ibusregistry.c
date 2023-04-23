@@ -28,7 +28,7 @@
 #include <glib/gstdio.h>
 #include <string.h>
 
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusmarshalers.h"
 #include "ibusregistry.h"
 

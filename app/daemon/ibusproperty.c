@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  * USA
  */
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusproperty.h"
 #include "ibusproplist.h"
 #include "ibusenumtypes.h"

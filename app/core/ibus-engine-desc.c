@@ -1,28 +1,11 @@
-/* -*- mode: C; c-basic-offset: 4; indent-tabs-mode: nil; -*- */
-/* vim:set et sts=4: */
-/* bus - The Input Bus
- * Copyright (C) 2008-2015 Peng Huang <shawn.p.huang@gmail.com>
- * Copyright (C) 2008-2019 Red Hat, Inc.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- * USA
- */
+//
+// Created by dingjing on 23-4-23.
+//
+
+#include "ibus-engine-desc.h"
 #include <stdlib.h>
-#include "ibusenginedesc.h"
-#include "ibusinternal.h"
 #include "ibusxml.h"
+#include "ibus-internal.h"
 
 enum {
     LAST_SIGNAL,
@@ -122,12 +105,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The name of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_NAME,
-                    g_param_spec_string ("name",
-                        "description name",
-                        "The name of engine description",
-                        NULL,
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_NAME,
+                                     g_param_spec_string ("name",
+                                                          "description name",
+                                                          "The name of engine description",
+                                                          NULL,
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:longname:
@@ -135,12 +118,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The longname of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_LONGNAME,
-                    g_param_spec_string ("longname",
-                        "description longname",
-                        "The longname of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_LONGNAME,
+                                     g_param_spec_string ("longname",
+                                                          "description longname",
+                                                          "The longname of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:description:
@@ -148,12 +131,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The description of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_DESCRIPTION,
-                    g_param_spec_string ("description",
-                        "description description",
-                        "The description of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_DESCRIPTION,
+                                     g_param_spec_string ("description",
+                                                          "description description",
+                                                          "The description of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:language:
@@ -161,12 +144,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The language of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_LANGUAGE,
-                    g_param_spec_string ("language",
-                        "description language",
-                        "The language of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_LANGUAGE,
+                                     g_param_spec_string ("language",
+                                                          "description language",
+                                                          "The language of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:license:
@@ -174,12 +157,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The license of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_LICENSE,
-                    g_param_spec_string ("license",
-                        "description license",
-                        "The license of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_LICENSE,
+                                     g_param_spec_string ("license",
+                                                          "description license",
+                                                          "The license of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:author:
@@ -187,12 +170,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The author of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_AUTHOR,
-                    g_param_spec_string ("author",
-                        "description author",
-                        "The author of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_AUTHOR,
+                                     g_param_spec_string ("author",
+                                                          "description author",
+                                                          "The author of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:icon:
@@ -200,12 +183,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The icon of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_ICON,
-                    g_param_spec_string ("icon",
-                        "description icon",
-                        "The icon of engine description",
-                        "ibus-engine",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_ICON,
+                                     g_param_spec_string ("icon",
+                                                          "description icon",
+                                                          "The icon of engine description",
+                                                          "ibus-engine",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:layout:
@@ -213,12 +196,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The layout of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_LAYOUT,
-                    g_param_spec_string ("layout",
-                        "description layout",
-                        "The layout of engine description",
-                        "us",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_LAYOUT,
+                                     g_param_spec_string ("layout",
+                                                          "description layout",
+                                                          "The layout of engine description",
+                                                          "us",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:layout-variant:
@@ -226,12 +209,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The keyboard variant of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_LAYOUT_VARIANT,
-                    g_param_spec_string ("layout-variant",
-                        "description keyboard variant",
-                        "The keyboard variant of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_LAYOUT_VARIANT,
+                                     g_param_spec_string ("layout-variant",
+                                                          "description keyboard variant",
+                                                          "The keyboard variant of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:layout-option:
@@ -239,12 +222,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The keyboard option of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_LAYOUT_OPTION,
-                    g_param_spec_string ("layout-option",
-                        "description keyboard option",
-                        "The keyboard option of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_LAYOUT_OPTION,
+                                     g_param_spec_string ("layout-option",
+                                                          "description keyboard option",
+                                                          "The keyboard option of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:rank:
@@ -252,14 +235,14 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The rank of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_RANK,
-                    g_param_spec_uint ("rank",
-                        "description rank",
-                        "The rank of engine description",
-                        0,
-                        G_MAXUINT,
-                        0,
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_RANK,
+                                     g_param_spec_uint ("rank",
+                                                        "description rank",
+                                                        "The rank of engine description",
+                                                        0,
+                                                        G_MAXUINT,
+                                                        0,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:hotkeys:
@@ -267,12 +250,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The hotkeys of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_HOTKEYS,
-                    g_param_spec_string ("hotkeys",
-                        "description hotkeys",
-                        "The hotkeys of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_HOTKEYS,
+                                     g_param_spec_string ("hotkeys",
+                                                          "description hotkeys",
+                                                          "The hotkeys of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:symbol:
@@ -280,12 +263,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The symbol chars of engine description instead of icon image
      */
     g_object_class_install_property (gobject_class,
-                    PROP_SYMBOL,
-                    g_param_spec_string ("symbol",
-                        "description symbol",
-                        "The icon symbol chars of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_SYMBOL,
+                                     g_param_spec_string ("symbol",
+                                                          "description symbol",
+                                                          "The icon symbol chars of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:setup:
@@ -293,12 +276,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The exec lists of the engine setup command
      */
     g_object_class_install_property (gobject_class,
-                    PROP_SETUP,
-                    g_param_spec_string ("setup",
-                        "setup args",
-                        "The exec lists of the engine setup command",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_SETUP,
+                                     g_param_spec_string ("setup",
+                                                          "setup args",
+                                                          "The exec lists of the engine setup command",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:version:
@@ -306,12 +289,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The version number of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_VERSION,
-                    g_param_spec_string ("version",
-                        "version number",
-                        "The version number of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_VERSION,
+                                     g_param_spec_string ("version",
+                                                          "version number",
+                                                          "The version number of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:textdomain:
@@ -319,12 +302,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The textdomain of engine description
      */
     g_object_class_install_property (gobject_class,
-                    PROP_TEXTDOMAIN,
-                    g_param_spec_string ("textdomain",
-                        "textdomain",
-                        "The textdomain of engine description",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_TEXTDOMAIN,
+                                     g_param_spec_string ("textdomain",
+                                                          "textdomain",
+                                                          "The textdomain of engine description",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
     /**
      * IBusEngineDesc:icon-prop-key:
@@ -332,12 +315,12 @@ ibus_engine_desc_class_init (IBusEngineDescClass *class)
      * The key of IBusProperty to change panel icon dynamically.
      */
     g_object_class_install_property (gobject_class,
-                    PROP_ICON_PROP_KEY,
-                    g_param_spec_string ("icon-prop-key",
-                        "icon property key",
-                        "The key of IBusProperty for the dynamic panel icon",
-                        "",
-                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                     PROP_ICON_PROP_KEY,
+                                     g_param_spec_string ("icon-prop-key",
+                                                          "icon property key",
+                                                          "The key of IBusProperty for the dynamic panel icon",
+                                                          "",
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -394,75 +377,75 @@ ibus_engine_desc_set_property (IBusEngineDesc *desc,
                                GParamSpec     *pspec)
 {
     switch (prop_id) {
-    case PROP_NAME:
-        g_assert (desc->priv->name == NULL);
-        desc->priv->name = g_value_dup_string (value);
-        break;
-    case PROP_LONGNAME:
-        g_assert (desc->priv->longname == NULL);
-        desc->priv->longname = g_value_dup_string (value);
-        break;
-    case PROP_DESCRIPTION:
-        g_assert (desc->priv->description == NULL);
-        desc->priv->description  = g_value_dup_string (value);
-        break;
-    case PROP_LANGUAGE:
-        g_assert (desc->priv->language == NULL);
-        desc->priv->language = g_value_dup_string (value);
-        break;
-    case PROP_LICENSE:
-        g_assert (desc->priv->license == NULL);
-        desc->priv->license = g_value_dup_string (value);
-        break;
-    case PROP_AUTHOR:
-        g_assert (desc->priv->author == NULL);
-        desc->priv->author = g_value_dup_string (value);
-        break;
-    case PROP_ICON:
-        g_assert (desc->priv->icon == NULL);
-        desc->priv->icon = g_value_dup_string (value);
-        break;
-    case PROP_LAYOUT:
-        g_assert (desc->priv->layout == NULL);
-        desc->priv->layout = g_value_dup_string (value);
-        break;
-    case PROP_LAYOUT_VARIANT:
-        g_assert (desc->priv->layout_variant == NULL);
-        desc->priv->layout_variant = g_value_dup_string (value);
-        break;
-    case PROP_LAYOUT_OPTION:
-        g_assert (desc->priv->layout_option == NULL);
-        desc->priv->layout_option = g_value_dup_string (value);
-        break;
-    case PROP_RANK:
-        desc->priv->rank = g_value_get_uint (value);
-        break;
-    case PROP_HOTKEYS:
-        g_assert (desc->priv->hotkeys == NULL);
-        desc->priv->hotkeys = g_value_dup_string (value);
-        break;
-    case PROP_SYMBOL:
-        g_assert (desc->priv->symbol == NULL);
-        desc->priv->symbol = g_value_dup_string (value);
-        break;
-    case PROP_SETUP:
-        g_assert (desc->priv->setup == NULL);
-        desc->priv->setup = g_value_dup_string (value);
-        break;
-    case PROP_VERSION:
-        g_assert (desc->priv->version == NULL);
-        desc->priv->version = g_value_dup_string (value);
-        break;
-    case PROP_TEXTDOMAIN:
-        g_assert (desc->priv->textdomain == NULL);
-        desc->priv->textdomain = g_value_dup_string (value);
-        break;
-    case PROP_ICON_PROP_KEY:
-        g_assert (desc->priv->icon_prop_key == NULL);
-        desc->priv->icon_prop_key = g_value_dup_string (value);
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (desc, prop_id, pspec);
+        case PROP_NAME:
+            g_assert (desc->priv->name == NULL);
+            desc->priv->name = g_value_dup_string (value);
+            break;
+        case PROP_LONGNAME:
+            g_assert (desc->priv->longname == NULL);
+            desc->priv->longname = g_value_dup_string (value);
+            break;
+        case PROP_DESCRIPTION:
+            g_assert (desc->priv->description == NULL);
+            desc->priv->description  = g_value_dup_string (value);
+            break;
+        case PROP_LANGUAGE:
+            g_assert (desc->priv->language == NULL);
+            desc->priv->language = g_value_dup_string (value);
+            break;
+        case PROP_LICENSE:
+            g_assert (desc->priv->license == NULL);
+            desc->priv->license = g_value_dup_string (value);
+            break;
+        case PROP_AUTHOR:
+            g_assert (desc->priv->author == NULL);
+            desc->priv->author = g_value_dup_string (value);
+            break;
+        case PROP_ICON:
+            g_assert (desc->priv->icon == NULL);
+            desc->priv->icon = g_value_dup_string (value);
+            break;
+        case PROP_LAYOUT:
+            g_assert (desc->priv->layout == NULL);
+            desc->priv->layout = g_value_dup_string (value);
+            break;
+        case PROP_LAYOUT_VARIANT:
+            g_assert (desc->priv->layout_variant == NULL);
+            desc->priv->layout_variant = g_value_dup_string (value);
+            break;
+        case PROP_LAYOUT_OPTION:
+            g_assert (desc->priv->layout_option == NULL);
+            desc->priv->layout_option = g_value_dup_string (value);
+            break;
+        case PROP_RANK:
+            desc->priv->rank = g_value_get_uint (value);
+            break;
+        case PROP_HOTKEYS:
+            g_assert (desc->priv->hotkeys == NULL);
+            desc->priv->hotkeys = g_value_dup_string (value);
+            break;
+        case PROP_SYMBOL:
+            g_assert (desc->priv->symbol == NULL);
+            desc->priv->symbol = g_value_dup_string (value);
+            break;
+        case PROP_SETUP:
+            g_assert (desc->priv->setup == NULL);
+            desc->priv->setup = g_value_dup_string (value);
+            break;
+        case PROP_VERSION:
+            g_assert (desc->priv->version == NULL);
+            desc->priv->version = g_value_dup_string (value);
+            break;
+        case PROP_TEXTDOMAIN:
+            g_assert (desc->priv->textdomain == NULL);
+            desc->priv->textdomain = g_value_dup_string (value);
+            break;
+        case PROP_ICON_PROP_KEY:
+            g_assert (desc->priv->icon_prop_key == NULL);
+            desc->priv->icon_prop_key = g_value_dup_string (value);
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (desc, prop_id, pspec);
     }
 }
 
@@ -473,59 +456,59 @@ ibus_engine_desc_get_property (IBusEngineDesc *desc,
                                GParamSpec     *pspec)
 {
     switch (prop_id) {
-    case PROP_NAME:
-        g_value_set_string (value, ibus_engine_desc_get_name (desc));
-        break;
-    case PROP_LONGNAME:
-        g_value_set_string (value, ibus_engine_desc_get_longname (desc));
-        break;
-    case PROP_DESCRIPTION:
-        g_value_set_string (value, ibus_engine_desc_get_description (desc));
-        break;
-    case PROP_LANGUAGE:
-        g_value_set_string (value, ibus_engine_desc_get_language (desc));
-        break;
-    case PROP_LICENSE:
-        g_value_set_string (value, ibus_engine_desc_get_license (desc));
-        break;
-    case PROP_AUTHOR:
-        g_value_set_string (value, ibus_engine_desc_get_author (desc));
-        break;
-    case PROP_ICON:
-        g_value_set_string (value, ibus_engine_desc_get_icon (desc));
-        break;
-    case PROP_LAYOUT:
-        g_value_set_string (value, ibus_engine_desc_get_layout (desc));
-        break;
-    case PROP_LAYOUT_VARIANT:
-        g_value_set_string (value, ibus_engine_desc_get_layout_variant (desc));
-        break;
-    case PROP_LAYOUT_OPTION:
-        g_value_set_string (value, ibus_engine_desc_get_layout_option (desc));
-        break;
-    case PROP_RANK:
-        g_value_set_uint (value, ibus_engine_desc_get_rank (desc));
-        break;
-    case PROP_HOTKEYS:
-        g_value_set_string (value, ibus_engine_desc_get_hotkeys (desc));
-        break;
-    case PROP_SYMBOL:
-        g_value_set_string (value, ibus_engine_desc_get_symbol (desc));
-        break;
-    case PROP_SETUP:
-        g_value_set_string (value, ibus_engine_desc_get_setup (desc));
-        break;
-    case PROP_VERSION:
-        g_value_set_string (value, ibus_engine_desc_get_version (desc));
-        break;
-    case PROP_TEXTDOMAIN:
-        g_value_set_string (value, ibus_engine_desc_get_textdomain (desc));
-        break;
-    case PROP_ICON_PROP_KEY:
-        g_value_set_string (value, ibus_engine_desc_get_icon_prop_key (desc));
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (desc, prop_id, pspec);
+        case PROP_NAME:
+            g_value_set_string (value, ibus_engine_desc_get_name (desc));
+            break;
+        case PROP_LONGNAME:
+            g_value_set_string (value, ibus_engine_desc_get_longname (desc));
+            break;
+        case PROP_DESCRIPTION:
+            g_value_set_string (value, ibus_engine_desc_get_description (desc));
+            break;
+        case PROP_LANGUAGE:
+            g_value_set_string (value, ibus_engine_desc_get_language (desc));
+            break;
+        case PROP_LICENSE:
+            g_value_set_string (value, ibus_engine_desc_get_license (desc));
+            break;
+        case PROP_AUTHOR:
+            g_value_set_string (value, ibus_engine_desc_get_author (desc));
+            break;
+        case PROP_ICON:
+            g_value_set_string (value, ibus_engine_desc_get_icon (desc));
+            break;
+        case PROP_LAYOUT:
+            g_value_set_string (value, ibus_engine_desc_get_layout (desc));
+            break;
+        case PROP_LAYOUT_VARIANT:
+            g_value_set_string (value, ibus_engine_desc_get_layout_variant (desc));
+            break;
+        case PROP_LAYOUT_OPTION:
+            g_value_set_string (value, ibus_engine_desc_get_layout_option (desc));
+            break;
+        case PROP_RANK:
+            g_value_set_uint (value, ibus_engine_desc_get_rank (desc));
+            break;
+        case PROP_HOTKEYS:
+            g_value_set_string (value, ibus_engine_desc_get_hotkeys (desc));
+            break;
+        case PROP_SYMBOL:
+            g_value_set_string (value, ibus_engine_desc_get_symbol (desc));
+            break;
+        case PROP_SETUP:
+            g_value_set_string (value, ibus_engine_desc_get_setup (desc));
+            break;
+        case PROP_VERSION:
+            g_value_set_string (value, ibus_engine_desc_get_version (desc));
+            break;
+        case PROP_TEXTDOMAIN:
+            g_value_set_string (value, ibus_engine_desc_get_textdomain (desc));
+            break;
+        case PROP_ICON_PROP_KEY:
+            g_value_set_string (value, ibus_engine_desc_get_icon_prop_key (desc));
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (desc, prop_id, pspec);
     }
 }
 
@@ -633,7 +616,7 @@ ibus_engine_desc_copy (IBusEngineDesc       *dest,
     gboolean retval;
 
     retval = IBUS_SERIALIZABLE_CLASS (ibus_engine_desc_parent_class)->copy ((IBusSerializable *)dest,
-                                 (IBusSerializable *)src);
+                                                                            (IBusSerializable *)src);
     g_return_val_if_fail (retval, FALSE);
 
     dest->priv->name             = g_strdup (src->priv->name);
@@ -705,9 +688,7 @@ ibus_engine_desc_output (IBusEngineDesc *desc,
     g_string_append (output, "</engine>\n");
 }
 
-static gboolean
-ibus_engine_desc_parse_xml_node (IBusEngineDesc *desc,
-                                XMLNode       *node)
+static gboolean ibus_engine_desc_parse_xml_node (IBusEngineDesc *desc, XMLNode* node)
 {
     GList *p;
 
@@ -745,6 +726,7 @@ ibus_engine_desc_parse_xml_node (IBusEngineDesc *desc,
         }
         g_warning ("<engines> element contains invalidate element <%s>", sub_node->name);
     }
+
     return TRUE;
 }
 
@@ -830,8 +812,7 @@ ibus_engine_desc_new_varargs (const gchar *first_property_name, ...)
     return desc;
 }
 
-IBusEngineDesc *
-ibus_engine_desc_new_from_xml_node (XMLNode      *node)
+IBusEngineDesc* ibus_engine_desc_new_from_xml_node (XMLNode* node)
 {
     g_assert (node);
 

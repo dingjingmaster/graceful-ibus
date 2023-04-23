@@ -22,7 +22,7 @@
 
 #include "ibusproxy.h"
 #include "ibusmarshalers.h"
-#include "ibusinternal.h"
+#include "ibus-internal.h"
 #include "ibusobject.h"
 
 #define IBUS_PROXY_GET_PRIVATE(o)  \
