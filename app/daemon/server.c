@@ -229,24 +229,28 @@ void bus_server_init (void)
 
     dbus = bus_dbus_impl_get_default ();
     ibus = bus_ibus_impl_get_default ();
-    bus_dbus_impl_register_object (dbus, (IBusService *)ibus);
+    bus_dbus_impl_register_object (dbus, (IBusService*)ibus);
 
     /* init server */
     socket_address = bus_extract_address ();
 
-    LOG_DEBUG("create dbus server and write socket address to '%s'", socket_address ? socket_address : "<null>");
+    LOG_DEBUG("create dbus server and write socket address to '%s'", socket_address ? socket_address : "<null>")
 
 #define IF_GET_UNIX_DIR_FROM_DIR(prefix)                                \
     if (g_str_has_prefix (socket_address, (prefix))) {                  \
         unix_dir = g_strdup (socket_address + strlen (prefix));         \
+        LOG_DEBUG("%s", prefix)                                         \
     }
 #define IF_GET_UNIX_DIR_FROM_PATH(prefix)                               \
     if (g_str_has_prefix (socket_address, (prefix))) {                  \
         const char *unix_path = socket_address + strlen (prefix);       \
         unix_dir = g_path_get_dirname (unix_path);                      \
+        LOG_DEBUG("%s", prefix)                                         \
     }
 #define IF_GET_UNIX_DIR_FROM_ABSTRACT(prefix)                           \
-    if (g_str_has_prefix (socket_address, (prefix))) {}
+    if (g_str_has_prefix (socket_address, (prefix))) {                  \
+        LOG_DEBUG("%s", prefix)                                         \
+    }
 
 
     IF_GET_UNIX_DIR_FROM_DIR (IBUS_UNIX_TMPDIR)
@@ -257,7 +261,7 @@ void bus_server_init (void)
     else
     IF_GET_UNIX_DIR_FROM_DIR (IBUS_UNIX_DIR)
     else {
-        g_error ("Your socket address \"%s\" does not correspond with "
+        LOG_ERROR("Your socket address \"%s\" does not correspond with "
                  "one of the following formats; "
                      IBUS_UNIX_TMPDIR "DIR, " IBUS_UNIX_PATH "FILE, "
                      IBUS_UNIX_ABSTRACT "FILE, " IBUS_UNIX_DIR "DIR.",
@@ -284,14 +288,17 @@ void bus_server_init (void)
     g_object_unref (observer);
     g_signal_connect (server, "new-connection", G_CALLBACK (bus_new_connection_cb), NULL);
 
+    LOG_DEBUG("g_dbus_server_start ...")
     g_dbus_server_start (server);
 
     address = g_strdup_printf ("%s,guid=%s", g_dbus_server_get_client_address (server), g_dbus_server_get_guid (server));
 
     /* write address to file */
+    LOG_DEBUG("write address: %s", address)
     ibus_write_address (address);
 
     /* own a session bus name so that third parties can easily track our life-cycle */
+    LOG_DEBUG("g_bus_own_name")
     g_bus_own_name (G_BUS_TYPE_SESSION, IBUS_SERVICE_IBUS, G_BUS_NAME_OWNER_FLAGS_NONE, bus_acquired_handler, NULL, NULL, NULL, NULL);
 
 #undef IF_GET_UNIX_DIR_FROM_DIR

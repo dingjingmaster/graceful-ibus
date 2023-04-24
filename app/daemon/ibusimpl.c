@@ -2102,9 +2102,7 @@ bus_ibus_impl_get_default (void)
     static BusIBusImpl *ibus = NULL;
 
     if (ibus == NULL) {
-        ibus = (BusIBusImpl *) g_object_new (BUS_TYPE_IBUS_IMPL,
-                                             "object-path", IBUS_PATH_IBUS,
-                                             NULL);
+        ibus = (BusIBusImpl *) g_object_new (BUS_TYPE_IBUS_IMPL, "object-path", IBUS_PATH_IBUS, NULL);
     }
     return ibus;
 }

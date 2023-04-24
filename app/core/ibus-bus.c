@@ -364,6 +364,8 @@ static void ibus_bus_init (IBusBus* bus)
     //
     path = g_path_get_dirname (ibus_get_socket_path ());
 
+    LOG_DEBUG("ibus socket dir: %s", path);
+
     errno = 0;
     if (g_mkdir_with_parents (path, 0700)) {
         LOG_WARNING("Failed to mkdir %s: %s", path, g_strerror (errno))

@@ -60,8 +60,7 @@ ibus_set_display (const gchar *display)
     _display = g_strdup (display);
 }
 
-const gchar *
-ibus_get_user_name (void)
+const gchar* ibus_get_user_name (void)
 {
     return g_get_user_name ();
 }

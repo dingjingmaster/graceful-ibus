@@ -91,6 +91,24 @@ static const GOptionEntry gEntries[] =
 };
 
 
+/**
+ * @brief
+ *  ibus-daemon 执行过程:
+ *    1. 日志初始化
+ *    2. 解析命令行参数
+ *    3. 判断是否以当前用户执行
+ *    4. 进程转为守护进程
+ *    5. 构造 IbusBus 结构
+ *      5.1 主要用来检测当前进程是否是单例
+ *      5.2 创建 ibus 运行需要的 socket 文件
+ *    6. IbusServer 初始化
+ *      6.1 创建 IBusImpl
+ *      6.2 创建 DBusImpl，并注册 IBusImpl (bus_dbus_impl_register_object)
+ *      6.3 new dbus server
+ *      6.4 start dbus server
+ *    7. ibus xim server 初始化
+ *    8. 运行 IBusServer
+ */
 int main (int argc, char* argv[])
 {
     int i;
@@ -182,9 +200,11 @@ int main (int argc, char* argv[])
                 g_printerr ("Can not execute default config program\n");
                 exit (-1);
             }
-        } else if (g_strcmp0 (config, "disable") != 0 && g_strcmp0 (config, "") != 0) {
-            if (!execute_cmdline (config))
+        }
+        else if (g_strcmp0 (config, "disable") != 0 && g_strcmp0 (config, "") != 0) {
+            if (!execute_cmdline (config)) {
                 exit (-1);
+            }
         }
 
         /* execute panel component */
@@ -198,7 +218,8 @@ int main (int argc, char* argv[])
                 g_printerr ("Can not execute default panel program\n");
                 exit (-1);
             }
-        } else if (g_strcmp0 (panel, "disable") != 0 && g_strcmp0 (panel, "") != 0) {
+        }
+        else if (g_strcmp0 (panel, "disable") != 0 && g_strcmp0 (panel, "") != 0) {
             if (!execute_cmdline (panel))
                 exit (-1);
         }
@@ -303,12 +324,8 @@ static gboolean execute_cmdline (const gchar *cmdline)
     }
 
     error = NULL;
-    gboolean retval = g_spawn_async (NULL, argv, NULL,
-                                     G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
-                                     NULL, NULL,
-                                     NULL, &error);
+    gboolean retval = g_spawn_async (NULL, argv, NULL, G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL, NULL, NULL, NULL, &error);
     g_strfreev (argv);
-
     if (!retval) {
         g_warning ("Can not execute cmdline `%s`: %s", cmdline, error->message);
         g_error_free (error);
