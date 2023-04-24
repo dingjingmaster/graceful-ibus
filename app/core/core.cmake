@@ -33,6 +33,9 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
         ${CMAKE_SOURCE_DIR}/app/core/ibus-config.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-config.c
 
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-marshal.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-marshal.c
+
         ${CMAKE_SOURCE_DIR}/app/core/ibus-unicode.h
         ${CMAKE_SOURCE_DIR}/app/core/ibus-unicode.c
 
@@ -71,7 +74,54 @@ file(GLOB GRACEFUL_IBUS_CORE_SRC
         ${CMAKE_SOURCE_DIR}/app/core/interface/ibus-service.h
         ${CMAKE_SOURCE_DIR}/app/core/interface/ibus-service.c
 
+        #######
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-keys.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-key-names.c
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-key-syms-compat.h
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-util.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-util.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-emoji.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-emoji.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-xevent.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-xevent.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-engine.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-engine.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-factory.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-factory.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-key-map.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-key-map.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-hot-key.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-hot-key.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-registry.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-registry.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-accel-group.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-accel-group.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-panel-service.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-panel-service.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-engine-simple.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-engine-simple.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-compose-table.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-compose-table.c
+
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-config-service.h
+        ${CMAKE_SOURCE_DIR}/app/core/ibus-config-service.c
 
         )
+
 include_directories(${CMAKE_SOURCE_DIR}/app/core)
 include_directories(${CMAKE_SOURCE_DIR}/app/core/interface)
+
+add_definitions(-D X11_LOCALEDATADIR=\\"/usr/share/X11/locale\\" )
+

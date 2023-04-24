@@ -6,7 +6,7 @@
 
 #include "ibus-object.h"
 #include "ibus-internal.h"
-#include "ibusmarshalers.h"
+#include "ibus-marshal.h"
 
 #define IBUS_PROXY_GET_PRIVATE(o)   (G_TYPE_INSTANCE_GET_PRIVATE ((o), IBUS_TYPE_PROXY, IBusProxyPrivate))
 

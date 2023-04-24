@@ -9,7 +9,7 @@
 #include "ibus-error.h"
 #include "ibus-types.h"
 #include "ibus-internal.h"
-#include "ibusmarshalers.h"
+#include "ibus-marshal.h"
 #include "ibus-attribute.h"
 #include "ibus-lookup-table.h"
 #include "ibus-property-list.h"

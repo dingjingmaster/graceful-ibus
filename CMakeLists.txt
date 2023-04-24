@@ -57,5 +57,16 @@ MESSAGE(STATUS "Qt Version: ${CUR_QT_VERSION}")
 execute_process(COMMAND uname -m OUTPUT_VARIABLE OS_ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
 MESSAGE(STATUS "OS arch: '${OS_ARCH}'")
 
+execute_process(COMMAND bash -c "glib-genmarshal --prefix _ibus_marshal --body --output ./ibus-marshal.c ./ibus-marshal.list"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/app/core)
+execute_process(COMMAND bash -c "glib-genmarshal --prefix _ibus_marshal --header --output ./ibus-marshal.h ./ibus-marshal.list"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/app/core)
+
+execute_process(COMMAND bash -c "glib-mkenums --output ./ibus-enum-types.h --template ./ibus-enum-types.h.template"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/app/core)
+execute_process(COMMAND bash -c "glib-mkenums --output ./ibus-enum-types.c --template ./ibus-enum-types.c.template"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/app/core)
+
 
 add_subdirectory(app/daemon)
+add_subdirectory(app/portal)

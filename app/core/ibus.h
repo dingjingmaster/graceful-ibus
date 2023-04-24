@@ -19,6 +19,7 @@
 #include "ibus-object.h"
 #include "ibus-unicode.h"
 #include "ibus-version.h"
+#include "ibus-service.h"
 #include "ibus-property.h"
 #include "ibus-component.h"
 #include "ibus-attribute.h"
@@ -28,27 +29,27 @@
 #include "ibus-attribute-list.h"
 /* ibus core -- end */
 
-#include "ibusservice.h"
-#include "ibusfactory.h"
-#include "ibusengine.h"
-#include "ibusenginesimple.h"
-#include "ibuskeysyms.h"
-#include "ibuskeymap.h"
-#include "ibuskeys.h"
-#include "ibusenumtypes.h"
-#include "ibushotkey.h"
-#include "ibusconfigservice.h"
-#include "ibuspanelservice.h"
-#include "ibusutil.h"
-#include "ibusregistry.h"
-#include "ibusemoji.h"
-#include "ibusxevent.h"
-#include "ibusaccelgroup.h"
+#include "ibus-keys.h"
+#include "ibus-util.h"
+#include "ibus-emoji.h"
+#include "ibus-engine.h"
+#include "ibus-xevent.h"
+#include "ibus-factory.h"
+#include "ibus-key-map.h"
+#include "ibus-hot-key.h"
+#include "ibus-registry.h"
+#include "ibus-key-syms.h"
+#include "ibus-accel-group.h"
 #include "ibus-serializable.h"
+#include "ibus-engine-simple.h"
+#include "ibus-panel-service.h"
+#include "ibus-config-service.h"
+
+#include "ibusenumtypes.h"
 
 #ifndef IBUS_DISABLE_DEPRECATED
-#include "ibuskeysyms-compat.h"
 #include "ibus-observed-path.h"
+#include "ibus-key-syms-compat.h"
 #endif
 
 #undef __IBUS_H_INSIDE__

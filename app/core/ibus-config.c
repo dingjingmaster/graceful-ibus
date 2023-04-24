@@ -9,7 +9,7 @@
 #include "ibus-error.h"
 #include "ibus-types.h"
 #include "ibus-internal.h"
-#include "ibusmarshalers.h"
+#include "ibus-marshal.h"
 
 #define IBUS_CONFIG_GET_PRIVATE(o)      ((IBusConfigPrivate *)ibus_config_get_instance_private (o))
 

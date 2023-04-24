@@ -48,17 +48,11 @@ file(GLOB IBUS_DAEMON_SRC
         ibusresources.h
         ibusresources.c
 
-        ibusmarshalers.h
-        ibusmarshalers.c
-
         ibusobject.h
         ibusobject.c
 
         ibuslookuptable.c
         ibuslookuptable.h
-
-        ibusregistry.c
-        ibusregistry.h
 
         ibusservice.h
 
@@ -66,18 +60,6 @@ file(GLOB IBUS_DAEMON_SRC
         ibusproplist.h
 
         ibusinternal.h
-
-        ibusutil.c
-        ibusutil.h
-
-        ibusxevent.c
-        ibusxevent.h
-
-        ibuskeymap.c
-        ibuskeymap.h
-
-        ibusemoji.c
-        ibusemoji.h
 
         ibuskeys.h
         ibuskeynames.c
@@ -87,7 +69,7 @@ file(GLOB IBUS_DAEMON_SRC
 
 add_executable(ibus-daemon main.c ${IBUS_DAEMON_SRC} ${GRACEFUL_IBUS_CORE_SRC})
 target_include_directories(ibus-daemon PUBLIC
-        ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/app/common/
+        ${CMAKE_SOURCE_DIR}/app ${CMAKE_SOURCE_DIR}/app/core/
         ${GIO_INCLUDE_DIRS})
 target_link_libraries(ibus-daemon PUBLIC ${GIO_LIBRARIES})
 target_compile_definitions(ibus-daemon PUBLIC -D INSTALL_NAME=\"ibus-daemon\")

@@ -14,7 +14,7 @@
 #include "ibus-main.h"
 #include "ibus-config.h"
 #include "ibus-internal.h"
-#include "ibusmarshalers.h"
+#include "ibus-marshal.h"
 #include "ibus-engine-desc.h"
 #include "ibus-serializable.h"
 

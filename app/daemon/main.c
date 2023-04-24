@@ -20,11 +20,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  * USA
  */
+
+#include "config.h"
+
 #include <pwd.h>
 #include <glib.h>
 #include "ibus.h"
 #include <fcntl.h>
-#include <config.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -42,9 +44,9 @@
 
 #include "server.h"
 #include "ibusimpl.h"
-#include "app/core/ibus-log.h"
-#include "app/core/gi-global.h"
-#include "app/core/ibus-functions.h"
+#include "core/ibus-log.h"
+#include "core/gi-global.h"
+#include "core/ibus-functions.h"
 
 
 static void show_version_and_quit (void);

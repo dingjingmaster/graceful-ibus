@@ -4,7 +4,7 @@
 
 #include "ibus-object.h"
 
-#include "ibusmarshalers.h"
+#include "ibus-marshal.h"
 
 #define IBUS_OBJECT_GET_PRIVATE(o)      ((IBusObjectPrivate*) ibus_object_get_instance_private(o))
 
